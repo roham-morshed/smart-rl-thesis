@@ -1,0 +1,34 @@
+name: smartrl-thesis
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      # Install the CUDA build of torch that matches the laptop's NVIDIA driver (checked in P0),
+      # e.g. pip install torch --index-url https://download.pytorch.org/whl/cu121
+      - numpy
+      - pandas
+      - pyarrow
+      - duckdb
+      - scipy
+      - statsmodels
+      - scikit-learn
+      - matplotlib
+      - arabic-reshaper
+      - python-bidi
+      - yfinance
+      - datasets
+      - huggingface_hub
+      - transformers
+      - gensim
+      - pysentiment2
+      - gymnasium
+      - stable-baselines3
+      - arch
+      - joblib
+      - tqdm
+      - pyyaml
+      - pytest

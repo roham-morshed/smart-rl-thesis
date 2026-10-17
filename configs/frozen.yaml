@@ -1,0 +1,246 @@
+# SMART-RL frozen configuration. Mirrors docs/SPEC.md.
+# Values marked "SET_IN_P4" are written by the development phase (E4) and frozen at gate G4.
+# Values marked "SET_IN_E13" are written by the base-paper task pilot (P3, SPEC §9.1).
+
+version: "1.0"
+
+markets:
+  SP500:   {index: "^GSPC",     total_return: "^SP500TR",   dividend_etf: null,           tz: "America/New_York", close: "16:00", news_tag: "US"}
+  FTSE100: {index: "^FTSE",     total_return: null,         dividend_etf: "ISF.L",        tz: "Europe/London",    close: "16:30", news_tag: "UK"}
+  NIFTY50: {index: "^NSEI",     total_return: null,         dividend_etf: "NIFTYBEES.NS", tz: "Asia/Kolkata",     close: "15:30", news_tag: "IN"}
+  SSE:     {index: "000001.SS", total_return: null,         dividend_etf: "510210.SS",    tz: "Asia/Shanghai",    close: "15:00", news_tag: "CN"}
+
+dividend_etf_check: {min_return_correlation: 0.98, window: ["2015-01-01", "2024-12-31"]}
+dividend_fallback:   # annual dividend yields used only if an ETF check fails; fill with a cited source
+  FTSE100: null
+  NIFTY50: null
+  SSE: null
+
+dates:
+  raw_end: "2026-09-30"
+  policy_start: "2010-01-01"
+  dev: {start: "2010-01-01", end: "2019-12-31", split: [0.70, 0.15, 0.15]}
+  confirmation_test_years: [2020, 2021, 2022, 2023, 2024]
+  forward: {train_start: "2010-01-01", train_end: "2023-12-31", val_year: 2024, test_start: "2025-01-01", test_end_max: "2026-09-30"}
+  test_lock_from: "2020-01-01"
+
+costs: {bps_per_unit_turnover: 10, robustness_bps: [0, 5, 10, 20]}
+risk_free_annual: 0.02
+no_trade_band: 0.05
+execution: {main: "close_t", robustness: "close_t_plus_1"}
+
+features:
+  price: [r1, r5, r20, r60, rv5, rv20, range, rsi14, macd, gap50, gap200, dd252, vchg]
+  minmax_quantiles: [0.01, 0.99]
+  clip: [-0.5, 1.5]
+  warmup_days: 252
+
+news:
+  hf_dataset: "Brianferrell787/financial-news-multisource"
+  date_range: ["2007-01-01", "2025-12-31"]
+  subsets_keep: SET_AT_G0          # proposed in P0 from the subset inventory, approved by Roham
+  fnspid_local: optional           # path in configs/paths.yaml
+  min_tokens: 4
+  max_tokens: 64
+  day_only_time_utc: "23:59:59"
+  ewma_half_life_days: 3
+news_keywords:   # word-boundary matching; words case-insensitive, acronyms case-sensitive
+  US:
+    words: ["wall street", "s&p 500", "dow jones", "nasdaq", "federal reserve", "u.s. stocks", "us stocks", "treasury yields"]
+    acronyms: ["NYSE", "Fed", "FOMC", "S&P"]
+    auto_tag_subsets: ["FNSPID", "Benzinga", "S&P 500 headlines"]   # adjust to real subset names at G0
+  UK:
+    words: ["ftse", "london stock exchange", "britain", "british", "united kingdom", "bank of england", "sterling", "gilts"]
+    acronyms: ["FTSE", "UK", "U.K.", "BoE"]
+  IN:
+    words: ["nifty", "sensex", "india", "indian", "reserve bank of india", "rupee", "mumbai", "dalal street"]
+    acronyms: ["RBI", "NSE", "BSE", "SEBI"]
+  CN:
+    words: ["shanghai composite", "sse composite", "shanghai", "china", "chinese", "beijing", "people's bank of china", "yuan", "renminbi", "shenzhen", "csi 300"]
+    acronyms: ["PBOC", "PBoC"]   # "SSE" alone is excluded on purpose: it also names SSE plc, a FTSE 100 company
+
+sentiment_sets:
+  split_seed: 2026
+  fiqa_thresholds: [-0.1, 0.1]
+
+sentiflow:
+  word2vec: {corpus_end: "2019-12-31", vector_size: 300, window: 5, min_count: 5, sg: 0, negative: 10, epochs: 5, seed: 2026}   # sg 0 = CBOW, as in the base paper
+  branch_a: {order: "gru_then_cnn", max_len: 48, gru_hidden: 128, conv_filters: 64, kernel: 3, dropout: 0.3, lr: 1.0e-3, batch: 64, max_epochs: 20, patience: 3}
+  branch_a_rev: {order: "cnn_then_gru", conv_filters: 64, kernel: 3, gru_hidden: 128}
+  branch_b: {model: "yiyanghkust/finbert-pretrain", max_len: 64, lr: 2.0e-5, weight_decay: 0.01, batch: 32, max_epochs: 4, warmup: 0.1, fp16: true}
+  fusion: {gate_hidden: 32, lr: 1.0e-3, max_epochs: 10}
+  calibration: {method: "temperature", ece_bins: 15}
+  seeds: [0, 1, 2, 3, 4]
+  scoring: {ensemble_seeds: true, max_hours_for_ensemble: 12}
+
+marketmind:
+  lookback: 96
+  patch: 8
+  stride: 4
+  d_model: 64
+  heads: 4
+  d_ff: 128
+  layers: 2
+  probsparse_factor: 5
+  dropout: 0.1
+  horizons: [1, 5, 20]
+  quantiles: [0.1, 0.5, 0.9]
+  vol_horizons: [5, 20]
+  vol_loss_weight: 0.5
+  train: {lr: 1.0e-3, weight_decay: 1.0e-4, batch: 128, max_epochs: 60, patience: 8, early_stop_tail: 0.10, grad_clip: 1.0}
+  refit_years: [2010, 2024]
+  feature_variants: [MM, MM_NOSENT, INFORMER, LSTM_PRICE, SENTIN]
+  h4_models: [MM, LSTM, GRU, INFORMER, PATCHTST, DLINEAR, NAIVE]
+  h4_seeds: [0, 1, 2]
+  vol_refs: {ewma_lambda: 0.94, har: true}
+
+ltsf_benchmark:
+  datasets: [ETTh1, ETTm1]
+  lookback: 336
+  patch: 16
+  stride: 8
+  horizons: [96, 192, 336, 720]
+  d_model: 128
+  heads: 16
+  d_ff: 256
+  layers: 3
+  dropout: 0.2
+  train: {lr: 1.0e-4, batch: 128, max_epochs: 100, patience: 10}
+  seeds: [0, 1, 2]
+
+env:
+  window: 20
+  episode_len: 252
+  initial_exposure: 1.0
+
+ppo:
+  net_arch: [128, 128]
+  activation: tanh
+  n_envs: 8
+  n_steps: 512
+  batch_size: 256
+  n_epochs: 10
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.0
+  learning_rate: SET_IN_P4          # from dev_grid.lr
+  total_timesteps: 300000
+  eval_every: 10000
+  seeds: [0, 1, 2, 3, 4]
+  reward: SET_IN_P4                 # R1 | R2 | R3 with parameters
+  reward_params:
+    R1: {eta: 0.01, A0: 0.0, B0: 1.0e-4, clip: 3.0}
+    R2: {lambda1: SET_IN_P4, lambda2: SET_IN_P4, scale: 100}
+    R3: {scale: 100}
+    IMIT: {theta_bps: SET_IN_P4, scale: 100}      # comparison arm only (SPEC §5.1)
+  confidence_divisor: 0.5
+  curriculum: {enabled: true, k0_fraction: 0.5, window_episodes: 20, alpha: 2, w_sa_before_window: 0.5}
+  bc_warm_start: {steps: 3000, lr: 1.0e-3}
+
+sac:
+  learning_rate: 3.0e-4
+  buffer_size: 200000
+  batch_size: 256
+  tau: 0.005
+  gamma: 0.99
+  ent_coef: auto
+  learning_starts: 5000
+  total_timesteps: 200000
+  seeds: [0, 1, 2]
+
+stm:
+  form: SET_IN_P4                   # STM-1 | STM-2
+  kappa: SET_IN_P4
+  z0: SET_IN_P4
+  logistic: {C: 1.0, horizon: 5, percentiles: [20, 80]}
+
+aws:
+  H: SET_IN_P4
+  alpha: SET_IN_P4
+  beta: SET_IN_P4
+  warm_start_from_validation: true
+
+baselines:
+  B2_SMA: {fast: 50, slow: 200}
+  B3_TSMOM: {lookback: 252, skip: 21}
+  B4_LSTM: {variant: LSTM_PRICE, horizon: 5}
+  B5_FINBERT: {kappa: SET_IN_P4, z0: SET_IN_P4}
+  B8_STATIC: {w_rl: 0.5, w_sa: 0.5}
+
+base:   # base paper: Chauhan, Ahmed & Sinha (2025), Connection Science 37(1): 2455070, model SenT-In (SPEC §0, §9.1)
+  status: final
+  model: SENTIN
+  trading_rule: {type: threshold, p_up: 0.5}      # e = 1 if P(up) > 0.5 else 0, environment rules of SPEC §5
+  overlap_window: ["2020-01-01", "2022-03-31"]
+
+sentin:   # reproduction of SenT-In (SPEC §9.1)
+  sentiment_index: {model: A, calibrated: false, aggregate: mean, polarity: "p_pos - p_neg", no_news_value: 0.0}
+  inputs: [open, high, low, close, volume, sentiment_index]
+  lookback: 96
+  awareness: {embed_dim: 16, hidden: 16}
+  informer: {d_model: 64, heads: 4, d_ff: 128, e_layers: 2, d_layers: 1, factor: 5, dropout: 0.1, label_len: 48, distil: true}
+  train: {batch: 256, max_epochs: 100, patience: 10, monitor: val_auc}
+  optimiser_choice: SET_IN_E13                    # sgd_mse (as published: SGD lr 1e-3, MSE) | adam_bce (Adam lr 1e-3, BCE)
+  seeds: [0, 1, 2]
+
+e13:   # the base paper's own task (SPEC §15)
+  window_end: "2022-03-31"
+  paper_window: ["2005-01-01", "2022-03-31"]
+  protocols: [PUB_R, PUB_C, CAUSAL]
+  split: {train: 0.80, test: 0.20, early_stop_share_of_train: 0.10, random_seed: 2026}
+  models: [SVM, CNN, LSTM, GRU, SENTIN, SENTIN_SF, MM_DIR]
+  svm: {window: 10, C: [0.1, 1, 10], gamma: scale}
+  cnn: {filters: 32, kernel: 3, layers: 2}
+  rnn: {hidden: 64, layers: 2}
+  seeds: [0, 1, 2]
+  published:   # Chauhan et al. (2025) Tables 4-7, typed into the thesis by the design lead; not used by code
+    note: "accuracy / F1 / AUC-ROC / PR-AUC of SenT-In: SP500 0.8159/0.8174/0.9331/0.9465; FTSE 0.9579/0.9521/0.9970/0.9963; SSE 0.8770/0.8851/0.9483/0.9567; NIFTY 0.8414/0.8464/0.9212/0.9309"
+
+dev_grid:
+  reward:
+    - {name: R1}
+    - {name: R2, lambda1: 10, lambda2: 0.5}
+    - {name: R2, lambda1: 10, lambda2: 1.0}
+    - {name: R2, lambda1: 50, lambda2: 0.5}
+    - {name: R2, lambda1: 50, lambda2: 1.0}
+    - {name: R3}
+  lr: [3.0e-4, 1.0e-4]
+  seeds: [0, 1, 2]
+  stm:
+    - {form: STM-1, kappa: 0.5, z0: 0.0}
+    - {form: STM-1, kappa: 0.5, z0: 0.5}
+    - {form: STM-1, kappa: 1.0, z0: 0.0}
+    - {form: STM-1, kappa: 1.0, z0: 0.5}
+    - {form: STM-1, kappa: 2.0, z0: 0.0}
+    - {form: STM-1, kappa: 2.0, z0: 0.5}
+    - {form: STM-2}
+  aws: {H: [20, 60], alpha: [1, 2, 5], beta: [0.5, 0.7, 1.0]}
+  imit: {theta_bps: [20, 50, 100], lr: selected, curriculum: false}
+  order: [stm, b5, ppo, aws, imit]
+  selection: {metric: "mean_dev_val_sharpe_across_markets", tie_break: "lower_turnover"}
+
+decision_labels: {horizon: 5, tau_multiplier: 0.5, tau_lookback: 252}
+
+regimes: {lookback: 126, threshold: 0.05}
+
+stats:
+  lw: {kernel: parzen, bandwidth: andrews_auto}
+  bootstrap: {block: 10, reps: 5000, type: circular_studentised}
+  stationary_bootstrap: {mean_block: 10, reps: 5000}
+  spa: {reps: 5000, block: 10}
+  mcs: {size: 0.10, reps: 5000, block: 10}
+  nemenyi_alpha: 0.05
+  pbo_blocks: 16
+  placebo_paths: 1000
+  multiple_testing: holm
+
+figures:
+  font: "B Nazanin"
+  fallback_font: "Vazirmatn"
+  dpi: 300
+  persian_digits: true
+
+parallel:
+  rl_jobs: 4          # update after the P0 benchmark
+  torch_threads_per_job: 1

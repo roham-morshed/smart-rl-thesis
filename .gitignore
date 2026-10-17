@@ -1,0 +1,12 @@
+# data and caches (large, rebuilt by scripts)
+data/
+results/runs/*/checkpoints/
+results/runs/*/*.zip
+results/runs/*/*.pt
+results/registry.sqlite
+*.pt
+*.ckpt
+__pycache__/
+*.pyc
+.pytest_cache/
+smartrl-thesis-kit.zip
