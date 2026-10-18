@@ -28,11 +28,12 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-18T12:35:39+00:00"
+  "created_utc": "2026-10-18T14:18:42+00:00"
  },
  "compute": {},
  "notes": [
-  "data.prices.SSE.dividend_source: no cited SSE Composite dividend yield was found (SSE and CSIndex sources searched), so the SSE sleeve earns the index price return without dividends; this understates SSE total returns of invested days and is a limitation (SPEC §2.1 fallback)."
+  "data.prices.SSE.dividend_source: no cited SSE Composite dividend yield was found (SSE and CSIndex sources searched), so the SSE sleeve earns the index price return without dividends; this understates SSE total returns of invested days and is a limitation (SPEC §2.1 fallback).",
+  "ltsf.*: mean (and standard deviation) over seeds 0-2 of the test MSE and MAE on standardised data, all channels, every test window; no reversible instance normalisation (not part of SPEC §15)."
  ],
  "p0": {
   "probe": {
@@ -1477,6 +1478,60 @@
      "test": 95
     },
     "removed_overlap": 488
+   }
+  }
+ },
+ "ltsf": {
+  "ETTh1": {
+   "h96": {
+    "mse": 0.44728141124371273,
+    "mse_sd": 0.006402939043789107,
+    "mae": 0.4579915225436187,
+    "mae_sd": 0.004450878688260076
+   },
+   "h192": {
+    "mse": 0.5333437212750304,
+    "mse_sd": 0.013293806045930563,
+    "mae": 0.5186073355329177,
+    "mae_sd": 0.009843141458975772
+   },
+   "h336": {
+    "mse": 0.5939670434725953,
+    "mse_sd": 0.011426160185578712,
+    "mae": 0.5602340029413861,
+    "mae_sd": 0.009800206091352594
+   },
+   "h720": {
+    "mse": 0.6096704575642278,
+    "mse_sd": 0.040187356085678354,
+    "mae": 0.5714715218250906,
+    "mae_sd": 0.020367975334175364
+   }
+  },
+  "ETTm1": {
+   "h96": {
+    "mse": 0.3370197432269144,
+    "mse_sd": 0.011399467629238267,
+    "mae": 0.3904351410848062,
+    "mae_sd": 0.011642776867131157
+   },
+   "h192": {
+    "mse": 0.3788809526245022,
+    "mse_sd": 0.006881962147049598,
+    "mae": 0.4149959542140483,
+    "mae_sd": 0.005614497494930295
+   },
+   "h336": {
+    "mse": 0.4063335731052405,
+    "mse_sd": 0.004558418407116982,
+    "mae": 0.42692475063151475,
+    "mae_sd": 0.0031187235855810657
+   },
+   "h720": {
+    "mse": 0.453296235038603,
+    "mse_sd": 0.009762935201284337,
+    "mae": 0.4619794296807529,
+    "mae_sd": 0.011024618155264026
    }
   }
  }
