@@ -4,3 +4,6 @@
 {"dataset": "ETTh1", "horizon": 192, "seed": 0, "mse": 0.5313990226696561, "mae": 0.5189150120669084, "val_mse": 1.012105765355632, "epochs": 25, "best_epoch": 14, "seconds": 142.40314531326294}
 {"dataset": "ETTh1", "horizon": 192, "seed": 1, "mse": 0.5211293769175344, "mae": 0.5086139629708335, "val_mse": 1.0114353524929054, "epochs": 24, "best_epoch": 13, "seconds": 136.82520246505737}
 {"dataset": "ETTh1", "horizon": 192, "seed": 2, "mse": 0.5475027642379005, "mae": 0.5282930315610114, "val_mse": 1.0414161489600489, "epochs": 15, "best_epoch": 4, "seconds": 109.61414790153503}
+{"dataset": "ETTh1", "horizon": 336, "seed": 0, "mse": 0.5852250999859668, "mae": 0.5508348034695214, "val_mse": 1.2242856161374176, "epochs": 16, "best_epoch": 5, "seconds": 90.52656698226929}
+{"dataset": "ETTh1", "horizon": 336, "seed": 1, "mse": 0.5897799222832552, "mae": 0.5594760092150809, "val_mse": 1.2175095725913154, "epochs": 16, "best_epoch": 5, "seconds": 90.67618823051453}
+{"dataset": "ETTh1", "horizon": 336, "seed": 2, "mse": 0.606896108148564, "mae": 0.570391196139556, "val_mse": 1.2181355498977586, "epochs": 15, "best_epoch": 4, "seconds": 85.48065257072449}
