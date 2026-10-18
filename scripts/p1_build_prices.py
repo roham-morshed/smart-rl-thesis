@@ -32,9 +32,10 @@ def main() -> None:
         run.set(outputs=[str(panel.processed_path(m).name) for m in MARKETS])
     items.append(("p1.prices", details))
     notes = []
-    if "PENDING" in details["SSE"]["dividend_source"]:
-        notes.append("data.prices.SSE.dividend_source: no cited SSE Composite dividend yield yet; the SSE total-return "
-                     "series is the price return until the G0 decision on dividend_fallback.SSE is settled (needed by P4).")
+    if details["SSE"]["dividend_source"].startswith("none"):
+        notes.append("data.prices.SSE.dividend_source: no cited SSE Composite dividend yield was found (SSE and "
+                     "CSIndex sources searched), so the SSE sleeve earns the index price return without dividends; "
+                     "this understates SSE total returns of invested days and is a limitation (SPEC §2.1 fallback).")
     R.update(items, notes)
     (RESULTS / "p1_prices.json").write_text(json.dumps(details, indent=1), encoding="utf-8")
 

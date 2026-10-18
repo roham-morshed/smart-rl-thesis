@@ -1,5 +1,12 @@
-"""Figure style of PROJECT_RULES.md rule 9: Persian labels (Latin name in parentheses), Persian tick digits, B Nazanin
-(fallback Vazirmatn), shaped with arabic_reshaper + python-bidi, no caption in the image, sizes of RESULTS_SCHEMA."""
+"""Figure style. Sizes and IDs of RESULTS_SCHEMA; no caption inside the image.
+
+`figures.language` in configs/frozen.yaml chooses the output:
+- "en" (default, Roham 2026-10-18): English labels, Latin digits, Times New Roman.
+- "fa": Persian labels with the Latin name in parentheses and Persian tick digits (PROJECT_RULES.md rule 9), B Nazanin.
+  matplotlib >= 3.11 shapes Persian itself, so arabic_reshaper + python-bidi run only on older versions; the
+  B Nazanin copy without brackets and hyphen avoids its legacy mirrored glyphs.
+Plots call `label(en, fa)`, `market(m)`, `method(m)` and `ticks(ax, ...)` and never format text themselves.
+"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -17,26 +24,32 @@ FA_DIGITS = str.maketrans("0123456789.-", "۰۱۲۳۴۵۶۷۸۹٫−")
 CM = 1 / 2.54
 HEIGHT_CM = {"F02": 10, "F09": 10, "F10": 10, "F12": 12, "F14": 11}
 
-MARKET_FA = {"SP500": "S&P 500", "FTSE100": "FTSE 100", "NIFTY50": "Nifty 50",
-             "SSE": "شاخص کل بورس شانگهای (SSE Composite)", "COMBINED": "سبد ترکیبی (Combined)"}
-METHOD_FA = {
-    "SMARTRL": "مدل پیشنهادی (SMART-RL)", "B1_BH": "خرید و نگهداری (Buy & Hold)", "B2_SMA": "میانگین متحرک ۵۰/۲۰۰ (SMA)",
-    "B3_TSMOM": "مومنتوم سری‌زمانی (TSMOM)", "B4_LSTM": "سیگنال LSTM (LSTM)", "B5_FINBERT": "سیگنال FinBERT (FinBERT)",
-    "B6_PPOPRICE": "PPO فقط قیمت (PPO price-only)", "B7_SAC": "عامل SAC (SAC)", "B8_STATIC": "ترکیب ایستا (Static hybrid)",
-    "BASE": "مدل مقاله‌ی مبنا (SenT-In)", "CURR": "برنامه‌ی آموزشی (CURR)", "PLAIN": "آموزش ساده (PLAIN)",
-    "BC": "شروع گرم (BC)", "IMIT": "پاداش تقلیدی (IMIT)",
+MARKETS = {"SP500": ("S&P 500", "S&P 500"), "FTSE100": ("FTSE 100", "FTSE 100"), "NIFTY50": ("Nifty 50", "Nifty 50"),
+           "SSE": ("SSE Composite", "شاخص کل بورس شانگهای (SSE Composite)"),
+           "COMBINED": ("Combined", "سبد ترکیبی (Combined)")}
+METHODS = {
+    "SMARTRL": ("SMART-RL", "مدل پیشنهادی (SMART-RL)"), "B1_BH": ("Buy & Hold", "خرید و نگهداری (Buy & Hold)"),
+    "B2_SMA": ("SMA 50/200", "میانگین متحرک ۵۰/۲۰۰ (SMA)"), "B3_TSMOM": ("TSMOM", "مومنتوم سری‌زمانی (TSMOM)"),
+    "B4_LSTM": ("LSTM signal", "سیگنال LSTM (LSTM)"), "B5_FINBERT": ("FinBERT signal", "سیگنال FinBERT (FinBERT)"),
+    "B6_PPOPRICE": ("PPO price-only", "PPO فقط قیمت (PPO price-only)"), "B7_SAC": ("SAC", "عامل SAC (SAC)"),
+    "B8_STATIC": ("Static hybrid", "ترکیب ایستا (Static hybrid)"), "BASE": ("SenT-In (base paper)", "مدل مقاله‌ی مبنا (SenT-In)"),
+    "CURR": ("CURR", "برنامه‌ی آموزشی (CURR)"), "PLAIN": ("PLAIN", "آموزش ساده (PLAIN)"),
+    "BC": ("BC", "شروع گرم (BC)"), "IMIT": ("IMIT", "پاداش تقلیدی (IMIT)"),
 }
-
-_font_name: str | None = None
 BRACKETS = (0x28, 0x29, 0x5B, 0x5D, 0x7B, 0x7D, 0x2D)   # brackets and the hyphen
+_ready: str | None = None
+
+
+def language() -> str:
+    return frozen()["figures"].get("language", "en")
+
+
+def _native_shaping() -> bool:
+    from packaging.version import Version
+    return Version(matplotlib.__version__) >= Version("3.11")
 
 
 def _nazanin_without_brackets(src: Path) -> Path:
-    """Local copy of B Nazanin without bracket characters in its cmap.
-
-    The legacy B Nazanin draws '(' and ')' for the old right-to-left behaviour, so with matplotlib's native
-    bidi layout a closing parenthesis comes out mirrored. Without them in the cmap, matplotlib takes brackets
-    from the Latin fallback font; every Persian glyph still comes from B Nazanin."""
     from fontTools.ttLib import TTFont
     from ..config import RAW
     dst = RAW / "fonts" / "BNazanin-figures.ttf"
@@ -51,68 +64,66 @@ def _nazanin_without_brackets(src: Path) -> Path:
 
 
 def setup() -> str:
-    """Register B Nazanin (or Vazirmatn) and return the family name in use."""
-    global _font_name
-    if _font_name:
-        return _font_name
+    global _ready
+    if _ready:
+        return _ready
     cfg = frozen()["figures"]
-    fonts = Path(paths()["fonts_dir"])
-    cands = sorted(fonts.glob("*nazanin*.ttf")) + sorted(fonts.glob("*Nazanin*.ttf"))
-    if cands:
-        cands = [_nazanin_without_brackets(cands[0])]
-    else:
-        cands = sorted(fonts.glob("Vazirmatn*.ttf")) or sorted(
-            (ROOT.parent / "thesis_writing" / "figures" / "diagrams").glob("Vazirmatn-Regular.ttf"))
-    for f in cands:
-        font_manager.fontManager.addfont(str(f))
-    _font_name = font_manager.FontProperties(fname=str(cands[0])).get_name()
-    # B Nazanin has no Latin glyphs: matplotlib takes each missing glyph from the next family in the list
     latin = [f for f in ("Times New Roman", "DejaVu Sans") if any(e.name == f for e in font_manager.fontManager.ttflist)]
-    # text.language "fa" makes the native layout run the bidi algorithm with a right-to-left base and mirror
-    # neutral characters, so "persian (Latin)" keeps its parentheses the right way round
-    lang = {"text.language": "fa"} if _native_shaping() else {}
-    plt.rcParams.update({**lang, "font.family": [_font_name] + latin, "axes.unicode_minus": False, "pdf.fonttype": 42,
-                         "savefig.dpi": cfg["dpi"], "figure.dpi": 100, "axes.titlesize": 11, "axes.labelsize": 11,
-                         "xtick.labelsize": 10, "ytick.labelsize": 10, "legend.fontsize": 9})
-    return _font_name
-
-
-def _native_shaping() -> bool:
-    """matplotlib >= 3.11 lays out complex scripts itself (letter joining and right-to-left order); shaping the
-    string beforehand with arabic_reshaper + python-bidi would then reverse it a second time."""
-    from packaging.version import Version
-    return Version(matplotlib.__version__) >= Version("3.11")
+    base = {"axes.unicode_minus": False, "pdf.fonttype": 42, "savefig.dpi": cfg["dpi"], "figure.dpi": 100,
+            "axes.titlesize": 10, "axes.labelsize": 10, "xtick.labelsize": 9, "ytick.labelsize": 9, "legend.fontsize": 8}
+    if language() == "fa":
+        fonts = Path(paths()["fonts_dir"])
+        cands = sorted(fonts.glob("*nazanin*.ttf")) + sorted(fonts.glob("*Nazanin*.ttf"))
+        cands = [_nazanin_without_brackets(cands[0])] if cands else (sorted(fonts.glob("Vazirmatn*.ttf")) or sorted(
+            (ROOT.parent / "thesis_writing" / "figures" / "diagrams").glob("Vazirmatn-Regular.ttf")))
+        for f in cands:
+            font_manager.fontManager.addfont(str(f))
+        name = font_manager.FontProperties(fname=str(cands[0])).get_name()
+        plt.rcParams.update({**base, **({"text.language": "fa"} if _native_shaping() else {}),
+                             "font.family": [name] + latin})
+        _ready = name
+    else:
+        plt.rcParams.update({**base, "font.family": latin or ["DejaVu Sans"]})
+        _ready = (latin or ["DejaVu Sans"])[0]
+    return _ready
 
 
 def _shape(text: str) -> str:
-    import arabic_reshaper
-    from bidi.algorithm import get_display
-    return get_display(arabic_reshaper.reshape(text))
-
-
-def fa(text: str) -> str:
-    """Persian label for matplotlib. With native shaping the string is passed unchanged; otherwise it is shaped with
-    arabic_reshaper + python-bidi, and 'persian (Latin)' is composed in visual order as '(Latin) <persian>' so the
-    bidi algorithm cannot move or mirror the parentheses. Text without Persian letters is left as it is."""
     if _native_shaping() or not any("؀" <= ch <= "ۿ" for ch in text):
         return text
+    import arabic_reshaper
+    from bidi.algorithm import get_display
     if text.endswith(")") and " (" in text:
         per, lat = text[:-1].rsplit(" (", 1)
         if not any("؀" <= ch <= "ۿ" for ch in lat):
-            return f"({lat}) " + _shape(per)
-    return _shape(text)
+            return f"({lat}) " + get_display(arabic_reshaper.reshape(per))
+    return get_display(arabic_reshaper.reshape(text))
 
 
-def fa_num(x, decimals: int | None = None) -> str:
-    s = f"{x:.{decimals}f}" if decimals is not None else (f"{x:g}")
-    return s.translate(FA_DIGITS)
+def label(en: str, fa: str) -> str:
+    return _shape(fa) if language() == "fa" else en
 
 
-def persian_ticks(ax, axis: str = "both", decimals: int | None = None, percent: bool = False) -> None:
+def market(m: str) -> str:
+    en, fa = MARKETS[m]
+    return label(en, fa)
+
+
+def method(m: str) -> str:
+    en, fa = METHODS[m]
+    return label(en, fa)
+
+
+def ticks(ax, axis: str = "both", decimals: int | None = None, percent: bool = False) -> None:
+    """Tick formatter: optional fixed decimals and percent; Persian digits only when language is 'fa'."""
+    fa = language() == "fa"
+
     def f(x, _pos):
         v = x * 100 if percent else x
-        s = fa_num(v, decimals)
-        return s + ("٪" if percent else "")
+        s = f"{v:.{decimals}f}" if decimals is not None else f"{v:g}"
+        if fa:
+            s = s.translate(FA_DIGITS)
+        return s + (("٪" if fa else "%") if percent else "")
     fmt = FuncFormatter(f)
     if axis in ("x", "both"):
         ax.xaxis.set_major_formatter(fmt)
@@ -127,8 +138,10 @@ def figure(fig_id: str, nrows: int = 1, ncols: int = 1, height_cm: float | None 
 
 
 def save(fig, fig_id: str) -> list[Path]:
-    FIGURES.mkdir(parents=True, exist_ok=True)
-    out = [FIGURES / f"{fig_id}.png", FIGURES / f"{fig_id}.pdf"]
+    """results/figures/<ID>.png (300 dpi) and .pdf; Persian versions go to results/figures/fa/."""
+    d = FIGURES / "fa" if language() == "fa" else FIGURES
+    d.mkdir(parents=True, exist_ok=True)
+    out = [d / f"{fig_id}.png", d / f"{fig_id}.pdf"]
     fig.tight_layout()
     for p in out:
         fig.savefig(p, dpi=frozen()["figures"]["dpi"])

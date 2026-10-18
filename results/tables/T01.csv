@@ -2,4 +2,4 @@ market,index_ticker,pnl_series,dividend_source,start,end,n_days,n_flagged_return
 SP500,^GSPC,^SP500TR,^SP500TR (total-return index),2007-09-17,2026-09-30,4790,0,True
 FTSE100,^FTSE,price + dy/252,ISF trailing-12-month distribution yield (iShares distribution history),2007-09-17,2026-09-30,4809,0,True
 NIFTY50,^NSEI,price + dy/252,NSE Indices daily dividend yield of NIFTY 50,2007-09-17,2026-09-30,4671,0,False
-SSE,000001.SS,price + dy/252,PENDING: no cited SSE Composite dividend yield yet (price return only),2007-09-17,2026-09-30,4623,0,True
+SSE,000001.SS,price + dy/252,none: price return only (no cited SSE Composite dividend yield),2007-09-17,2026-09-30,4623,0,True

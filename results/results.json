@@ -28,11 +28,11 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-18T12:05:00+00:00"
+  "created_utc": "2026-10-18T12:35:39+00:00"
  },
  "compute": {},
  "notes": [
-  "data.prices.SSE.dividend_source: no cited SSE Composite dividend yield yet; the SSE total-return series is the price return until the G0 decision on dividend_fallback.SSE is settled (needed by P4)."
+  "data.prices.SSE.dividend_source: no cited SSE Composite dividend yield was found (SSE and CSIndex sources searched), so the SSE sleeve earns the index price return without dividends; this understates SSE total returns of invested days and is a limitation (SPEC §2.1 fallback)."
  ],
  "p0": {
   "probe": {
@@ -1280,7 +1280,7 @@
     "start": "2007-09-17",
     "end": "2026-09-30",
     "n_days": 4623,
-    "dividend_source": "PENDING: no cited SSE Composite dividend yield yet (price return only)",
+    "dividend_source": "none: price return only (no cited SSE Composite dividend yield)",
     "n_flagged_returns": 0
    }
   },
@@ -1349,7 +1349,7 @@
     "start": "2007-09-17",
     "end": "2026-09-30",
     "n_days": 4623,
-    "dividend_source": "PENDING: no cited SSE Composite dividend yield yet (price return only)",
+    "dividend_source": "none: price return only (no cited SSE Composite dividend yield)",
     "n_flagged_returns": 0,
     "flagged_dates": [],
     "n_rows_without_close": 0,

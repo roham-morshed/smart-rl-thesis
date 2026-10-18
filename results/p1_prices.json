@@ -39,7 +39,7 @@
   "start": "2007-09-17",
   "end": "2026-09-30",
   "n_days": 4623,
-  "dividend_source": "PENDING: no cited SSE Composite dividend yield yet (price return only)",
+  "dividend_source": "none: price return only (no cited SSE Composite dividend yield)",
   "n_flagged_returns": 0,
   "flagged_dates": [],
   "n_rows_without_close": 0,

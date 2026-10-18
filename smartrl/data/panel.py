@@ -83,7 +83,7 @@ def dividend_yield(market: str, dates: pd.DatetimeIndex) -> tuple[pd.Series, str
         if isinstance(fb["SSE"], dict) and isinstance(fb["SSE"].get("values"), dict):
             vals = fb["SSE"]["values"]
             return pd.Series([vals.get(d.year, np.nan) for d in dates], index=dates), str(fb["SSE"]["source"])
-        return pd.Series(np.nan, index=dates), "PENDING: no cited SSE Composite dividend yield yet (price return only)"
+        return pd.Series(np.nan, index=dates), "none: price return only (no cited SSE Composite dividend yield)"
     raise KeyError(market)
 
 

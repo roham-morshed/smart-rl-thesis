@@ -16,7 +16,7 @@ dividend_fallback:   # annual dividend yields used only if an ETF check fails; f
   # Yahoo lists its dividends only from 2013-02-20, so its trailing-12-month yield is incomplete before 2014-02-20.
   FTSE100: {type: etf_distributions, source: "iShares (BlackRock) distribution history of ISF, issuer product page; Yahoo lists only 2013-02-20 on and matches it exactly", file: "data/raw/dividends/isf_distributions.parquet"}
   NIFTY50: {type: daily_yield, source: "NSE Indices Ltd, NIFTY 50 historical P/E, P/B and dividend yield (niftyindices.com)", file: "data/raw/dividends/nifty50_pe_pb_dy.parquet"}
-  SSE: {type: annual_yield, values: PENDING_CITED_SOURCE, source: null}
+  SSE: {type: none, source: null, note: "no cited SSE Composite dividend yield (official sources searched at P1); price return only, recorded as a limitation; annual values can still be added here before P4"}
 
 dates:
   raw_end: "2026-09-30"
@@ -245,10 +245,11 @@ stats:
   multiple_testing: holm
 
 figures:
-  font: "B Nazanin"
+  language: en          # 2026-10-18, Roham: standard figures (English labels, Latin digits); Persian versions later
+  font: "B Nazanin"     # used only for language: fa
   fallback_font: "Vazirmatn"
   dpi: 300
-  persian_digits: true
+  persian_digits: false
 
 parallel:
   rl_jobs: 6          # P0 benchmark (p0.compute_plan), approved at G0
