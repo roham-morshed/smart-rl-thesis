@@ -95,14 +95,16 @@ def _first_valid(price: np.ndarray, use_cols: list[int]) -> int:
     return int(np.argmax(ok)) if ok.any() else len(price)
 
 
-def build_refit(panels: dict[str, MarketPanel], train_end: str, predict: tuple[str, str] | None,
+def build_refit(panels: dict[str, MarketPanel], train_end: str | dict, predict: tuple[str, str] | dict | None,
                 lookback: int = 96, early_tail: float = 0.10) -> tuple[WindowSet, WindowSet | None, dict[str, Scaling]]:
-    """Training windows (dated <= train_end) and prediction windows for days in `predict` (inclusive)."""
-    te = pd.Timestamp(train_end)
+    """Training windows (dated <= train_end) and prediction windows for days in `predict` (inclusive).
+    `train_end` and `predict` may be dicts keyed by market (E13 MM_DIR: each market's own 80 % cut)."""
     vol_disabled = set(frozen()["features"].get("volume_disabled", []))
     lo_c, hi_c = frozen()["features"]["clip"]
     tr_parts, pr_parts, scales = [], [], {}
     for m, mp in panels.items():
+        te = pd.Timestamp(train_end[m] if isinstance(train_end, dict) else train_end)
+        pr_rng = predict[m] if isinstance(predict, dict) else predict
         price_cols = [i for i, f in enumerate(P.PRICE_FEATURES) if f != "vchg"]
         fv = _first_valid(mp.price, price_cols)
         in_train = (mp.dates <= te) & (np.arange(len(mp.dates)) >= fv)
@@ -131,8 +133,8 @@ def build_refit(panels: dict[str, MarketPanel], train_end: str, predict: tuple[s
             return (X_p[w], X_s[w], np.full(len(idx), mp.mid), yr[idx], yv[idx], np.full(len(idx), m),
                     mp.dates.values[idx])
         tr_parts.append(take(tr_idx))
-        if predict is not None:
-            a, b = pd.Timestamp(predict[0]), pd.Timestamp(predict[1])
+        if pr_rng is not None:
+            a, b = pd.Timestamp(pr_rng[0]), pd.Timestamp(pr_rng[1])
             pi = np.where((mp.dates >= a) & (mp.dates <= b))[0]
             pi = pi[pi >= fv + lookback - 1]
             if len(pi):
