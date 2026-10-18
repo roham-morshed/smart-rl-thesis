@@ -222,6 +222,16 @@ def evaluate_fold(fold_name: str, market: str, cost_bps: float | None = None, de
     sn = folds.forecast_frame("SENTIN")
     sn = sn[sn["market"] == market].drop_duplicates("date", keep="last").set_index("date").reindex(f.dates)
     out["BASE"] = path(rules.base_sentin(sn["p_up"].to_numpy(), frozen()["base"]["trading_rule"]["p_up"]))
+    if fold_name != "forward":
+        # H6: each training arm alone (seed ensemble 0-2 and every single seed), PPO without STM/AWS
+        from ..agents.ppo import load_policy
+        for arm, key in (("SMARTRL", "CURR"), ("A5", "PLAIN"), ("BC", "BC"), ("IMIT", "IMIT")):
+            pols = [load_policy(policy_dir(fold_name, arm, market, s)) for s in range(3)]
+            win = window_matrix(inp["full"], c.window)
+            for name, ps in [(f"H6_{key}", pols)] + [(f"H6_{key}_s{s}", [pols[s]]) for s in range(3)]:
+                p = path_ensemble(PolicyEnsemble([q[0] for q in ps], [q[1] for q in ps]), win, c.window, inp["ret_tr"], a, b,
+                                  c.cost, c.band, c.initial_exposure, delay)
+                out[name] = {"r": p["r"], "held": p["held"]}
     out["_inp"] = {"ret_tr": inp["ret_tr"][a:b + 1], "close": inp["close"], "sent": inp["sent"].iloc[a:b + 1],
                    "fold": f}
     return out
