@@ -48,8 +48,8 @@ class AWS:
 
 def run_aws(e_rl: np.ndarray, e_sa: np.ndarray, c_rl: np.ndarray, c_sa: np.ndarray, ret_tr: np.ndarray, a: int, b: int,
             H: float, alpha: float, beta: float, cost: float, band: float, state: AWSState | None = None,
-            e_init: float = 1.0, rf: float = RF_DAILY) -> dict:
-    """Run AWS over days a..b.
+            e_init: float = 1.0, rf: float = RF_DAILY, delay: int = 0) -> dict:
+    """Run AWS over days a..b (`delay=1`: the portfolio executes each decision one day later, SPEC §14).
 
     e_rl, e_sa, c_rl, c_sa: expert target exposures and confidences at each day's close. Day a is held at e_init;
     at the close of day t the returns of day t update the EWMA state, the weights give a_final, the band gives the
@@ -65,6 +65,7 @@ def run_aws(e_rl: np.ndarray, e_sa: np.ndarray, c_rl: np.ndarray, c_sa: np.ndarr
     r0 = e_init * ret_tr[a] + (1 - e_init) * rf
     L["r"][0] = L["r_rl"][0] = L["r_sa"][0] = r0
     L["held"][0] = e_init
+    pending = e_init
     for i, t in enumerate(range(a, b + 1)):
         aws.update(L["r_rl"][i], L["r_sa"][i])
         w, P = aws.weights(c_rl[t], c_sa[t])
@@ -78,7 +79,9 @@ def run_aws(e_rl: np.ndarray, e_sa: np.ndarray, c_rl: np.ndarray, c_sa: np.ndarr
             r_next = ret_tr[t + 1]
             L["r_rl"][i + 1] = books["RL"].step(e_rl[t], r_next)[1]
             L["r_sa"][i + 1] = books["SA"].step(e_sa[t], r_next)[1]
-            e, L["r"][i + 1] = books["AWS"].step(a_final, r_next)
+            tgt = a_final if delay == 0 else pending
+            pending = a_final
+            e, L["r"][i + 1] = books["AWS"].step(tgt, r_next)
             L["e"][i] = L["held"][i + 1] = e
         else:
             L["e"][i] = prev if abs(a_final - prev) <= band else a_final

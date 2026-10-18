@@ -47,5 +47,8 @@
   "dataset": "ETTh1",
   "horizon": 720
  },
- "events": []
+ "events": [],
+ "end_utc": "2026-10-18T13:04:38+00:00",
+ "seconds": 264.4172774000035,
+ "status": "ok"
 }
