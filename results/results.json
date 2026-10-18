@@ -1,0 +1,1254 @@
+{
+ "meta": {
+  "config_hash": "e669a8c9cafb0d874f472e6f6c7591c21d1c1852645976bf16b12e7a85fbe051",
+  "git_commit": "ea6e409084f2c04990b705acda34b81b7700d80c",
+  "packages": {
+   "torch": "2.6.0+cu124",
+   "numpy": "2.4.6",
+   "pandas": "3.0.6",
+   "pyarrow": "26.0.0",
+   "duckdb": "1.5.6",
+   "scipy": "1.17.1",
+   "statsmodels": "0.15.0",
+   "scikit-learn": "1.9.1",
+   "matplotlib": "3.11.2",
+   "arabic-reshaper": "3.0.1",
+   "python-bidi": "0.6.11",
+   "yfinance": "1.7.0",
+   "datasets": "5.1.0",
+   "huggingface-hub": "2.2.0",
+   "transformers": "5.20.1",
+   "gensim": "4.4.0",
+   "pysentiment2": "0.1.1",
+   "gymnasium": "1.2.3",
+   "stable-baselines3": "2.8.0",
+   "arch": "8.0.0",
+   "joblib": "1.6.0",
+   "tqdm": "4.70.1",
+   "PyYAML": "6.0.3",
+   "pytest": "9.1.1"
+  },
+  "created_utc": "2026-10-18T11:43:01+00:00"
+ },
+ "compute": {},
+ "notes": [],
+ "p0": {
+  "probe": {
+   "env": {
+    "hardware": {
+     "platform": "Windows-10-10.0.19045-SP0",
+     "python": "3.11.17",
+     "processor": "AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD",
+     "cpu_count": 16,
+     "torch_cuda": "12.4",
+     "cuda_available": true,
+     "gpu": "NVIDIA GeForce RTX 2060",
+     "gpu_mem_gb": 6.0
+    },
+    "disk_free_gb": 154.52122497558594,
+    "font_b_nazanin": [
+     "bnazanin.ttf"
+    ],
+    "font_vazirmatn": [
+     "Vazirmatn-Bold.ttf",
+     "Vazirmatn-Regular.ttf"
+    ],
+    "font_used": "B Nazanin",
+    "torch_matmul_ok": true,
+    "probed_utc": "2026-10-17T09:23:15+00:00"
+   },
+   "yf": {
+    "tickers": {
+     "^GSPC": {
+      "ok": true,
+      "first_date": "1990-01-02",
+      "last_date": "2026-09-30",
+      "rows": 9254,
+      "missing_close": 0,
+      "share_zero_volume": 0.0001080613788631943,
+      "n_dividends": 0
+     },
+     "^SP500TR": {
+      "ok": true,
+      "first_date": "1990-01-02",
+      "last_date": "2026-09-30",
+      "rows": 9254,
+      "missing_close": 0,
+      "share_zero_volume": 1.0,
+      "n_dividends": 0
+     },
+     "^FTSE": {
+      "ok": true,
+      "first_date": "1990-01-02",
+      "last_date": "2026-09-30",
+      "rows": 9282,
+      "missing_close": 0,
+      "share_zero_volume": 0.24509803921568626,
+      "n_dividends": 0
+     },
+     "ISF.L": {
+      "ok": true,
+      "first_date": "2009-01-02",
+      "last_date": "2026-09-30",
+      "rows": 4482,
+      "missing_close": 0,
+      "share_zero_volume": 0.00022311468094600624,
+      "n_dividends": 55
+     },
+     "^NSEI": {
+      "ok": true,
+      "first_date": "2007-09-17",
+      "last_date": "2026-09-30",
+      "rows": 4671,
+      "missing_close": 0,
+      "share_zero_volume": 0.2853778634125455,
+      "n_dividends": 0
+     },
+     "NIFTYBEES.NS": {
+      "ok": true,
+      "first_date": "2009-01-02",
+      "last_date": "2026-09-30",
+      "rows": 4374,
+      "missing_close": 0,
+      "share_zero_volume": 0.04000914494741655,
+      "n_dividends": 0
+     },
+     "000001.SS": {
+      "ok": true,
+      "first_date": "1997-07-02",
+      "last_date": "2026-09-30",
+      "rows": 7087,
+      "missing_close": 0,
+      "share_zero_volume": 0.19204176661492875,
+      "n_dividends": 0
+     },
+     "510210.SS": {
+      "ok": true,
+      "first_date": "2011-02-01",
+      "last_date": "2026-09-30",
+      "rows": 3777,
+      "missing_close": 0,
+      "share_zero_volume": 0.021975112523166536,
+      "n_dividends": 4
+     }
+    },
+    "etf_check": {
+     "SP500": {
+      "ticker": "^SP500TR",
+      "kind": "total_return",
+      "corr_daily_returns_2015_2024": 0.999832433176188,
+      "corr_traded_days_only": 0.9998469145642268,
+      "n_common_days": 2516,
+      "n_dividend_events": 0,
+      "dividend_first": null,
+      "dividend_last": null
+     },
+     "FTSE100": {
+      "ticker": "ISF.L",
+      "kind": "dividend_etf",
+      "corr_daily_returns_2015_2024": 0.9877941923085478,
+      "corr_traded_days_only": 0.9879498947711857,
+      "n_common_days": 2525,
+      "n_dividend_events": 55,
+      "dividend_first": "2013-02-20",
+      "dividend_last": "2026-09-17",
+      "passes": true,
+      "ttm_yield_mean_by_year": {
+       "2009": 0.0,
+       "2010": 0.0,
+       "2011": 0.0,
+       "2012": 0.0,
+       "2013": 0.015323293010763236,
+       "2014": 0.032046658342883456,
+       "2015": 0.034450717358435884,
+       "2016": 0.041963905749286684,
+       "2017": 0.0387972089106828,
+       "2018": 0.04061448258162905,
+       "2019": 0.04420363630117551,
+       "2020": 0.045176119100720225,
+       "2021": 0.03211980076491775,
+       "2022": 0.037022116141768535,
+       "2023": 0.03753979027207201,
+       "2024": 0.03809464028674417,
+       "2025": 0.0336515073861281,
+       "2026": 0.028536092577600064
+      }
+     },
+     "NIFTY50": {
+      "ticker": "NIFTYBEES.NS",
+      "kind": "dividend_etf",
+      "corr_daily_returns_2015_2024": 0.047711727626535694,
+      "corr_traded_days_only": 0.04771145970476849,
+      "n_common_days": 2459,
+      "n_dividend_events": 0,
+      "dividend_first": null,
+      "dividend_last": null,
+      "passes": false,
+      "ttm_yield_mean_by_year": {
+       "2009": 0.0,
+       "2010": 0.0,
+       "2011": 0.0,
+       "2012": 0.0,
+       "2013": 0.0,
+       "2014": 0.0,
+       "2015": 0.0,
+       "2016": 0.0,
+       "2017": 0.0,
+       "2018": 0.0,
+       "2019": 0.0,
+       "2020": 0.0,
+       "2021": 0.0,
+       "2022": 0.0,
+       "2023": 0.0,
+       "2024": 0.0,
+       "2025": 0.0,
+       "2026": 0.0
+      }
+     },
+     "SSE": {
+      "ticker": "510210.SS",
+      "kind": "dividend_etf",
+      "corr_daily_returns_2015_2024": 0.03540628408767067,
+      "corr_traded_days_only": 0.03568702583391047,
+      "n_common_days": 2429,
+      "n_dividend_events": 4,
+      "dividend_first": "2023-06-20",
+      "dividend_last": "2023-12-20",
+      "passes": false,
+      "ttm_yield_mean_by_year": {
+       "2011": 0.0,
+       "2012": 0.0,
+       "2013": 0.0,
+       "2014": 0.0,
+       "2015": 0.0,
+       "2016": 0.0,
+       "2017": 0.0,
+       "2018": 0.0,
+       "2019": 0.0,
+       "2020": 0.0,
+       "2021": 0.0,
+       "2022": 0.0,
+       "2023": 0.07169636770600195,
+       "2024": 0.2410375646861639,
+       "2025": 0.0,
+       "2026": 0.0
+      }
+     }
+    },
+    "markets": {
+     "SP500": {
+      "index": "^GSPC",
+      "first_date": "1990-01-02",
+      "last_date": "2026-09-30",
+      "rows": 9254,
+      "^SP500TR_index_days_missing_2015_2024": 0
+     },
+     "FTSE100": {
+      "index": "^FTSE",
+      "first_date": "1990-01-02",
+      "last_date": "2026-09-30",
+      "rows": 9282,
+      "ISF.L_index_days_missing_2015_2024": 0
+     },
+     "NIFTY50": {
+      "index": "^NSEI",
+      "first_date": "2007-09-17",
+      "last_date": "2026-09-30",
+      "rows": 4671,
+      "NIFTYBEES.NS_index_days_missing_2015_2024": 0
+     },
+     "SSE": {
+      "index": "000001.SS",
+      "first_date": "1997-07-02",
+      "last_date": "2026-09-30",
+      "rows": 7087,
+      "510210.SS_index_days_missing_2015_2024": 0
+     }
+    },
+    "first_common_index_date": "2007-09-17",
+    "probed_utc": "2026-10-17T09:23:21+00:00"
+   },
+   "ett": {
+    "ETTh1": {
+     "ok": true,
+     "url": "https://raw.githubusercontent.com/zhouhaoyi/ETDataset/main/ETT-small/ETTh1.csv",
+     "rows": 17420,
+     "columns": [
+      "date",
+      "HUFL",
+      "HULL",
+      "MUFL",
+      "MULL",
+      "LUFL",
+      "LULL",
+      "OT"
+     ],
+     "first": "2016-07-01 00:00:00",
+     "last": "2018-06-26 19:00:00"
+    },
+    "ETTm1": {
+     "ok": true,
+     "url": "https://raw.githubusercontent.com/zhouhaoyi/ETDataset/main/ETT-small/ETTm1.csv",
+     "rows": 69680,
+     "columns": [
+      "date",
+      "HUFL",
+      "HULL",
+      "MUFL",
+      "MULL",
+      "LUFL",
+      "LULL",
+      "OT"
+     ],
+     "first": "2016-07-01 00:00:00",
+     "last": "2018-06-26 19:45:00"
+    },
+    "probed_utc": "2026-10-17T09:23:24+00:00"
+   },
+   "sets": {
+    "phrasebank": {
+     "phrasebank50": {
+      "ok": true,
+      "rows": 4846,
+      "labels": {
+       "neutral": 2879,
+       "positive": 1363,
+       "negative": 604
+      },
+      "source": "takala/financial_phrasebank data/FinancialPhraseBank-v1.0.zip"
+     },
+     "phrasebank_all": {
+      "ok": true,
+      "rows": 2264,
+      "labels": {
+       "neutral": 1391,
+       "positive": 570,
+       "negative": 303
+      },
+      "source": "takala/financial_phrasebank data/FinancialPhraseBank-v1.0.zip"
+     }
+    },
+    "twitter": {
+     "ok": true,
+     "train": {
+      "rows": 9543,
+      "columns": [
+       "text",
+       "label"
+      ],
+      "labels": {
+       "2": 6178,
+       "1": 1923,
+       "0": 1442
+      }
+     },
+     "valid": {
+      "rows": 2388,
+      "columns": [
+       "text",
+       "label"
+      ],
+      "labels": {
+       "2": 1566,
+       "1": 475,
+       "0": 347
+      }
+     }
+    },
+    "fiqa": {
+     "pauri32/fiqa-2018": {
+      "ok": true,
+      "has_sentence_and_score": true,
+      "files": {
+       "test.csv": {
+        "rows": 150,
+        "columns": [
+         "sentence",
+         "snippets",
+         "target",
+         "sentiment_score",
+         "aspects",
+         "format",
+         "label"
+        ],
+        "score_col": "sentiment_score",
+        "score_min": -0.938,
+        "score_max": 0.721,
+        "n_pos": 50,
+        "n_neg": 50,
+        "n_neu": 50,
+        "example": "$HCP Come to the party and buy this -gonna give solid gains and a dividend $$$$$$",
+        "n_unique_sentences": 150
+       },
+       "train.csv": {
+        "rows": 961,
+        "columns": [
+         "sentence",
+         "snippets",
+         "target",
+         "sentiment_score",
+         "aspects",
+         "format",
+         "label"
+        ],
+        "score_col": "sentiment_score",
+        "score_min": -0.854,
+        "score_max": 0.975,
+        "n_pos": 632,
+        "n_neg": 295,
+        "n_neu": 34,
+        "example": "Still short $LNG from $11.70 area...next stop could be down through $9.00. Someone slammed it hard with 230,000 shs this",
+        "n_unique_sentences": 961
+       },
+       "validation.csv": {
+        "rows": 102,
+        "columns": [
+         "sentence",
+         "snippets",
+         "target",
+         "sentiment_score",
+         "aspects",
+         "format",
+         "label"
+        ],
+        "score_col": "sentiment_score",
+        "score_min": -0.854,
+        "score_max": 0.65,
+        "n_pos": 34,
+        "n_neg": 34,
+        "n_neu": 34,
+        "example": "Teva: FDA Approves Generic Version of AstraZeneca Heartburn Drug",
+        "n_unique_sentences": 87
+       }
+      }
+     },
+     "TheFinAI/fiqa-sentiment-classification": {
+      "ok": false,
+      "error": "GatedRepoError: 403 Client Error. (Request ID: Root=1-6ad4aebe-12b29e7e699ad3dc6d358ef4;fce8742d-448c-47fe-810a-2149ce922c49)\n\nCannot access gated repo for url https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification/resolve/main/data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet.\nAccess to dataset TheFinAI/en-fiqa-absa is restricted and you are not in the authorized list. Visit https://huggingface.co/datasets/TheFinAI/en-fiqa-absa to ask for access."
+     },
+     "TheFinAI/en-fiqa-absa": {
+      "ok": false,
+      "error": "GatedRepoError: 403 Client Error. (Request ID: Root=1-6ad4aebe-306ac0d33e37c2c160b0902e;ef390111-5f67-4e3d-b7a5-dde0b53dac92)\n\nCannot access gated repo for url https://huggingface.co/datasets/TheFinAI/en-fiqa-absa/resolve/main/data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet.\nAccess to dataset TheFinAI/en-fiqa-absa is restricted and you are not in the authorized list. Visit https://huggingface.co/datasets/TheFinAI/en-fiqa-absa to ask for access."
+     },
+     "ChanceFocus/fiqa-sentiment-classification": {
+      "ok": false,
+      "error": "RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-6ad4aebf-2a7ef0605efd652c7194dc0c;1228fce3-b2ac-49b6-a92d-bd813ae83c4e)\n\nRepository Not Found for url: https://huggingface.co/api/datasets/ChanceFocus/fiqa-sentiment-classification/tree/main?recursive=true&expand=false.\nPlease make sure you specified the correct `repo_id` and `repo_type`.\nIf you are trying to access a private or gated repo, make sure you are authenticated and your token has the required permissions.\nFor more details, see https://huggingface.co/docs/huggingface_hub/authentication"
+     }
+    },
+    "probed_utc": "2026-10-18T11:34:21+00:00"
+   },
+   "models": {
+    "yiyanghkust/finbert-pretrain": {
+     "ok": true,
+     "path": "<project_root>\\data\\raw\\hf_cache\\models--yiyanghkust--finbert-pretrain\\snapshots\\88ab954a39ea6d3ce2b62cff086dd5ad1172c664",
+     "n_params": 109161216,
+     "vocab": 30873,
+     "tokens": [
+      "[CLS]",
+      "operating",
+      "profit",
+      "rose",
+      "to",
+      "eur",
+      "13",
+      ".",
+      "1",
+      "mn",
+      "from",
+      "eur",
+      "8",
+      ".",
+      "7",
+      "mn",
+      ".",
+      "[SEP]"
+     ],
+     "id2label": null,
+     "output_shape": [
+      1,
+      18,
+      768
+     ]
+    },
+    "ProsusAI/finbert": {
+     "ok": true,
+     "path": "<project_root>\\data\\raw\\hf_cache\\models--ProsusAI--finbert\\snapshots\\0bc2ac10dda6929bcb1f77ccc43c7ec5c424f031",
+     "n_params": 109484547,
+     "vocab": 30522,
+     "tokens": [
+      "[CLS]",
+      "operating",
+      "profit",
+      "rose",
+      "to",
+      "eu",
+      "##r",
+      "13",
+      ".",
+      "1",
+      "mn",
+      "from",
+      "eu",
+      "##r",
+      "8",
+      ".",
+      "7",
+      "mn",
+      ".",
+      "[SEP]"
+     ],
+     "id2label": [
+      "positive",
+      "negative",
+      "neutral"
+     ],
+     "output_shape": [
+      1,
+      3
+     ]
+    },
+    "pysentiment2_LM": {
+     "ok": true,
+     "example_score": {
+      "Positive": 0,
+      "Negative": 2,
+      "Polarity": -0.99999950000025,
+      "Subjectivity": 0.33333327777778704
+     }
+    },
+    "probed_utc": "2026-10-18T11:34:46+00:00"
+   },
+   "hf": {
+    "repo": "Brianferrell787/financial-news-multisource",
+    "token_found": true,
+    "hf_user": "Lucifer0079",
+    "ok": true,
+    "n_files": 131,
+    "total_gb": 19.93976714927703,
+    "total_rows": 57114479,
+    "subsets": {
+     "all_the_news_2": {
+      "files": 4,
+      "bytes": 3913988408,
+      "rows": 1972976,
+      "date_min": "2016-01-01T00:00:00Z",
+      "date_max": "2020-04-01T13:42:08Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 3.645185761153698
+     },
+     "american_news_jonasbecker": {
+      "files": 1,
+      "bytes": 1049846726,
+      "rows": 265552,
+      "date_min": "2016-02-05T21:51:32Z",
+      "date_max": "2021-06-25T14:41:13Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.9777459558099508
+     },
+     "benzinga_6000stocks": {
+      "files": 4,
+      "bytes": 170203598,
+      "rows": 1568363,
+      "date_min": "2009-02-14T19:02:00Z",
+      "date_max": "2020-06-11T21:11:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.1585144530981779
+     },
+     "bloomberg_reuters": {
+      "files": 17,
+      "bytes": 1304199389,
+      "rows": 8203282,
+      "date_min": "2006-10-20T20:16:16Z",
+      "date_max": "2016-08-16T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 1.214630332775414
+     },
+     "cnbc_headlines": {
+      "files": 1,
+      "bytes": 1161400,
+      "rows": 553,
+      "date_min": "2006-11-30T14:25:19Z",
+      "date_max": "2024-07-30T14:02:49Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.0010816380381584167
+     },
+     "djia_stock_headlines": {
+      "files": 1,
+      "bytes": 8405996,
+      "rows": 102324,
+      "date_min": "2000-01-03T00:00:00Z",
+      "date_max": "2016-07-01T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.007828693836927414
+     },
+     "finsen_us_2007_2023": {
+      "files": 1,
+      "bytes": 3959038,
+      "rows": 15523,
+      "date_min": "2007-06-04T00:00:00Z",
+      "date_max": "2023-07-16T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.003687141463160515
+     },
+     "fnspid_news": {
+      "files": 59,
+      "bytes": 11075918998,
+      "rows": 28606801,
+      "date_min": "1999-08-31T00:00:00Z",
+      "date_max": "2024-01-09T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 10.315253397449851
+     },
+     "frontpage_news": {
+      "files": 10,
+      "bytes": 1018301544,
+      "rows": 4994950,
+      "date_min": "2015-07-16T00:00:00Z",
+      "date_max": "2020-11-08T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.948367215692997
+     },
+     "gold_news_kaggle": {
+      "files": 1,
+      "bytes": 1036880,
+      "rows": 10404,
+      "date_min": "2000-02-15T00:00:00Z",
+      "date_max": "2019-02-01T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.0009656697511672974
+     },
+     "headlines_10sites_2007_2022": {
+      "files": 9,
+      "bytes": 453138657,
+      "rows": 4405397,
+      "date_min": "2007-01-01T00:00:00Z",
+      "date_max": "2023-01-01T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.4220182606950402
+     },
+     "huffpost_news": {
+      "files": 1,
+      "bytes": 48218338,
+      "rows": 209415,
+      "date_min": "2012-01-28T00:00:00Z",
+      "date_max": "2022-09-23T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.04490682668983936
+     },
+     "mind_news_2019": {
+      "files": 1,
+      "bytes": 29819204,
+      "rows": 128621,
+      "date_min": "2019-11-09T00:00:00Z",
+      "date_max": "2019-11-22T23:58:41Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.027771297842264175
+     },
+     "nyt_articles_2000_present": {
+      "files": 5,
+      "bytes": 690911766,
+      "rows": 2175632,
+      "date_min": "2000-01-01T05:00:00Z",
+      "date_max": "2025-05-01T23:51:29Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.643461724743247
+     },
+     "nyt_headlines_1990_2020": {
+      "files": 6,
+      "bytes": 264861858,
+      "rows": 2802355,
+      "date_min": "1990-01-01T05:00:00Z",
+      "date_max": "2020-12-31T18:08:26Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.24667182750999928
+     },
+     "nyt_headlines_2010_2021": {
+      "files": 2,
+      "bytes": 184974863,
+      "rows": 597708,
+      "date_min": "2007-07-07T14:46:20Z",
+      "date_max": "2021-12-31T20:47:58Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.17227126564830542
+     },
+     "reddit_finance_sp500": {
+      "files": 1,
+      "bytes": 106332464,
+      "rows": 48029,
+      "date_min": "2008-11-11T01:35:09Z",
+      "date_max": "2025-07-03T18:34:21Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.09902982413768768
+     },
+     "reddit_worldnews_2008_2016": {
+      "files": 1,
+      "bytes": 6214193,
+      "rows": 73578,
+      "date_min": "2008-06-08T00:00:00Z",
+      "date_max": "2016-07-01T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.005787418223917484
+     },
+     "sentarl_combined": {
+      "files": 1,
+      "bytes": 64865649,
+      "rows": 318307,
+      "date_min": "1997-01-03T14:39:00Z",
+      "date_max": "2021-03-09T15:55:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.06041084323078394
+     },
+     "sp500_daily_headlines": {
+      "files": 1,
+      "bytes": 935058,
+      "rows": 18153,
+      "date_min": "2008-01-02T00:00:00Z",
+      "date_max": "2024-03-04T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.0008708406239748001
+     },
+     "us_financial_news_2018_jeet": {
+      "files": 1,
+      "bytes": 459378076,
+      "rows": 305947,
+      "date_min": "2017-12-07T04:58:00Z",
+      "date_max": "2018-05-31T23:58:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.42782917246222496
+     },
+     "wikinews_articles": {
+      "files": 1,
+      "bytes": 29056746,
+      "rows": 21397,
+      "date_min": "2002-04-01T00:00:00Z",
+      "date_max": "2022-11-19T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.027061203494668007
+     },
+     "yahoo_finance_articles": {
+      "files": 1,
+      "bytes": 446029236,
+      "rows": 198926,
+      "date_min": "2025-03-11T00:00:00Z",
+      "date_max": "2025-09-06T00:00:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.4153970964252949
+     },
+     "yahoo_finance_felixdrinkall": {
+      "files": 1,
+      "bytes": 78403864,
+      "rows": 70286,
+      "date_min": "2017-01-03T00:00:00Z",
+      "date_max": "2023-12-30T18:15:00Z",
+      "n_files_without_stats": 0,
+      "columns": [
+       "date",
+       "text",
+       "extra_fields"
+      ],
+      "gb": 0.07301928848028183
+     }
+    },
+    "probed_utc": "2026-10-18T11:31:41+00:00"
+   }
+  },
+  "benchmark": {
+   "finbert": {
+    "n_headlines": 20000,
+    "max_len": 64,
+    "tokenize_per_s": 10744.950074936616,
+    "infer_bs256_headlines_per_s": 1171.4630042406359,
+    "infer_bs256_peak_mem_gb": 0.989891529083252,
+    "infer_bs512_headlines_per_s": 1192.0772211415895,
+    "infer_bs512_peak_mem_gb": 1.389488697052002,
+    "train_bs32_samples_per_s": 240.98173549213448,
+    "train_bs32_peak_mem_gb": 2.6578750610351562
+   },
+   "rl": {
+    "timesteps_per_job": 20480,
+    "obs_dim": 604,
+    "ppo_jobs1": {
+     "per_job_steps_per_s": 1882.0646462361997,
+     "aggregate_steps_per_s": 1682.7902845298333,
+     "wall_s": 12.170262799991178,
+     "eval_pass_s": 0.1496837000013329
+    },
+    "ppo_jobs2": {
+     "per_job_steps_per_s": 1857.724106944755,
+     "aggregate_steps_per_s": 2295.7687407126255,
+     "wall_s": 17.841518300003372,
+     "eval_pass_s": 0.1966480999981286
+    },
+    "ppo_jobs4": {
+     "per_job_steps_per_s": 1737.7724877908208,
+     "aggregate_steps_per_s": 4153.827362239548,
+     "wall_s": 19.721570699999575,
+     "eval_pass_s": 0.19801060000099824
+    },
+    "ppo_jobs6": {
+     "per_job_steps_per_s": 1509.6981030355398,
+     "aggregate_steps_per_s": 5603.838983594378,
+     "wall_s": 21.92782489999081,
+     "eval_pass_s": 0.2506582833351179
+    },
+    "sac_jobs4": {
+     "train_steps_per_s": 20.638585860928178,
+     "warmup_steps_per_s": 2228.435026827239,
+     "wall_s": 153.6997146000067
+    }
+   },
+   "marketmind": {
+    "samples": 16816,
+    "epoch_s": 5.955793100001756,
+    "peak_mem_gb": 0.2839665412902832,
+    "n_params": 203147
+   },
+   "ltsf": {
+    "batch": 128,
+    "step_s": 0.06917368499998702,
+    "peak_mem_gb": 0.5507321357727051,
+    "epoch_s_h720": {
+     "ETTh1": 4.150421099999221,
+     "ETTm1": 18.1235054699966
+    }
+   },
+   "sac_device": {
+    "cuda_x1": {
+     "per_job_steps_per_s": 52.76385974883713,
+     "aggregate_steps_per_s": 52.76385974883713,
+     "wall_s": 42.6206411000021
+    },
+    "cpu4threads_x1": {
+     "per_job_steps_per_s": 43.33620713780131,
+     "aggregate_steps_per_s": 43.33620713780131,
+     "wall_s": 46.5563101000007
+    },
+    "cuda_x3": {
+     "per_job_steps_per_s": 40.1525508691786,
+     "aggregate_steps_per_s": 120.45765260753579,
+     "wall_s": 60.77599120000377
+    },
+    "cpu2threads_x6": {
+     "per_job_steps_per_s": 14.72294162831463,
+     "aggregate_steps_per_s": 88.33764976988778,
+     "wall_s": 145.52756089999457
+    }
+   }
+  },
+  "news_proposal": {
+   "subsets": {
+    "fnspid_news": {
+     "decision": "keep",
+     "reason": "FNSPID financial news (expected in SPEC)",
+     "rows": 28606801,
+     "gb": 10.315253397449851,
+     "date_min": "1999-08-31",
+     "date_max": "2024-01-09"
+    },
+    "bloomberg_reuters": {
+     "decision": "keep",
+     "reason": "Bloomberg / Reuters (expected in SPEC)",
+     "rows": 8203282,
+     "gb": 1.214630332775414,
+     "date_min": "2006-10-20",
+     "date_max": "2016-08-16"
+    },
+    "nyt_headlines_1990_2020": {
+     "decision": "keep_business",
+     "reason": "NYT; keep only business/financial desk rows (expected in SPEC)",
+     "rows": 2802355,
+     "gb": 0.24667182750999928,
+     "date_min": "1990-01-01",
+     "date_max": "2020-12-31"
+    },
+    "nyt_articles_2000_present": {
+     "decision": "keep_business",
+     "reason": "NYT; keep only business/financial desk rows (expected in SPEC)",
+     "rows": 2175632,
+     "gb": 0.643461724743247,
+     "date_min": "2000-01-01",
+     "date_max": "2025-05-01"
+    },
+    "benzinga_6000stocks": {
+     "decision": "keep",
+     "reason": "Benzinga (expected in SPEC)",
+     "rows": 1568363,
+     "gb": 0.1585144530981779,
+     "date_min": "2009-02-14",
+     "date_max": "2020-06-11"
+    },
+    "nyt_headlines_2010_2021": {
+     "decision": "keep_business",
+     "reason": "NYT; keep only business/financial desk rows (expected in SPEC)",
+     "rows": 597708,
+     "gb": 0.17227126564830542,
+     "date_min": "2007-07-07",
+     "date_max": "2021-12-31"
+    },
+    "sentarl_combined": {
+     "decision": "keep",
+     "reason": "SentARL financial news for 20 assets (finance subset)",
+     "rows": 318307,
+     "gb": 0.06041084323078394,
+     "date_min": "1997-01-03",
+     "date_max": "2021-03-09"
+    },
+    "us_financial_news_2018_jeet": {
+     "decision": "keep",
+     "reason": "U.S. financial news, multi-publisher (finance subset)",
+     "rows": 305947,
+     "gb": 0.42782917246222496,
+     "date_min": "2017-12-07",
+     "date_max": "2018-05-31"
+    },
+    "yahoo_finance_articles": {
+     "decision": "keep",
+     "reason": "Yahoo Finance (expected in SPEC); only subset covering 2025",
+     "rows": 198926,
+     "gb": 0.4153970964252949,
+     "date_min": "2025-03-11",
+     "date_max": "2025-09-06"
+    },
+    "yahoo_finance_felixdrinkall": {
+     "decision": "keep",
+     "reason": "Yahoo Finance (expected in SPEC)",
+     "rows": 70286,
+     "gb": 0.07301928848028183,
+     "date_min": "2017-01-03",
+     "date_max": "2023-12-30"
+    },
+    "sp500_daily_headlines": {
+     "decision": "keep",
+     "reason": "S&P 500 headlines (expected in SPEC)",
+     "rows": 18153,
+     "gb": 0.0008708406239748001,
+     "date_min": "2008-01-02",
+     "date_max": "2024-03-04"
+    },
+    "finsen_us_2007_2023": {
+     "decision": "keep",
+     "reason": "FinSen U.S. financial news (finance subset)",
+     "rows": 15523,
+     "gb": 0.003687141463160515,
+     "date_min": "2007-06-04",
+     "date_max": "2023-07-16"
+    },
+    "gold_news_kaggle": {
+     "decision": "keep",
+     "reason": "gold/commodity market headlines (markets subset)",
+     "rows": 10404,
+     "gb": 0.0009656697511672974,
+     "date_min": "2000-02-15",
+     "date_max": "2019-02-01"
+    },
+    "cnbc_headlines": {
+     "decision": "keep",
+     "reason": "CNBC (expected in SPEC)",
+     "rows": 553,
+     "gb": 0.0010816380381584167,
+     "date_min": "2006-11-30",
+     "date_max": "2024-07-30"
+    },
+    "frontpage_news": {
+     "decision": "exclude",
+     "reason": "general news front pages",
+     "rows": 4994950,
+     "gb": 0.948367215692997,
+     "date_min": "2015-07-16",
+     "date_max": "2020-11-08"
+    },
+    "headlines_10sites_2007_2022": {
+     "decision": "exclude",
+     "reason": "general news, 10 major sites",
+     "rows": 4405397,
+     "gb": 0.4220182606950402,
+     "date_min": "2007-01-01",
+     "date_max": "2023-01-01"
+    },
+    "all_the_news_2": {
+     "decision": "exclude",
+     "reason": "general news",
+     "rows": 1972976,
+     "gb": 3.645185761153698,
+     "date_min": "2016-01-01",
+     "date_max": "2020-04-01"
+    },
+    "american_news_jonasbecker": {
+     "decision": "exclude",
+     "reason": "general news crawl",
+     "rows": 265552,
+     "gb": 0.9777459558099508,
+     "date_min": "2016-02-05",
+     "date_max": "2021-06-25"
+    },
+    "huffpost_news": {
+     "decision": "exclude",
+     "reason": "general news",
+     "rows": 209415,
+     "gb": 0.04490682668983936,
+     "date_min": "2012-01-28",
+     "date_max": "2022-09-23"
+    },
+    "mind_news_2019": {
+     "decision": "exclude",
+     "reason": "recommendation dataset (MIND)",
+     "rows": 128621,
+     "gb": 0.027771297842264175,
+     "date_min": "2019-11-09",
+     "date_max": "2019-11-22"
+    },
+    "djia_stock_headlines": {
+     "decision": "exclude",
+     "reason": "top-25 world headlines per day (Reddit r/worldnews style), general news",
+     "rows": 102324,
+     "gb": 0.007828693836927414,
+     "date_min": "2000-01-03",
+     "date_max": "2016-07-01"
+    },
+    "reddit_worldnews_2008_2016": {
+     "decision": "exclude",
+     "reason": "Reddit",
+     "rows": 73578,
+     "gb": 0.005787418223917484,
+     "date_min": "2008-06-08",
+     "date_max": "2016-07-01"
+    },
+    "reddit_finance_sp500": {
+     "decision": "exclude",
+     "reason": "Reddit",
+     "rows": 48029,
+     "gb": 0.09902982413768768,
+     "date_min": "2008-11-11",
+     "date_max": "2025-07-03"
+    },
+    "wikinews_articles": {
+     "decision": "exclude",
+     "reason": "general news",
+     "rows": 21397,
+     "gb": 0.027061203494668007,
+     "date_min": "2002-04-01",
+     "date_max": "2022-11-19"
+    }
+   },
+   "keep": [
+    "fnspid_news",
+    "bloomberg_reuters",
+    "nyt_headlines_1990_2020",
+    "nyt_articles_2000_present",
+    "benzinga_6000stocks",
+    "nyt_headlines_2010_2021",
+    "sentarl_combined",
+    "us_financial_news_2018_jeet",
+    "yahoo_finance_articles",
+    "yahoo_finance_felixdrinkall",
+    "sp500_daily_headlines",
+    "finsen_us_2007_2023",
+    "gold_news_kaggle",
+    "cnbc_headlines"
+   ],
+   "keep_rows": 44892240,
+   "keep_gb": 13.734064691700041,
+   "all_rows": 57114479,
+   "all_gb": 19.93976714927703,
+   "latest_kept_date": "2025-09-06",
+   "latest_kept_date_excl_yahoo2025_nyt": "2024-07-30"
+  },
+  "compute_plan": {
+   "ppo_best_parallel_jobs": 6,
+   "ppo_aggregate_steps_per_s": 5603.838983594378,
+   "ppo_per_job_steps_per_s": 1509.6981030355398,
+   "ppo_run_minutes_at_best_jobs": 3.3119204362425396,
+   "ppo_runs": {
+    "dev_ppo_grid": 144,
+    "dev_imit": 36,
+    "conf_smartrl_ppo": 100,
+    "conf_b6_ppo_price": 100,
+    "conf_a1_nosent": 100,
+    "conf_a2_nomm": 100,
+    "conf_a5_nocurr": 100,
+    "conf_bc": 60,
+    "conf_imit": 60,
+    "fwd_smartrl_ppo": 20,
+    "fwd_b6_ppo_price": 20
+   },
+   "ppo_runs_total": 840,
+   "ppo_wall_hours": 12.491436710606743,
+   "sac_runs": {
+    "conf_b7_sac": 60,
+    "fwd_b7_sac": 12
+   },
+   "sac_runs_total": 72,
+   "sac_aggregate_steps_per_s_cuda_x3": 120.45765260753579,
+   "sac_wall_hours_cuda_x3": 33.206690595511084,
+   "sac_wall_hours_cpu_x4": 48.452932131030565,
+   "finbert_infer_headlines_per_s": 1192.0772211415895,
+   "finbert_scoring_hours_per_seed_per_10M": 2.330199527776939,
+   "finbert_max_headlines_for_5seed_ensemble_in_12h": 10299547.190663334,
+   "sentiflow_branch_b_training_hours_5_seeds": 0.3181430597223375,
+   "marketmind_epoch_s_largest_window": 5.955793100001756,
+   "marketmind_trainings": 160,
+   "marketmind_hours_upper_bound": 15.882114933338016,
+   "ltsf_hours_upper_bound": 7.4246421899986075
+  },
+  "etf_summary": {
+   "SP500": {
+    "ticker": "^SP500TR",
+    "kind": "total_return",
+    "corr_daily_returns_2015_2024": 0.999832433176188,
+    "corr_traded_days_only": 0.9998469145642268,
+    "n_common_days": 2516,
+    "n_dividend_events": 0,
+    "dividend_first": null,
+    "dividend_last": null
+   },
+   "FTSE100": {
+    "ticker": "ISF.L",
+    "kind": "dividend_etf",
+    "corr_daily_returns_2015_2024": 0.9877941923085478,
+    "corr_traded_days_only": 0.9879498947711857,
+    "n_common_days": 2525,
+    "n_dividend_events": 55,
+    "dividend_first": "2013-02-20",
+    "dividend_last": "2026-09-17",
+    "passes": true
+   },
+   "NIFTY50": {
+    "ticker": "NIFTYBEES.NS",
+    "kind": "dividend_etf",
+    "corr_daily_returns_2015_2024": 0.047711727626535694,
+    "corr_traded_days_only": 0.04771145970476849,
+    "n_common_days": 2459,
+    "n_dividend_events": 0,
+    "dividend_first": null,
+    "dividend_last": null,
+    "passes": false
+   },
+   "SSE": {
+    "ticker": "510210.SS",
+    "kind": "dividend_etf",
+    "corr_daily_returns_2015_2024": 0.03540628408767067,
+    "corr_traded_days_only": 0.03568702583391047,
+    "n_common_days": 2429,
+    "n_dividend_events": 4,
+    "dividend_first": "2023-06-20",
+    "dividend_last": "2023-12-20",
+    "passes": false
+   }
+  }
+ }
+}

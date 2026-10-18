@@ -1,0 +1,233 @@
+== sets
+{
+ "phrasebank": {
+  "phrasebank50": {
+   "ok": true,
+   "rows": 4846,
+   "labels": {
+    "neutral": 2879,
+    "positive": 1363,
+    "negative": 604
+   },
+   "source": "takala/financial_phrasebank data/FinancialPhraseBank-v1.0.zip"
+  },
+  "phrasebank_all": {
+   "ok": true,
+   "rows": 2264,
+   "labels": {
+    "neutral": 1391,
+    "positive": 570,
+    "negative": 303
+   },
+   "source": "takala/financial_phrasebank data/FinancialPhraseBank-v1.0.zip"
+  }
+ },
+ "twitter": {
+  "ok": true,
+  "train": {
+   "rows": 9543,
+   "columns": [
+    "text",
+    "label"
+   ],
+   "labels": {
+    "2": 6178,
+    "1": 1923,
+    "0": 1442
+   }
+  },
+  "valid": {
+   "rows": 2388,
+   "columns": [
+    "text",
+    "label"
+   ],
+   "labels": {
+    "2": 1566,
+    "1": 475,
+    "0": 347
+   }
+  }
+ },
+ "fiqa": {
+  "pauri32/fiqa-2018": {
+   "ok": true,
+   "has_sentence_and_score": true,
+   "files": {
+    "test.csv": {
+     "rows": 150,
+     "columns": [
+      "sentence",
+      "snippets",
+      "target",
+      "sentiment_score",
+      "aspects",
+      "format",
+      "label"
+     ],
+     "score_col": "sentiment_score",
+     "score_min": -0.938,
+     "score_max": 0.721,
+     "n_pos": 50,
+     "n_neg": 50,
+     "n_neu": 50,
+     "example": "$HCP Come to the party and buy this -gonna give solid gains and a dividend $$$$$$",
+     "n_unique_sentences": 150
+    },
+    "train.csv": {
+     "rows": 961,
+     "columns": [
+      "sentence",
+      "snippets",
+      "target",
+      "sentiment_score",
+      "aspects",
+      "format",
+      "label"
+     ],
+     "score_col": "sentiment_score",
+     "score_min": -0.854,
+     "score_max": 0.975,
+     "n_pos": 632,
+     "n_neg": 295,
+     "n_neu": 34,
+     "example": "Still short $LNG from $11.70 area...next stop could be down through $9.00. Someone slammed it hard with 230,000 shs this",
+     "n_unique_sentences": 961
+    },
+    "validation.csv": {
+     "rows": 102,
+     "columns": [
+      "sentence",
+      "snippets",
+      "target",
+      "sentiment_score",
+      "aspects",
+      "format",
+      "label"
+     ],
+     "score_col": "sentiment_score",
+     "score_min": -0.854,
+     "score_max": 0.65,
+     "n_pos": 34,
+     "n_neg": 34,
+     "n_neu": 34,
+     "example": "Teva: FDA Approves Generic Version of AstraZeneca Heartburn Drug",
+     "n_unique_sentences": 87
+    }
+   }
+  },
+  "TheFinAI/fiqa-sentiment-classification": {
+   "ok": false,
+   "error": "GatedRepoError: 403 Client Error. (Request ID: Root=1-6ad4aebe-12b29e7e699ad3dc6d358ef4;fce8742d-448c-47fe-810a-2149ce922c49)\n\nCannot access gated repo for url https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification/resolve/main/data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet.\nAccess to dataset TheFinAI/en-fiqa-absa is restricted and you are not in the authorized list. Visit https://huggingface.co/datasets/TheFinAI/en-fiqa-absa to ask for access."
+  },
+  "TheFinAI/en-fiqa-absa": {
+   "ok": false,
+   "error": "GatedRepoError: 403 Client Error. (Request ID: Root=1-6ad4aebe-306ac0d33e37c2c160b0902e;ef390111-5f67-4e3d-b7a5-dde0b53dac92)\n\nCannot access gated repo for url https://huggingface.co/datasets/TheFinAI/en-fiqa-absa/resolve/main/data/test-00000-of-00001-0fb9f3a47c7d0fce.parquet.\nAccess to dataset TheFinAI/en-fiqa-absa is restricted and you are not in the authorized list. Visit https://huggingface.co/datasets/TheFinAI/en-fiqa-absa to ask for access."
+  },
+  "ChanceFocus/fiqa-sentiment-classification": {
+   "ok": false,
+   "error": "RepositoryNotFoundError: 404 Client Error. (Request ID: Root=1-6ad4aebf-2a7ef0605efd652c7194dc0c;1228fce3-b2ac-49b6-a92d-bd813ae83c4e)\n\nRepository Not Found for url: https://huggingface.co/api/datasets/ChanceFocus/fiqa-sentiment-classification/tree/main?recursive=true&expand=false.\nPlease make sure you specified the correct `repo_id` and `repo_type`.\nIf you are trying to access a private or gated repo, make sure you are authenticated and your token has the required permissions.\nFor more details, see https://huggingface.co/do
+== models
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|##########| 3/3 [00:00<00:00, 423.77it/s]
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|##########| 197/197 [00:00<00:00, 19556.87it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|##########| 3/3 [00:00<00:00, 453.24it/s]
+Fetching 6 files:   0%|          | 0/6 [00:00<?, ?it/s]Fetching 6 files: 100%|##########| 6/6 [00:00<00:00, 593.38it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   6%|6         | 13/201 [00:00<00:10, 18.73it/s]Loading weights:   7%|7         | 15/201 [00:01<00:16, 10.96it/s]Loading weights:   8%|7         | 16/201 [00:01<00:25,  7.19it/s]Loading weights:   8%|8         | 17/201 [00:02<00:54,  3.37it/s]Loading weights:   9%|8         | 18/201 [00:03<00:53,  3.39it/s]Loading weights:   9%|9         | 19/201 [00:03<01:00,  3.02it/s]Loading weights:  13%|#2        | 26/201 [00:04<00:24,  7.09it/s]Loading weights:  13%|#3        | 27/201 [00:04<00:24,  7.17it/s]Loading weights:  14%|#3        | 28/201 [00:04<00:29,  5.92it/s]Loading weights:  14%|#4        | 29/201 [00:05<00:39,  4.41it/s]Loading weights:  15%|#4        | 30/201 [00:05<00:39,  4.30it/s]Loading weights:  15%|#5        | 31/201 [00:05<00:36,  4.66it/s]Loading weights:  17%|#6        | 34/201 [00:05<00:29,  5.61it/s]Loading weights: 100%|##########| 201/201 [00:05<00:00, 34.03it/s]
+Fetching 6 files:   0%|          | 0/6 [00:00<?, ?it/s]Fetching 6 files: 100%|##########| 6/6 [00:00<00:00, 660.07it/s]
+{
+ "yiyanghkust/finbert-pretrain": {
+  "ok": true,
+  "path": "<project_root>\\data\\raw\\hf_cache\\models--yiyanghkust--finbert-pretrain\\snapshots\\88ab954a39ea6d3ce2b62cff086dd5ad1172c664",
+  "n_params": 109161216,
+  "vocab": 30873,
+  "tokens": [
+   "[CLS]",
+   "operating",
+   "profit",
+   "rose",
+   "to",
+   "eur",
+   "13",
+   ".",
+   "1",
+   "mn",
+   "from",
+   "eur",
+   "8",
+   ".",
+   "7",
+   "mn",
+   ".",
+   "[SEP]"
+  ],
+  "id2label": null,
+  "output_shape": [
+   1,
+   18,
+   768
+  ]
+ },
+ "ProsusAI/finbert": {
+  "ok": true,
+  "path": "<project_root>\\data\\raw\\hf_cache\\models--ProsusAI--finbert\\snapshots\\0bc2ac10dda6929bcb1f77ccc43c7ec5c424f031",
+  "n_params": 109484547,
+  "vocab": 30522,
+  "tokens": [
+   "[CLS]",
+   "operating",
+   "profit",
+   "rose",
+   "to",
+   "eu",
+   "##r",
+   "13",
+   ".",
+   "1",
+   "mn",
+   "from",
+   "eu",
+   "##r",
+   "8",
+   ".",
+   "7",
+   "mn",
+   ".",
+   "[SEP]"
+  ],
+  "id2label": [
+   "positive",
+   "negative",
+   "neutral"
+  ],
+  "output_shape": [
+   1,
+   3
+  ]
+ },
+ "pysentiment2_LM": {
+  "ok": true,
+  "example_score": {
+   "Positive": 0,
+   "Negative": 2,
+   "Polarity": -0.99999950000025,
+   "Subjectivity": 0.33333327777778704
+  }
+ },
+ "probed_utc": "2026-10-18T11:34:46+00:00"
+}

@@ -1,0 +1,193 @@
+== hf
+{
+ "repo": "Brianferrell787/financial-news-multisource",
+ "token_found": true,
+ "hf_user": "Lucifer0079",
+ "ok": true,
+ "n_files": 131,
+ "total_gb": 19.93976714927703,
+ "total_rows": 57114479,
+ "subsets": {
+  "all_the_news_2": {
+   "files": 4,
+   "bytes": 3913988408,
+   "rows": 1972976,
+   "date_min": "2016-01-01T00:00:00Z",
+   "date_max": "2020-04-01T13:42:08Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 3.645185761153698
+  },
+  "american_news_jonasbecker": {
+   "files": 1,
+   "bytes": 1049846726,
+   "rows": 265552,
+   "date_min": "2016-02-05T21:51:32Z",
+   "date_max": "2021-06-25T14:41:13Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.9777459558099508
+  },
+  "benzinga_6000stocks": {
+   "files": 4,
+   "bytes": 170203598,
+   "rows": 1568363,
+   "date_min": "2009-02-14T19:02:00Z",
+   "date_max": "2020-06-11T21:11:00Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.1585144530981779
+  },
+  "bloomberg_reuters": {
+   "files": 17,
+   "bytes": 1304199389,
+   "rows": 8203282,
+   "date_min": "2006-10-20T20:16:16Z",
+   "date_max": "2016-08-16T00:00:00Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 1.214630332775414
+  },
+  "cnbc_headlines": {
+   "files": 1,
+   "bytes": 1161400,
+   "rows": 553,
+   "date_min": "2006-11-30T14:25:19Z",
+   "date_max": "2024-07-30T14:02:49Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.0010816380381584167
+  },
+  "djia_stock_headlines": {
+   "files": 1,
+   "bytes": 8405996,
+   "rows": 102324,
+   "date_min": "2000-01-03T00:00:00Z",
+   "date_max": "2016-07-01T00:00:00Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.007828693836927414
+  },
+  "finsen_us_2007_2023": {
+   "files": 1,
+   "bytes": 3959038,
+   "rows": 15523,
+   "date_min": "2007-06-04T00:00:00Z",
+   "date_max": "2023-07-16T00:00:00Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.003687141463160515
+  },
+  "fnspid_news": {
+   "files": 59,
+   "bytes": 11075918998,
+   "rows": 28606801,
+   "date_min": "1999-08-31T00:00:00Z",
+   "date_max": "2024-01-09T00:00:00Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 10.315253397449851
+  },
+  "frontpage_news": {
+   "files": 10,
+   "bytes": 1018301544,
+   "rows": 4994950,
+   "date_min": "2015-07-16T00:00:00Z",
+   "date_max": "2020-11-08T00:00:00Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.948367215692997
+  },
+  "gold_news_kaggle": {
+   "files": 1,
+   "bytes": 1036880,
+   "rows": 10404,
+   "date_min": "2000-02-15T00:00:00Z",
+   "date_max": "2019-02-01T00:00:00Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.0009656697511672974
+  },
+  "headlines_10sites_2007_2022": {
+   "files": 9,
+   "bytes": 453138657,
+   "rows": 4405397,
+   "date_min": "2007-01-01T00:00:00Z",
+   "date_max": "2023-01-01T00:00:00Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.4220182606950402
+  },
+  "huffpost_news": {
+   "files": 1,
+   "bytes": 48218338,
+   "rows": 209415,
+   "date_min": "2012-01-28T00:00:00Z",
+   "date_max": "2022-09-23T00:00:00Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.04490682668983936
+  },
+  "mind_news_2019": {
+   "files": 1,
+   "bytes": 29819204,
+   "rows": 128621,
+   "date_min": "2019-11-09T00:00:00Z",
+   "date_max": "2019-11-22T23:58:41Z",
+   "n_files_without_stats": 0,
+   "columns": [
+    "date",
+    "text",
+    "extra_fields"
+   ],
+   "gb": 0.027771297842264175
+  },
+  "nyt_articles_2000_pr

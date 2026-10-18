@@ -1,0 +1,22 @@
+{
+ "cuda_x1": {
+  "per_job_steps_per_s": 52.76385974883713,
+  "aggregate_steps_per_s": 52.76385974883713,
+  "wall_s": 42.6206411000021
+ },
+ "cpu4threads_x1": {
+  "per_job_steps_per_s": 43.33620713780131,
+  "aggregate_steps_per_s": 43.33620713780131,
+  "wall_s": 46.5563101000007
+ },
+ "cuda_x3": {
+  "per_job_steps_per_s": 40.1525508691786,
+  "aggregate_steps_per_s": 120.45765260753579,
+  "wall_s": 60.77599120000377
+ },
+ "cpu2threads_x6": {
+  "per_job_steps_per_s": 14.72294162831463,
+  "aggregate_steps_per_s": 88.33764976988778,
+  "wall_s": 145.52756089999457
+ }
+}

@@ -135,3 +135,18 @@ results keys listed for it (RESULTS_SCHEMA.md). Hypothesis numbers follow the ap
 | Development PPO (incl. IMIT ϑ) | 180 | ≈ 4 h with 4 jobs |
 | Confirmation RL runs (E5–E7, incl. IMIT arm) | ≈ 780 | 15–25 h with 4 jobs |
 | Statistics, placebo, figures | — | 1–2 h |
+
+## Run budget measured in P0 (scripts/p0_benchmark.py, results.json `p0.benchmark` and `p0.compute_plan`)
+
+RTX 2060 6 GB, AMD Ryzen 8 cores / 16 threads, 32 GB RAM. PPO on the CPU (DummyVecEnv, 8 envs, one torch thread per job); SAC on the GPU (3 parallel jobs) at the same time as the PPO jobs.
+
+| block | runs | measured speed | estimate |
+| --- | ---: | --- | --- |
+| SentiFlow branch B fine-tuning (5 seeds) + A, A_rev, fusion | 20 | 241 samples/s (batch 32, fp16) | ≈ 0.3 GPU h (+ E1-b < 0.5 h) |
+| Corpus scoring with FinBERT | per seed | 1192 headlines/s (fp16, max_len 64) | 2.3 GPU h per seed per 10 M headlines; 5-seed ensemble fits the 12 h rule up to 10.3 M headlines |
+| MarketMind and comparison models (E2, incl. annual refits) | ≈ 160 | 6.0 s per epoch on the largest window (16.8 k samples) | ≤ 15.9 GPU h (60 epochs each; early stopping makes it shorter) |
+| LTSF benchmark (E3) | 24 | ETTh1 4.2 s / ETTm1 18.1 s per epoch (h = 720) | ≤ 7.4 GPU h (100 epochs each; patience 10 makes it shorter) |
+| PPO runs (P4 grid + IMIT, P5 E5–E7, forward) | 840 | 5604 steps/s with 6 parallel jobs (3.3 min per 300 k-step run) | ≈ 12.5 h |
+| SAC runs (B7, P5 + forward) | 72 | 120 steps/s with 3 jobs on the GPU (CPU: 83 steps/s with 4 jobs) | ≈ 33.2 h on the GPU, parallel to PPO on the CPU |
+
+Recommendation: `parallel.rl_jobs: 6` for PPO (aggregate throughput +35 % over 4 jobs) and SAC with `device: cuda`, 3 parallel jobs.

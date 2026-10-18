@@ -1,0 +1,73 @@
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|##########| 3/3 [00:00<00:00, 794.63it/s]
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|##########| 197/197 [00:00<00:00, 12599.16it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+finbert {
+ "n_headlines": 20000,
+ "max_len": 64,
+ "tokenize_per_s": 10744.950074936616,
+ "infer_bs256_headlines_per_s": 1171.4630042406359,
+ "infer_bs256_peak_mem_gb": 0.989891529083252,
+ "infer_bs512_headlines_per_s": 1192.0772211415895,
+ "infer_bs512_peak_mem_gb": 1.389488697052002,
+ "train_bs32_samples_per_s": 240.98173549213448,
+ "train_bs32_peak_mem_gb": 2.6578750610351562
+}
+1 {'per_job_steps_per_s': 1882.0646462361997, 'aggregate_steps_per_s': 1682.7902845298333, 'wall_s': 12.170262799991178, 'eval_pass_s': 0.1496837000013329}
+2 {'per_job_steps_per_s': 1857.724106944755, 'aggregate_steps_per_s': 2295.7687407126255, 'wall_s': 17.841518300003372, 'eval_pass_s': 0.1966480999981286}
+4 {'per_job_steps_per_s': 1737.7724877908208, 'aggregate_steps_per_s': 4153.827362239548, 'wall_s': 19.721570699999575, 'eval_pass_s': 0.19801060000099824}
+6 {'per_job_steps_per_s': 1509.6981030355398, 'aggregate_steps_per_s': 5603.838983594378, 'wall_s': 21.92782489999081, 'eval_pass_s': 0.2506582833351179}
+sac {'train_steps_per_s': 20.638585860928178, 'warmup_steps_per_s': 2228.435026827239, 'wall_s': 153.6997146000067}
+rl {
+ "timesteps_per_job": 20480,
+ "obs_dim": 604,
+ "ppo_jobs1": {
+  "per_job_steps_per_s": 1882.0646462361997,
+  "aggregate_steps_per_s": 1682.7902845298333,
+  "wall_s": 12.170262799991178,
+  "eval_pass_s": 0.1496837000013329
+ },
+ "ppo_jobs2": {
+  "per_job_steps_per_s": 1857.724106944755,
+  "aggregate_steps_per_s": 2295.7687407126255,
+  "wall_s": 17.841518300003372,
+  "eval_pass_s": 0.1966480999981286
+ },
+ "ppo_jobs4": {
+  "per_job_steps_per_s": 1737.7724877908208,
+  "aggregate_steps_per_s": 4153.827362239548,
+  "wall_s": 19.721570699999575,
+  "eval_pass_s": 0.19801060000099824
+ },
+ "ppo_jobs6": {
+  "per_job_steps_per_s": 1509.6981030355398,
+  "aggregate_steps_per_s": 5603.838983594378,
+  "wall_s": 21.92782489999081,
+  "eval_pass_s": 0.2506582833351179
+ },
+ "sac_jobs4": {
+  "train_steps_per_s": 20.638585860928178,
+  "warmup_steps_per_s": 2228.435026827239,
+  "wall_s": 153.6997146000067
+ }
+}
+marketmind {
+ "samples": 16816,
+ "epoch_s": 5.955793100001756,
+ "peak_mem_gb": 0.2839665412902832,
+ "n_params": 203147
+}
