@@ -12,9 +12,11 @@ markets:
 
 dividend_etf_check: {min_return_correlation: 0.98, window: ["2015-01-01", "2024-12-31"]}
 dividend_fallback:   # annual dividend yields used only if an ETF check fails; fill with a cited source
-  FTSE100: null
-  NIFTY50: null
-  SSE: null
+  # G0 (approved 2026-10-18): NIFTYBEES.NS and 510210.SS fail the ETF check (p0.etf_summary); ISF.L passes, but
+  # Yahoo lists its dividends only from 2013-02-20, so its trailing-12-month yield is incomplete before 2014-02-20.
+  FTSE100: {type: etf_distributions, source: "iShares (BlackRock) distribution history of ISF, issuer product page; Yahoo lists only 2013-02-20 on and matches it exactly", file: "data/raw/dividends/isf_distributions.parquet"}
+  NIFTY50: {type: daily_yield, source: "NSE Indices Ltd, NIFTY 50 historical P/E, P/B and dividend yield (niftyindices.com)", file: "data/raw/dividends/nifty50_pe_pb_dy.parquet"}
+  SSE: {type: annual_yield, values: PENDING_CITED_SOURCE, source: null}
 
 dates:
   raw_end: "2026-09-30"
@@ -34,11 +36,15 @@ features:
   minmax_quantiles: [0.01, 0.99]
   clip: [-0.5, 1.5]
   warmup_days: 252
+  volume_disabled: [NIFTY50]   # G0: ^NSEI has zero volume on every day of 2007-2012; vchg off for this market on all dates
 
 news:
   hf_dataset: "Brianferrell787/financial-news-multisource"
   date_range: ["2007-01-01", "2025-12-31"]
-  subsets_keep: SET_AT_G0          # proposed in P0 from the subset inventory, approved by Roham
+  subsets_keep: [fnspid_news, bloomberg_reuters, nyt_headlines_1990_2020, nyt_articles_2000_present, benzinga_6000stocks,
+                 nyt_headlines_2010_2021, sentarl_combined, us_financial_news_2018_jeet, yahoo_finance_articles,
+                 yahoo_finance_felixdrinkall, sp500_daily_headlines, finsen_us_2007_2023, gold_news_kaggle, cnbc_headlines]   # approved at G0
+  business_only_subsets: [nyt_headlines_1990_2020, nyt_articles_2000_present, nyt_headlines_2010_2021]   # NYT: business/financial desk rows only (G0)
   fnspid_local: optional           # path in configs/paths.yaml
   min_tokens: 4
   max_tokens: 64
@@ -48,7 +54,7 @@ news_keywords:   # word-boundary matching; words case-insensitive, acronyms case
   US:
     words: ["wall street", "s&p 500", "dow jones", "nasdaq", "federal reserve", "u.s. stocks", "us stocks", "treasury yields"]
     acronyms: ["NYSE", "Fed", "FOMC", "S&P"]
-    auto_tag_subsets: ["FNSPID", "Benzinga", "S&P 500 headlines"]   # adjust to real subset names at G0
+    auto_tag_subsets: ["fnspid_news", "benzinga_6000stocks", "sp500_daily_headlines"]   # real subset names (G0)
   UK:
     words: ["ftse", "london stock exchange", "britain", "british", "united kingdom", "bank of england", "sterling", "gilts"]
     acronyms: ["FTSE", "UK", "U.K.", "BoE"]
@@ -62,6 +68,8 @@ news_keywords:   # word-boundary matching; words case-insensitive, acronyms case
 sentiment_sets:
   split_seed: 2026
   fiqa_thresholds: [-0.1, 0.1]
+  fiqa_source: "pauri32/fiqa-2018"            # G0: sentence + sentiment_score; official files pooled, then re-split
+  fiqa_duplicates: mean_score_per_sentence    # G0: one row per normalised sentence, mean score
 
 sentiflow:
   word2vec: {corpus_end: "2019-12-31", vector_size: 300, window: 5, min_count: 5, sg: 0, negative: 10, epochs: 5, seed: 2026}   # sg 0 = CBOW, as in the base paper
@@ -74,6 +82,7 @@ sentiflow:
   scoring: {ensemble_seeds: true, max_hours_for_ensemble: 12}
 
 marketmind:
+  c_price: 13          # G0: the 13 price features of §2.2; vchg is 0 where volume is disabled
   lookback: 96
   patch: 8
   stride: 4
@@ -242,5 +251,7 @@ figures:
   persian_digits: true
 
 parallel:
-  rl_jobs: 4          # update after the P0 benchmark
+  rl_jobs: 6          # P0 benchmark (p0.compute_plan), approved at G0
+  sac_device: cuda    # P0 benchmark: 3 GPU jobs give 120 steps/s versus 83 with 4 CPU jobs
+  sac_jobs: 3
   torch_threads_per_job: 1

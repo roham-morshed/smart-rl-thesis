@@ -1,0 +1,50 @@
+{
+ "SP500": {
+  "start": "2007-09-17",
+  "end": "2026-09-30",
+  "n_days": 4790,
+  "dividend_source": "^SP500TR (total-return index)",
+  "n_flagged_returns": 0,
+  "flagged_dates": [],
+  "n_rows_without_close": 0,
+  "volume_used": true,
+  "n_days_tr_unavailable": 0,
+  "share_high_eq_low": 0.0
+ },
+ "FTSE100": {
+  "start": "2007-09-17",
+  "end": "2026-09-30",
+  "n_days": 4809,
+  "dividend_source": "ISF trailing-12-month distribution yield (iShares distribution history)",
+  "n_flagged_returns": 0,
+  "flagged_dates": [],
+  "n_rows_without_close": 0,
+  "volume_used": true,
+  "n_days_tr_unavailable": 328,
+  "share_high_eq_low": 0.0
+ },
+ "NIFTY50": {
+  "start": "2007-09-17",
+  "end": "2026-09-30",
+  "n_days": 4671,
+  "dividend_source": "NSE Indices daily dividend yield of NIFTY 50",
+  "n_flagged_returns": 0,
+  "flagged_dates": [],
+  "n_rows_without_close": 0,
+  "volume_used": false,
+  "n_days_tr_unavailable": 0,
+  "share_high_eq_low": 0.0
+ },
+ "SSE": {
+  "start": "2007-09-17",
+  "end": "2026-09-30",
+  "n_days": 4623,
+  "dividend_source": "PENDING: no cited SSE Composite dividend yield yet (price return only)",
+  "n_flagged_returns": 0,
+  "flagged_dates": [],
+  "n_rows_without_close": 0,
+  "volume_used": true,
+  "n_days_tr_unavailable": 4623,
+  "share_high_eq_low": 0.0
+ }
+}

@@ -28,10 +28,12 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-18T11:43:01+00:00"
+  "created_utc": "2026-10-18T12:05:00+00:00"
  },
  "compute": {},
- "notes": [],
+ "notes": [
+  "data.prices.SSE.dividend_source: no cited SSE Composite dividend yield yet; the SSE total-return series is the price return until the G0 decision on dividend_fallback.SSE is settled (needed by P4)."
+ ],
  "p0": {
   "probe": {
    "env": {
@@ -1248,6 +1250,233 @@
     "dividend_first": "2023-06-20",
     "dividend_last": "2023-12-20",
     "passes": false
+   }
+  }
+ },
+ "data": {
+  "prices": {
+   "SP500": {
+    "start": "2007-09-17",
+    "end": "2026-09-30",
+    "n_days": 4790,
+    "dividend_source": "^SP500TR (total-return index)",
+    "n_flagged_returns": 0
+   },
+   "FTSE100": {
+    "start": "2007-09-17",
+    "end": "2026-09-30",
+    "n_days": 4809,
+    "dividend_source": "ISF trailing-12-month distribution yield (iShares distribution history)",
+    "n_flagged_returns": 0
+   },
+   "NIFTY50": {
+    "start": "2007-09-17",
+    "end": "2026-09-30",
+    "n_days": 4671,
+    "dividend_source": "NSE Indices daily dividend yield of NIFTY 50",
+    "n_flagged_returns": 0
+   },
+   "SSE": {
+    "start": "2007-09-17",
+    "end": "2026-09-30",
+    "n_days": 4623,
+    "dividend_source": "PENDING: no cited SSE Composite dividend yield yet (price return only)",
+    "n_flagged_returns": 0
+   }
+  },
+  "sentiment_sets": {
+   "phrasebank50": {
+    "n_train": 3384,
+    "n_val": 725,
+    "n_test": 726
+   },
+   "phrasebank_all": {
+    "n_train": 1601,
+    "n_val": 343,
+    "n_test": 315
+   },
+   "fiqa": {
+    "n_train": 777,
+    "n_val": 167,
+    "n_test": 167
+   },
+   "twitter": {
+    "n_train": 9543,
+    "n_val": 1186,
+    "n_test": 1187
+   }
+  }
+ },
+ "p1": {
+  "prices": {
+   "SP500": {
+    "start": "2007-09-17",
+    "end": "2026-09-30",
+    "n_days": 4790,
+    "dividend_source": "^SP500TR (total-return index)",
+    "n_flagged_returns": 0,
+    "flagged_dates": [],
+    "n_rows_without_close": 0,
+    "volume_used": true,
+    "n_days_tr_unavailable": 0,
+    "share_high_eq_low": 0.0
+   },
+   "FTSE100": {
+    "start": "2007-09-17",
+    "end": "2026-09-30",
+    "n_days": 4809,
+    "dividend_source": "ISF trailing-12-month distribution yield (iShares distribution history)",
+    "n_flagged_returns": 0,
+    "flagged_dates": [],
+    "n_rows_without_close": 0,
+    "volume_used": true,
+    "n_days_tr_unavailable": 328,
+    "share_high_eq_low": 0.0
+   },
+   "NIFTY50": {
+    "start": "2007-09-17",
+    "end": "2026-09-30",
+    "n_days": 4671,
+    "dividend_source": "NSE Indices daily dividend yield of NIFTY 50",
+    "n_flagged_returns": 0,
+    "flagged_dates": [],
+    "n_rows_without_close": 0,
+    "volume_used": false,
+    "n_days_tr_unavailable": 0,
+    "share_high_eq_low": 0.0
+   },
+   "SSE": {
+    "start": "2007-09-17",
+    "end": "2026-09-30",
+    "n_days": 4623,
+    "dividend_source": "PENDING: no cited SSE Composite dividend yield yet (price return only)",
+    "n_flagged_returns": 0,
+    "flagged_dates": [],
+    "n_rows_without_close": 0,
+    "volume_used": true,
+    "n_days_tr_unavailable": 4623,
+    "share_high_eq_low": 0.0
+   }
+  },
+  "sentiment_sets": {
+   "removed_overlap": {
+    "phrasebank50": 0,
+    "phrasebank_all": 0,
+    "fiqa": 0,
+    "twitter": 15
+   },
+   "sizes": {
+    "phrasebank50": {
+     "train": 3384,
+     "val": 725,
+     "test": 726
+    },
+    "phrasebank_all": {
+     "train": 1601,
+     "val": 343,
+     "test": 315
+    },
+    "fiqa": {
+     "train": 777,
+     "val": 167,
+     "test": 167
+    },
+    "twitter": {
+     "train": 9543,
+     "val": 1186,
+     "test": 1187
+    }
+   },
+   "labels": {
+    "phrasebank50": {
+     "train": {
+      "0": 423,
+      "1": 2008,
+      "2": 953
+     },
+     "val": {
+      "0": 91,
+      "1": 430,
+      "2": 204
+     },
+     "test": {
+      "0": 90,
+      "1": 431,
+      "2": 205
+     }
+    },
+    "phrasebank_all": {
+     "train": {
+      "0": 221,
+      "1": 974,
+      "2": 406
+     },
+     "val": {
+      "0": 44,
+      "1": 216,
+      "2": 83
+     },
+     "test": {
+      "0": 38,
+      "1": 196,
+      "2": 81
+     }
+    },
+    "fiqa": {
+     "train": {
+      "0": 241,
+      "1": 59,
+      "2": 477
+     },
+     "val": {
+      "0": 52,
+      "1": 12,
+      "2": 103
+     },
+     "test": {
+      "0": 52,
+      "1": 13,
+      "2": 102
+     }
+    },
+    "twitter": {
+     "train": {
+      "0": 1442,
+      "1": 6178,
+      "2": 1923
+     },
+     "val": {
+      "0": 172,
+      "1": 779,
+      "2": 235
+     },
+     "test": {
+      "0": 172,
+      "1": 778,
+      "2": 237
+     }
+    }
+   },
+   "pb_all_mode": "nested",
+   "araci_sizes": {
+    "phrasebank_all": {
+     "train": 1445,
+     "val": 362,
+     "test": 452
+    },
+    "phrasebank50": {
+     "train": 3094,
+     "val": 774,
+     "test": 967
+    }
+   },
+   "alternative_independent_pb_all": {
+    "sizes": {
+     "train": 1581,
+     "val": 95,
+     "test": 95
+    },
+    "removed_overlap": 488
    }
   }
  }
