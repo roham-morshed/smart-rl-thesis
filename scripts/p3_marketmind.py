@@ -77,11 +77,14 @@ def run_one(variant: str, seed: int, panels, train_end: str, pred: tuple[str, st
                  epochs=info["epochs"], best_epoch=info["best_epoch"])
 
 
-def stage_refits(cfg: dict, panels, smoke: bool) -> None:
+PRICE_ONLY = {"MM_NOSENT", "LSTM_PRICE"}          # do not read the sentiment channels
+
+
+def stage_refits(cfg: dict, panels, smoke: bool, variants: list[str] | None = None) -> None:
     mm = cfg["marketmind"]
     windows = refit_windows(cfg)[:1] if smoke else refit_windows(cfg)
     cache: dict = {}
-    for variant in FEATURE_VARIANTS[:1] if smoke else FEATURE_VARIANTS:
+    for variant in FEATURE_VARIANTS[:1] if smoke else (variants or FEATURE_VARIANTS):
         if forecast_path(variant).exists() and not smoke:
             print(f"{variant}: exists, skipped", flush=True)
             continue
@@ -233,17 +236,20 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", default="refits", choices=["refits", "h4", "eval"])
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--variants", default="", help="comma list for --stage refits (default: all feature variants)")
     args = ap.parse_args()
+    variants = [v for v in args.variants.split(",") if v]
     cfg = frozen()
     if args.smoke:
         cfg = {**cfg, "marketmind": {**cfg["marketmind"], "train": {**cfg["marketmind"]["train"], "max_epochs": 2}}}
     panels = MD.load_panels()
     for mp in panels.values():
         access.check(mp.dates, "marketmind_refit")
-    if not all(mp.has_sentiment for mp in panels.values()) and not args.smoke:
+    price_only = args.stage == "refits" and variants and set(variants) <= PRICE_ONLY
+    if not all(mp.has_sentiment for mp in panels.values()) and not args.smoke and not price_only:
         sys.exit("sentiment_daily_<MKT>.parquet missing: run P2 first")
     t0 = time.time()
-    {"refits": lambda: stage_refits(cfg, panels, args.smoke), "h4": lambda: stage_h4(cfg, panels),
+    {"refits": lambda: stage_refits(cfg, panels, args.smoke, variants), "h4": lambda: stage_h4(cfg, panels),
      "eval": lambda: stage_eval(cfg, panels)}[args.stage]()
     print(f"stage {args.stage} done in {(time.time() - t0) / 60:.1f} min", flush=True)
 
