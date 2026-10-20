@@ -46,22 +46,35 @@ def complete(f: dict) -> bool:
     return p.exists() and p.stat().st_size == f["size"]
 
 
+def organize() -> int:
+    """Move parquet files saved anywhere under data/raw/news_multisource (e.g. all in one folder by a download
+    manager) into their subset folders; names are matched with manifest.json. Returns the number moved."""
+    by_name = {Path(f["path"]).name: f for f in manifest()}
+    moved = 0
+    for p in NEWS_DIR.rglob("*.parquet"):
+        f = by_name.get(p.name)
+        if f is None or p == target(f):
+            continue
+        dst = target(f)
+        if dst.exists() and dst.stat().st_size == f["size"]:
+            continue
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        os.replace(p, dst)
+        moved += 1
+    for f in manifest():                                  # a finished file makes its partial download obsolete
+        part = target(f).with_suffix(".parquet.part")
+        if complete(f) and part.exists():
+            part.unlink()
+    return moved
+
+
 def write_links() -> Path:
-    files = manifest()
-    lines = [
-        "# Direct download links of the approved news subsets (Hugging Face, gated dataset).",
-        "# Log in to huggingface.co in the browser first (the account that accepted the dataset terms).",
-        f"# Save every file as: {NEWS_DIR}\\<subset>\\<file name>   (folder name = subset in the first column)",
-        f"# Total: {len(files)} files, {sum(f['size'] for f in files) / 2**30:.2f} GB. Exact sizes in manifest.json.",
-        "# subset\tsize_MB\turl",
-    ]
-    for f in sorted(files, key=lambda x: (x["subset"], x["path"])):
-        lines.append(f"{f['subset']}\t{f['size'] / 2**20:.1f}\t{BASE_URL}{f['path']}?download=true")
+    """LINKS.txt: one URL per line, only the files that are not complete yet."""
+    files = [f for f in sorted(manifest(), key=lambda x: (x["subset"], x["path"])) if not complete(f)]
     out = NEWS_DIR / "LINKS.txt"
-    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    (NEWS_DIR / "LINKS_urls_only.txt").write_text(
-        "\n".join(f"{BASE_URL}{f['path']}?download=true" for f in files) + "\n", encoding="utf-8")
-    for s in {f["subset"] for f in files}:
+    out.write_text("\n".join(f"{BASE_URL}{f['path']}?download=true" for f in files) + "\n", encoding="utf-8")
+    (NEWS_DIR / "LINKS_urls_only.txt").unlink(missing_ok=True)
+    for s in {f["subset"] for f in manifest()}:
         (NEWS_DIR / s).mkdir(parents=True, exist_ok=True)
     return out
 
@@ -145,8 +158,12 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=8)
     args = ap.parse_args()
     if args.links:
+        organize()
         print(write_links())
         return
+    moved = organize()
+    if moved:
+        print(f"moved {moved} manually downloaded files into their subset folders", flush=True)
     files = manifest()
     missing = [f for f in files if not complete(f)]
     print(f"news: {len(files)} files, {sum(f['size'] for f in files) / 2**30:.2f} GB; complete "
