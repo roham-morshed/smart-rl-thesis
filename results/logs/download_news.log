@@ -90,3 +90,16 @@ Retrying in 8s [Retry 4/5].
 Retrying in 8s [Retry 5/5].
 '[WinError 10054] An existing connection was forcibly closed by the remote host' thrown while requesting HEAD https://huggingface.co/datasets/Brianferrell787/financial-news-multisource/resolve/main/data/benzinga_6000stocks/benzinga_6000stocks.003.parquet
   retry 5 for data/benzinga_6000stocks/benzinga_6000stocks.003.parquet: LocalEntryNotFoundError: An error happened while trying to locate the file on the Hub and we cannot find the requested files in the local cache. Please check your connection and try again or make sure your Internet connection is on.
+news: 101 files, 13.73 GB; complete 0.00 GB; missing 98 files
+news: 101 files, 13.73 GB; to download 98 files with 8 connections
+  retry 1 data/nyt_headlines_1990_2020/nyt_headlines_1990_2020.005.parquet: 14.0/30.5 MB (curl 1 )
+  retry 1 data/nyt_headlines_2010_2021/nyt_headlines_2010_2021.001.parquet: 13.2/29.3 MB (curl 1 )
+  retry 1 data/fnspid_news/fnspid_news.013.parquet: 14.6/36.2 MB (curl 1 )
+  retry 1 data/fnspid_news/fnspid_news.045.parquet: 14.5/36.1 MB (curl 1 )
+  retry 1 data/bloomberg_reuters/bloomberg_reuters.016.parquet: 13.9/16.3 MB (curl 1 )
+news: 101 files, 13.73 GB; complete 0.01 GB; missing 96 files
+news: 101 files, 13.73 GB; to download 96 files with 16 connections
+  retry 1 data/fnspid_news/fnspid_news.045.parquet: 20.1/36.1 MB (curl 1 )
+  retry 1 data/fnspid_news/fnspid_news.013.parquet: 20.2/36.2 MB (curl 1 )
+  retry 1 data/nyt_headlines_1990_2020/nyt_headlines_1990_2020.005.parquet: 19.4/30.5 MB (curl 1 )
+  retry 1 data/nyt_headlines_2010_2021/nyt_headlines_2010_2021.001.parquet: 18.6/29.3 MB (curl 1 )
