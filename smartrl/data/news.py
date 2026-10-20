@@ -63,15 +63,18 @@ def headline_from_text(text: str, text_type: str | None) -> str:
 
 # ---------------------------------------------------------------- 1. extraction
 def subset_files(subset: str) -> list[Path]:
-    from huggingface_hub import HfApi, try_to_load_from_cache
-    files = [f.path for f in HfApi(token=hf.token()).list_repo_tree(
-        NEWS_REPO, repo_type="dataset", path_in_repo=f"data/{subset}", recursive=True) if f.path.endswith(".parquet")]
+    """Complete local files of a subset (data/raw/news_multisource/<subset>/, written by scripts/download_all.py or
+    by a manual download); every file of manifest.json must be present with its exact size."""
+    import json
+    from ..config import RAW
+    d = RAW / "news_multisource"
+    man = [f for f in json.loads((d / "manifest.json").read_text(encoding="utf-8")) if f["subset"] == subset]
     out = []
-    for f in files:
-        p = try_to_load_from_cache(NEWS_REPO, f, cache_dir=hf.cache_dir(), repo_type="dataset")
-        if not isinstance(p, str):
-            raise FileNotFoundError(f"{f} is not in the local cache; run scripts/download_all.py")
-        out.append(Path(p))
+    for f in man:
+        p = d / subset / Path(f["path"]).name
+        if not p.exists() or p.stat().st_size != f["size"]:
+            raise FileNotFoundError(f"{p} missing or incomplete; run scripts/download_all.py")
+        out.append(p)
     return out
 
 
