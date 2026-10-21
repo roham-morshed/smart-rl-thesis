@@ -211,7 +211,35 @@ def f15(res):
     return style.save(fig, "F15")
 
 
-BUILDERS = {"T03": t03, "T04": t04, "T05": t05, "T06": t06, "T07": t07, "T20": t20,
+def f16(res):
+    """E13x: accuracy and AUC of SENTIN (mean of the four markets) along the leakage-removal chain."""
+    if "e13x" not in res or "e13" not in res:
+        return None
+    chain = [("PUB_R", "e13"), ("PUB_C", "e13"), ("X_TRD_UTC", "e13x"), ("X_TRD_SES", "e13x"), ("CAUSAL", "e13")]
+    labels = ["Published\n(random split)", "Chronological\nsplit", "Trading days\n(no forward-fill)",
+              "Session-aligned\nnews", "Causal\n(train scaling)"]
+    acc = [_get(res, f"{src}.{p}.MEAN.SENTIN.acc") for p, src in chain]
+    auc = [_get(res, f"{src}.{p}.MEAN.SENTIN.auc") for p, src in chain]
+    ups = [np.mean([_get(res, f"{src}.{p}.{m}.up_share") for m in MARKETS]) for p, src in chain]
+    maj = [max(u, 1 - u) for u in ups]
+    fig, ax = style.figure("F16")
+    x = np.arange(len(chain))
+    ax.plot(x, acc, marker="o", lw=1.8, label=style.label("SenT-In accuracy", "دقت (Accuracy)"))
+    ax.plot(x, auc, marker="s", lw=1.8, label=style.label("SenT-In AUC-ROC", "AUC-ROC"))
+    ax.plot(x, maj, ls="--", color="0.4", lw=1.2, label=style.label("Majority-class accuracy", "دقت دسته‌ی غالب (Majority)"))
+    ax.axhline(0.5, color="0.7", lw=0.8, ls=":")
+    pub = 0.8731
+    ax.axhline(pub, color="C3", lw=1.0, ls="-.", label=style.label("Published accuracy (mean of 4 indices)",
+                                                                    "دقت منتشرشده (Published)"))
+    ax.set_xticks(x, labels, fontsize=7)
+    ax.set_ylim(0.4, 0.95)
+    ax.set_ylabel(style.label("Mean over the four indices", "میانگین چهار شاخص (Mean)"))
+    ax.grid(axis="y", alpha=0.3)
+    ax.legend(frameon=False, fontsize=7, loc="upper right")
+    return style.save(fig, "F16")
+
+
+BUILDERS = {"F16": f16, "T03": t03, "T04": t04, "T05": t05, "T06": t06, "T07": t07, "T20": t20,
             "F02": f02, "F03": f03, "F04": f04, "F05": f05, "F06": f06, "F15": f15}
 
 
