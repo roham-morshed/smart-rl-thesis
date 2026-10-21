@@ -30,3 +30,5 @@
 [2026-10-21 17:18:29] DONE P3 E2 evaluation in 0.2 min
 [2026-10-21 17:18:35] START G3 leakage tests: -m pytest -q tests/test_leakage.py
 [2026-10-21 17:24:37] DONE G3 leakage tests in 6.0 min
+[2026-10-21 17:24:52] START P4 STM grid: scripts/p4_dev.py --stage stm
+[2026-10-21 17:24:59] DONE P4 STM grid in 0.1 min

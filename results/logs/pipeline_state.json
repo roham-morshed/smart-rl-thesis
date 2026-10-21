@@ -14,6 +14,7 @@
   "P3 SENTIN refits",
   "P3 H4 comparison",
   "P3 E2 evaluation",
-  "G3 leakage tests"
+  "G3 leakage tests",
+  "P4 STM grid"
  ]
 }
