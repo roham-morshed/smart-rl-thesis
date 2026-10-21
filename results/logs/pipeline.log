@@ -6,3 +6,5 @@
 [2026-10-21 11:00:39] DONE P1 outputs in 0.1 min
 [2026-10-21 11:00:48] START G1 leakage tests: -m pytest -q tests/test_leakage.py tests/test_news_pipeline.py tests/test_daily_features.py
 [2026-10-21 11:04:48] DONE G1 leakage tests in 4.0 min
+[2026-10-21 11:04:50] START P2 Branch B pre-training: scripts/p2_sentiflow.py --pretrain_b
+[2026-10-21 11:04:57] DONE P2 Branch B pre-training in 0.1 min

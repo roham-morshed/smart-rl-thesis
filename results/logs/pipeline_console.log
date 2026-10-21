@@ -4,3 +4,5 @@
 [2026-10-21 10:55:35] waiting for the running news build / Branch B pre-training to finish
 [2026-10-21 11:00:35] START P1 outputs: scripts/p1_outputs.py
 [2026-10-21 11:00:39] DONE P1 outputs in 0.1 min
+[2026-10-21 11:00:48] START G1 leakage tests: -m pytest -q tests/test_leakage.py tests/test_news_pipeline.py tests/test_daily_features.py
+[2026-10-21 11:04:48] DONE G1 leakage tests in 4.0 min
