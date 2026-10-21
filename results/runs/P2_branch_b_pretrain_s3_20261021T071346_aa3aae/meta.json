@@ -1,0 +1,53 @@
+{
+ "run_id": "P2_branch_b_pretrain_s3_20261021T071346_aa3aae",
+ "experiment": "P2",
+ "name": "branch_b_pretrain",
+ "seed": 3,
+ "device": "cuda",
+ "config_hash": "d65ab32939268aed7673bef561da0796c684646d9fb390c9b6c38f230edf12a4",
+ "git_commit": "b989061d0d2d522640832412decb8eb8408d5f02+dirty",
+ "start_utc": "2026-10-21T07:13:46+00:00",
+ "hardware": {
+  "platform": "Windows-10-10.0.19045-SP0",
+  "python": "3.11.17",
+  "processor": "AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD",
+  "cpu_count": 16,
+  "torch_cuda": "12.4",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 2060",
+  "gpu_mem_gb": 6.0
+ },
+ "packages": {
+  "torch": "2.6.0+cu124",
+  "numpy": "2.4.6",
+  "pandas": "3.0.6",
+  "pyarrow": "26.0.0",
+  "duckdb": "1.5.6",
+  "scipy": "1.17.1",
+  "statsmodels": "0.15.0",
+  "scikit-learn": "1.9.1",
+  "matplotlib": "3.11.2",
+  "arabic-reshaper": "3.0.1",
+  "python-bidi": "0.6.11",
+  "yfinance": "1.7.0",
+  "datasets": "5.1.0",
+  "huggingface-hub": "2.2.0",
+  "transformers": "5.20.1",
+  "gensim": "4.4.0",
+  "pysentiment2": "0.1.1",
+  "gymnasium": "1.2.3",
+  "stable-baselines3": "2.8.0",
+  "arch": "8.0.0",
+  "joblib": "1.6.0",
+  "tqdm": "4.70.1",
+  "PyYAML": "6.0.3",
+  "pytest": "9.1.1"
+ },
+ "params": {
+  "cache": "sentiflow\\branch_b\\seed3"
+ },
+ "events": [],
+ "end_utc": "2026-10-21T07:18:03+00:00",
+ "seconds": 256.9547135999892,
+ "status": "ok"
+}

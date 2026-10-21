@@ -1,0 +1,114 @@
+fnspid_news {"n_rows_subset": 28606801, "n_raw": 28254545, "n_short_dropped": 264017, "n_nonbusiness_dropped": 0, "n_after_clean": 27990528, "share_day_only": 0.39097811945526717, "n_new_york_midnight_day_only": 47530, "business_desks_kept": null, "seconds": 800.6900351047516}
+bloomberg_reuters {"n_rows_subset": 8203282, "n_raw": 8203189, "n_short_dropped": 60229, "n_nonbusiness_dropped": 0, "n_after_clean": 8142960, "share_day_only": 0.9615319245090237, "n_new_york_midnight_day_only": 901, "business_desks_kept": null, "seconds": 217.51834082603455}
+nyt_headlines_1990_2020 {"n_rows_subset": 2802355, "n_raw": 1209352, "n_short_dropped": 4990, "n_nonbusiness_dropped": 1061092, "n_after_clean": 143270, "share_day_only": 0.10542332658616597, "n_new_york_midnight_day_only": 15627, "business_desks_kept": {"Business": 134174, "SundayBusiness": 8683, "Business Day": 2285, "SpecialSections": 692, "Express": 336, "National": 281, "ContinuousNews": 273, "NAT": 266, "Washington
+nyt_articles_2000_present {"n_rows_subset": 2175632, "n_raw": 1354405, "n_short_dropped": 1209, "n_nonbusiness_dropped": 1269987, "n_after_clean": 83209, "share_day_only": 0.14868583927219411, "n_new_york_midnight_day_only": 12880, "business_desks_kept": {"(url)": 84418}, "seconds": 15.78895092010498}
+benzinga_6000stocks {"n_rows_subset": 1568363, "n_raw": 1568363, "n_short_dropped": 19020, "n_nonbusiness_dropped": 0, "n_after_clean": 1549343, "share_day_only": 0.5636492371282538, "n_new_york_midnight_day_only": 271, "business_desks_kept": null, "seconds": 41.135292530059814}
+nyt_headlines_2010_2021 {"n_rows_subset": 597708, "n_raw": 597708, "n_short_dropped": 1975, "n_nonbusiness_dropped": 505069, "n_after_clean": 90664, "share_day_only": 1.1029736168710844e-05, "n_new_york_midnight_day_only": 0, "business_desks_kept": {"Business": 68662, "": 16751, "SundayBusiness": 5155, "Express": 416, "Washington": 372, "SpecialSections": 311, "NAT": 196, "Culture": 149, "National": 148, "Foreign": 144, 
+sentarl_combined {"n_rows_subset": 318307, "n_raw": 240370, "n_short_dropped": 2502, "n_nonbusiness_dropped": 0, "n_after_clean": 237868, "share_day_only": 0.001290631778969849, "n_new_york_midnight_day_only": 157, "business_desks_kept": null, "seconds": 6.932715892791748}
+us_financial_news_2018_jeet {"n_rows_subset": 305947, "n_raw": 305947, "n_short_dropped": 1818, "n_nonbusiness_dropped": 0, "n_after_clean": 304129, "share_day_only": 0.014779912471352618, "n_new_york_midnight_day_only": 160, "business_desks_kept": null, "seconds": 13.916667461395264}
+yahoo_finance_articles {"n_rows_subset": 198926, "n_raw": 198926, "n_short_dropped": 790, "n_nonbusiness_dropped": 0, "n_after_clean": 198136, "share_day_only": 1.0, "n_new_york_midnight_day_only": 0, "business_desks_kept": null, "seconds": 10.37291145324707}
+yahoo_finance_felixdrinkall {"n_rows_subset": 70286, "n_raw": 70286, "n_short_dropped": 261, "n_nonbusiness_dropped": 0, "n_after_clean": 70025, "share_day_only": 0.013295251695822921, "n_new_york_midnight_day_only": 170, "business_desks_kept": null, "seconds": 3.9329721927642822}
+sp500_daily_headlines {"n_rows_subset": 18153, "n_raw": 18153, "n_short_dropped": 99, "n_nonbusiness_dropped": 0, "n_after_clean": 18054, "share_day_only": 1.0, "n_new_york_midnight_day_only": 0, "business_desks_kept": null, "seconds": 0.6420300006866455}
+finsen_us_2007_2023 {"n_rows_subset": 15523, "n_raw": 15523, "n_short_dropped": 327, "n_nonbusiness_dropped": 0, "n_after_clean": 15196, "share_day_only": 1.0, "n_new_york_midnight_day_only": 0, "business_desks_kept": null, "seconds": 0.9920403957366943}
+gold_news_kaggle {"n_rows_subset": 10404, "n_raw": 9121, "n_short_dropped": 22, "n_nonbusiness_dropped": 0, "n_after_clean": 9099, "share_day_only": 1.0, "n_new_york_midnight_day_only": 0, "business_desks_kept": null, "seconds": 0.46645426750183105}
+cnbc_headlines {"n_rows_subset": 553, "n_raw": 551, "n_short_dropped": 7, "n_nonbusiness_dropped": 0, "n_after_clean": 544, "share_day_only": 0.001838235294117647, "n_new_york_midnight_day_only": 0, "business_desks_kept": null, "seconds": 0.1550741195678711}
+{
+ "n_before_dedup": 38853025,
+ "n_kept": 19382825,
+ "n_duplicates": 19470200,
+ "duplicates_by_source": {
+  "finsen_us_2007_2023": 60,
+  "fnspid_news": 18553506,
+  "benzinga_6000stocks": 50993,
+  "us_financial_news_2018_jeet": 41072,
+  "gold_news_kaggle": 31,
+  "nyt_articles_2000_present": 97,
+  "yahoo_finance_articles": 828,
+  "cnbc_headlines": 29,
+  "sentarl_combined": 1949,
+  "bloomberg_reuters": 670844,
+  "nyt_headlines_1990_2020": 75831,
+  "yahoo_finance_felixdrinkall": 529,
+  "nyt_headlines_2010_2021": 73523,
+  "sp500_daily_headlines": 908
+ },
+ "kept_by_source": {
+  "cnbc_headlines": {
+   "n_kept": 515,
+   "first_date": "2007-01-31",
+   "last_date": "2024-07-30"
+  },
+  "finsen_us_2007_2023": {
+   "n_kept": 15136,
+   "first_date": "2007-06-05",
+   "last_date": "2023-07-17"
+  },
+  "sentarl_combined": {
+   "n_kept": 235919,
+   "first_date": "2007-01-02",
+   "last_date": "2021-03-09"
+  },
+  "benzinga_6000stocks": {
+   "n_kept": 1498350,
+   "first_date": "2009-02-14",
+   "last_date": "2020-06-12"
+  },
+  "us_financial_news_2018_jeet": {
+   "n_kept": 263057,
+   "first_date": "2017-12-07",
+   "last_date": "2018-06-01"
+  },
+  "nyt_headlines_1990_2020": {
+   "n_kept": 67439,
+   "first_date": "2007-01-02",
+   "last_date": "2020-12-31"
+  },
+  "bloomberg_reuters": {
+   "n_kept": 7472116,
+   "first_date": "2007-01-02",
+   "last_date": "2016-08-17"
+  },
+  "yahoo_finance_felixdrinkall": {
+   "n_kept": 69496,
+   "first_date": "2017-01-03",
+   "last_date": "2023-12-30"
+  },
+  "yahoo_finance_articles": {
+   "n_kept": 197308,
+   "first_date": "2025-03-12",
+   "last_date": "2025-09-07"
+  },
+  "fnspid_news": {
+   "n_kept": 9437022,
+   "first_date": "2007-01-01",
+   "last_date": "2024-01-10"
+  },
+  "nyt_articles_2000_present": {
+   "n_kept": 83112,
+   "first_date": "2007-01-02",
+   "last_date": "2025-05-02"
+  },
+  "gold_news_kaggle": {
+   "n_kept": 9068,
+   "first_date": "2007-01-02",
+   "last_date": "2019-02-01"
+  },
+  "sp500_daily_headlines": {
+   "n_kept": 17146,
+   "first_date": "2008-01-03",
+   "last_date": "2024-03-05"
+  },
+  "nyt_headlines_2010_2021": {
+   "n_kept": 17141,
+   "first_date": "2010-09-22",
+   "last_date": "2021-12-30"
+  }
+ },
+ "tags": {
+  "GLOBAL": 19382825,
+  "US": 11182800,
+  "UK": 285594,
+  "IN": 175599,
+  "CN": 428888
+ }
+}

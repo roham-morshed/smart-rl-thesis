@@ -28,12 +28,13 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-18T14:18:42+00:00"
+  "created_utc": "2026-10-21T07:21:54+00:00"
  },
  "compute": {},
  "notes": [
   "data.prices.SSE.dividend_source: no cited SSE Composite dividend yield was found (SSE and CSIndex sources searched), so the SSE sleeve earns the index price return without dividends; this understates SSE total returns of invested days and is a limitation (SPEC §2.1 fallback).",
-  "ltsf.*: mean (and standard deviation) over seeds 0-2 of the test MSE and MAE on standardised data, all channels, every test window; no reversible instance normalisation (not part of SPEC §15)."
+  "ltsf.*: mean (and standard deviation) over seeds 0-2 of the test MSE and MAE on standardised data, all channels, every test window; no reversible instance normalisation (not part of SPEC §15).",
+  "data.news.market.*: means and shares over trading days 2010-01-01 .. 2025-12-31 (policy start to the end of the news date range); by-year shares cover every panel year."
  ],
  "p0": {
   "probe": {
@@ -1306,6 +1307,224 @@
     "n_val": 1186,
     "n_test": 1187
    }
+  },
+  "news": {
+   "n_raw": 42046439,
+   "n_kept": 19382825,
+   "n_duplicates": 19470200,
+   "source": {
+    "fnspid_news": {
+     "n_raw": 28254545,
+     "n_kept": 9437022,
+     "first_date": "2007-01-01",
+     "last_date": "2024-01-10"
+    },
+    "bloomberg_reuters": {
+     "n_raw": 8203189,
+     "n_kept": 7472116,
+     "first_date": "2007-01-02",
+     "last_date": "2016-08-17"
+    },
+    "nyt_headlines_1990_2020": {
+     "n_raw": 1209352,
+     "n_kept": 67439,
+     "first_date": "2007-01-02",
+     "last_date": "2020-12-31"
+    },
+    "nyt_articles_2000_present": {
+     "n_raw": 1354405,
+     "n_kept": 83112,
+     "first_date": "2007-01-02",
+     "last_date": "2025-05-02"
+    },
+    "benzinga_6000stocks": {
+     "n_raw": 1568363,
+     "n_kept": 1498350,
+     "first_date": "2009-02-14",
+     "last_date": "2020-06-12"
+    },
+    "nyt_headlines_2010_2021": {
+     "n_raw": 597708,
+     "n_kept": 17141,
+     "first_date": "2010-09-22",
+     "last_date": "2021-12-30"
+    },
+    "sentarl_combined": {
+     "n_raw": 240370,
+     "n_kept": 235919,
+     "first_date": "2007-01-02",
+     "last_date": "2021-03-09"
+    },
+    "us_financial_news_2018_jeet": {
+     "n_raw": 305947,
+     "n_kept": 263057,
+     "first_date": "2017-12-07",
+     "last_date": "2018-06-01"
+    },
+    "yahoo_finance_articles": {
+     "n_raw": 198926,
+     "n_kept": 197308,
+     "first_date": "2025-03-12",
+     "last_date": "2025-09-07"
+    },
+    "yahoo_finance_felixdrinkall": {
+     "n_raw": 70286,
+     "n_kept": 69496,
+     "first_date": "2017-01-03",
+     "last_date": "2023-12-30"
+    },
+    "sp500_daily_headlines": {
+     "n_raw": 18153,
+     "n_kept": 17146,
+     "first_date": "2008-01-03",
+     "last_date": "2024-03-05"
+    },
+    "finsen_us_2007_2023": {
+     "n_raw": 15523,
+     "n_kept": 15136,
+     "first_date": "2007-06-05",
+     "last_date": "2023-07-17"
+    },
+    "gold_news_kaggle": {
+     "n_raw": 9121,
+     "n_kept": 9068,
+     "first_date": "2007-01-02",
+     "last_date": "2019-02-01"
+    },
+    "cnbc_headlines": {
+     "n_raw": 551,
+     "n_kept": 515,
+     "first_date": "2007-01-31",
+     "last_date": "2024-07-30"
+    }
+   },
+   "tag": {
+    "GLOBAL": {
+     "n": 19382825
+    },
+    "US": {
+     "n": 11182800
+    },
+    "UK": {
+     "n": 285594
+    },
+    "IN": {
+     "n": 175599
+    },
+    "CN": {
+     "n": 428888
+    }
+   },
+   "market": {
+    "SP500": {
+     "mean_daily_local": 2285.090208747515,
+     "share_days_with_local": 0.9202286282306164,
+     "mean_daily_global": 3875.3909045725645,
+     "share_days_with_local_by_year": {
+      "2007": 1.0,
+      "2008": 1.0,
+      "2009": 1.0,
+      "2010": 1.0,
+      "2011": 1.0,
+      "2012": 1.0,
+      "2013": 1.0,
+      "2014": 1.0,
+      "2015": 1.0,
+      "2016": 1.0,
+      "2017": 1.0,
+      "2018": 1.0,
+      "2019": 1.0,
+      "2020": 1.0,
+      "2021": 1.0,
+      "2022": 1.0,
+      "2023": 1.0,
+      "2024": 0.2261904761904762,
+      "2025": 0.496,
+      "2026": 0.0
+     }
+    },
+    "FTSE100": {
+     "mean_daily_local": 56.73037880663531,
+     "share_days_with_local": 0.8925476603119584,
+     "mean_daily_global": 3861.0341668729884,
+     "share_days_with_local_by_year": {
+      "2007": 1.0,
+      "2008": 1.0,
+      "2009": 1.0,
+      "2010": 1.0,
+      "2011": 1.0,
+      "2012": 1.0,
+      "2013": 1.0,
+      "2014": 1.0,
+      "2015": 1.0,
+      "2016": 0.9881422924901185,
+      "2017": 0.9603174603174603,
+      "2018": 0.9881422924901185,
+      "2019": 0.9960474308300395,
+      "2020": 0.9802371541501976,
+      "2021": 0.9604743083003953,
+      "2022": 0.988,
+      "2023": 0.952191235059761,
+      "2024": 0.03937007874015748,
+      "2025": 0.43478260869565216,
+      "2026": 0.0
+     }
+    },
+    "NIFTY50": {
+     "mean_daily_local": 35.476457113769406,
+     "share_days_with_local": 0.8546703995927717,
+     "mean_daily_global": 3969.2410282514634,
+     "share_days_with_local_by_year": {
+      "2007": 1.0,
+      "2008": 1.0,
+      "2009": 1.0,
+      "2010": 1.0,
+      "2011": 1.0,
+      "2012": 1.0,
+      "2013": 1.0,
+      "2014": 1.0,
+      "2015": 1.0,
+      "2016": 0.9426229508196722,
+      "2017": 0.7741935483870968,
+      "2018": 0.9877551020408163,
+      "2019": 0.9875518672199171,
+      "2020": 0.9,
+      "2021": 0.9032258064516129,
+      "2022": 0.8709677419354839,
+      "2023": 0.9183673469387755,
+      "2024": 0.016260162601626018,
+      "2025": 0.3895582329317269,
+      "2026": 0.0
+     }
+    },
+    "SSE": {
+     "mean_daily_local": 90.36244204018547,
+     "share_days_with_local": 0.9095826893353941,
+     "mean_daily_global": 4017.342349304482,
+     "share_days_with_local_by_year": {
+      "2007": 1.0,
+      "2008": 1.0,
+      "2009": 1.0,
+      "2010": 1.0,
+      "2011": 1.0,
+      "2012": 1.0,
+      "2013": 1.0,
+      "2014": 1.0,
+      "2015": 1.0,
+      "2016": 1.0,
+      "2017": 1.0,
+      "2018": 1.0,
+      "2019": 1.0,
+      "2020": 1.0,
+      "2021": 0.9876543209876543,
+      "2022": 0.9958677685950413,
+      "2023": 0.9917355371900827,
+      "2024": 0.07851239669421488,
+      "2025": 0.49794238683127573,
+      "2026": 0.0
+     }
+    }
+   }
   }
  },
  "p1": {
@@ -1478,6 +1697,554 @@
      "test": 95
     },
     "removed_overlap": 488
+   }
+  },
+  "news": {
+   "stats_window": [
+    "2010-01-01",
+    "2025-12-31"
+   ],
+   "subsets": {
+    "fnspid_news": {
+     "n_rows_subset": 28606801,
+     "n_raw": 28254545,
+     "n_short_dropped": 264017,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 27990528,
+     "share_day_only": 0.39097811945526717,
+     "n_new_york_midnight_day_only": 47530,
+     "business_desks_kept": null,
+     "seconds": 800.6900351047516
+    },
+    "bloomberg_reuters": {
+     "n_rows_subset": 8203282,
+     "n_raw": 8203189,
+     "n_short_dropped": 60229,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 8142960,
+     "share_day_only": 0.9615319245090237,
+     "n_new_york_midnight_day_only": 901,
+     "business_desks_kept": null,
+     "seconds": 217.51834082603455
+    },
+    "nyt_headlines_1990_2020": {
+     "n_rows_subset": 2802355,
+     "n_raw": 1209352,
+     "n_short_dropped": 4990,
+     "n_nonbusiness_dropped": 1061092,
+     "n_after_clean": 143270,
+     "share_day_only": 0.10542332658616597,
+     "n_new_york_midnight_day_only": 15627,
+     "business_desks_kept": {
+      "Business": 134174,
+      "SundayBusiness": 8683,
+      "Business Day": 2285,
+      "SpecialSections": 692,
+      "Express": 336,
+      "National": 281,
+      "ContinuousNews": 273,
+      "NAT": 266,
+      "Washington": 257,
+      "Foreign": 201,
+      "Culture": 173,
+      "Obits": 149,
+      "Dealbook": 101,
+      "Metro": 99,
+      "Your Money": 81,
+      "Media": 46,
+      "Investigative": 42,
+      "NODESK": 34,
+      "Sports": 13,
+      "Summary": 11,
+      "WEB": 10,
+      "None": 6,
+      "Weekend": 6,
+      "Politics": 6,
+      "Gender": 5,
+      "Styles": 4,
+      "Magazine": 3,
+      "RealEstate": 3,
+      "": 2,
+      "Arts&Leisure": 2,
+      "Energy": 2,
+      "Science": 2,
+      "Books": 2,
+      "Travel": 2,
+      "IHT Finance": 1,
+      "NewsDesk": 1,
+      "Automobiles": 1,
+      "Climate": 1,
+      "Video": 1,
+      "NYTI": 1
+     },
+     "seconds": 10.614182233810425
+    },
+    "nyt_articles_2000_present": {
+     "n_rows_subset": 2175632,
+     "n_raw": 1354405,
+     "n_short_dropped": 1209,
+     "n_nonbusiness_dropped": 1269987,
+     "n_after_clean": 83209,
+     "share_day_only": 0.14868583927219411,
+     "n_new_york_midnight_day_only": 12880,
+     "business_desks_kept": {
+      "(url)": 84418
+     },
+     "seconds": 15.78895092010498
+    },
+    "benzinga_6000stocks": {
+     "n_rows_subset": 1568363,
+     "n_raw": 1568363,
+     "n_short_dropped": 19020,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 1549343,
+     "share_day_only": 0.5636492371282538,
+     "n_new_york_midnight_day_only": 271,
+     "business_desks_kept": null,
+     "seconds": 41.135292530059814
+    },
+    "nyt_headlines_2010_2021": {
+     "n_rows_subset": 597708,
+     "n_raw": 597708,
+     "n_short_dropped": 1975,
+     "n_nonbusiness_dropped": 505069,
+     "n_after_clean": 90664,
+     "share_day_only": 1.1029736168710844e-05,
+     "n_new_york_midnight_day_only": 0,
+     "business_desks_kept": {
+      "Business": 68662,
+      "": 16751,
+      "SundayBusiness": 5155,
+      "Express": 416,
+      "Washington": 372,
+      "SpecialSections": 311,
+      "NAT": 196,
+      "Culture": 149,
+      "National": 148,
+      "Foreign": 144,
+      "Dealbook": 94,
+      "Media": 49,
+      "Investigative": 49,
+      "NODESK": 33,
+      "Metro": 28,
+      "Your Money": 28,
+      "Sports": 9,
+      "Politics": 7,
+      "Styles": 5,
+      "Gender": 5,
+      "Magazine": 3,
+      "Weekend": 3,
+      "Obits": 3,
+      "RealEstate": 2,
+      "Energy": 2,
+      "Arts&Leisure": 2,
+      "Science": 2,
+      "Travel": 2,
+      "Climate": 2,
+      "IHT Finance": 1,
+      "NewsDesk": 1,
+      "Summary": 1,
+      "Video": 1,
+      "NYTI": 1,
+      "Smarter Living": 1,
+      "Insider": 1
+     },
+     "seconds": 8.57432770729065
+    },
+    "sentarl_combined": {
+     "n_rows_subset": 318307,
+     "n_raw": 240370,
+     "n_short_dropped": 2502,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 237868,
+     "share_day_only": 0.001290631778969849,
+     "n_new_york_midnight_day_only": 157,
+     "business_desks_kept": null,
+     "seconds": 6.932715892791748
+    },
+    "us_financial_news_2018_jeet": {
+     "n_rows_subset": 305947,
+     "n_raw": 305947,
+     "n_short_dropped": 1818,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 304129,
+     "share_day_only": 0.014779912471352618,
+     "n_new_york_midnight_day_only": 160,
+     "business_desks_kept": null,
+     "seconds": 13.916667461395264
+    },
+    "yahoo_finance_articles": {
+     "n_rows_subset": 198926,
+     "n_raw": 198926,
+     "n_short_dropped": 790,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 198136,
+     "share_day_only": 1.0,
+     "n_new_york_midnight_day_only": 0,
+     "business_desks_kept": null,
+     "seconds": 10.37291145324707
+    },
+    "yahoo_finance_felixdrinkall": {
+     "n_rows_subset": 70286,
+     "n_raw": 70286,
+     "n_short_dropped": 261,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 70025,
+     "share_day_only": 0.013295251695822921,
+     "n_new_york_midnight_day_only": 170,
+     "business_desks_kept": null,
+     "seconds": 3.9329721927642822
+    },
+    "sp500_daily_headlines": {
+     "n_rows_subset": 18153,
+     "n_raw": 18153,
+     "n_short_dropped": 99,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 18054,
+     "share_day_only": 1.0,
+     "n_new_york_midnight_day_only": 0,
+     "business_desks_kept": null,
+     "seconds": 0.6420300006866455
+    },
+    "finsen_us_2007_2023": {
+     "n_rows_subset": 15523,
+     "n_raw": 15523,
+     "n_short_dropped": 327,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 15196,
+     "share_day_only": 1.0,
+     "n_new_york_midnight_day_only": 0,
+     "business_desks_kept": null,
+     "seconds": 0.9920403957366943
+    },
+    "gold_news_kaggle": {
+     "n_rows_subset": 10404,
+     "n_raw": 9121,
+     "n_short_dropped": 22,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 9099,
+     "share_day_only": 1.0,
+     "n_new_york_midnight_day_only": 0,
+     "business_desks_kept": null,
+     "seconds": 0.46645426750183105
+    },
+    "cnbc_headlines": {
+     "n_rows_subset": 553,
+     "n_raw": 551,
+     "n_short_dropped": 7,
+     "n_nonbusiness_dropped": 0,
+     "n_after_clean": 544,
+     "share_day_only": 0.001838235294117647,
+     "n_new_york_midnight_day_only": 0,
+     "business_desks_kept": null,
+     "seconds": 0.1550741195678711
+    }
+   },
+   "dedup": {
+    "n_before_dedup": 38853025,
+    "n_kept": 19382825,
+    "n_duplicates": 19470200,
+    "duplicates_by_source": {
+     "finsen_us_2007_2023": 60,
+     "fnspid_news": 18553506,
+     "benzinga_6000stocks": 50993,
+     "us_financial_news_2018_jeet": 41072,
+     "gold_news_kaggle": 31,
+     "nyt_articles_2000_present": 97,
+     "yahoo_finance_articles": 828,
+     "cnbc_headlines": 29,
+     "sentarl_combined": 1949,
+     "bloomberg_reuters": 670844,
+     "nyt_headlines_1990_2020": 75831,
+     "yahoo_finance_felixdrinkall": 529,
+     "nyt_headlines_2010_2021": 73523,
+     "sp500_daily_headlines": 908
+    },
+    "kept_by_source": {
+     "cnbc_headlines": {
+      "n_kept": 515,
+      "first_date": "2007-01-31",
+      "last_date": "2024-07-30"
+     },
+     "finsen_us_2007_2023": {
+      "n_kept": 15136,
+      "first_date": "2007-06-05",
+      "last_date": "2023-07-17"
+     },
+     "sentarl_combined": {
+      "n_kept": 235919,
+      "first_date": "2007-01-02",
+      "last_date": "2021-03-09"
+     },
+     "benzinga_6000stocks": {
+      "n_kept": 1498350,
+      "first_date": "2009-02-14",
+      "last_date": "2020-06-12"
+     },
+     "us_financial_news_2018_jeet": {
+      "n_kept": 263057,
+      "first_date": "2017-12-07",
+      "last_date": "2018-06-01"
+     },
+     "nyt_headlines_1990_2020": {
+      "n_kept": 67439,
+      "first_date": "2007-01-02",
+      "last_date": "2020-12-31"
+     },
+     "bloomberg_reuters": {
+      "n_kept": 7472116,
+      "first_date": "2007-01-02",
+      "last_date": "2016-08-17"
+     },
+     "yahoo_finance_felixdrinkall": {
+      "n_kept": 69496,
+      "first_date": "2017-01-03",
+      "last_date": "2023-12-30"
+     },
+     "yahoo_finance_articles": {
+      "n_kept": 197308,
+      "first_date": "2025-03-12",
+      "last_date": "2025-09-07"
+     },
+     "fnspid_news": {
+      "n_kept": 9437022,
+      "first_date": "2007-01-01",
+      "last_date": "2024-01-10"
+     },
+     "nyt_articles_2000_present": {
+      "n_kept": 83112,
+      "first_date": "2007-01-02",
+      "last_date": "2025-05-02"
+     },
+     "gold_news_kaggle": {
+      "n_kept": 9068,
+      "first_date": "2007-01-02",
+      "last_date": "2019-02-01"
+     },
+     "sp500_daily_headlines": {
+      "n_kept": 17146,
+      "first_date": "2008-01-03",
+      "last_date": "2024-03-05"
+     },
+     "nyt_headlines_2010_2021": {
+      "n_kept": 17141,
+      "first_date": "2010-09-22",
+      "last_date": "2021-12-30"
+     }
+    },
+    "tags": {
+     "GLOBAL": 19382825,
+     "US": 11182800,
+     "UK": 285594,
+     "IN": 175599,
+     "CN": 428888
+    }
+   },
+   "markets": {
+    "SP500": {
+     "mean_daily_local": 2285.090208747515,
+     "share_days_with_local": 0.9202286282306164,
+     "mean_daily_global": 3875.3909045725645,
+     "share_days_with_local_by_year": {
+      "2007": 1.0,
+      "2008": 1.0,
+      "2009": 1.0,
+      "2010": 1.0,
+      "2011": 1.0,
+      "2012": 1.0,
+      "2013": 1.0,
+      "2014": 1.0,
+      "2015": 1.0,
+      "2016": 1.0,
+      "2017": 1.0,
+      "2018": 1.0,
+      "2019": 1.0,
+      "2020": 1.0,
+      "2021": 1.0,
+      "2022": 1.0,
+      "2023": 1.0,
+      "2024": 0.2261904761904762,
+      "2025": 0.496,
+      "2026": 0.0
+     },
+     "mean_daily_local_by_year": {
+      "2007": 1936.3243243243244,
+      "2008": 3348.505928853755,
+      "2009": 3151.1150793650795,
+      "2010": 4028.9563492063494,
+      "2011": 5208.976190476191,
+      "2012": 5180.816,
+      "2013": 4121.111111111111,
+      "2014": 4009.440476190476,
+      "2015": 4423.3452380952385,
+      "2016": 2288.6944444444443,
+      "2017": 1146.1752988047808,
+      "2018": 1460.6294820717133,
+      "2019": 1549.4484126984128,
+      "2020": 885.4268774703557,
+      "2021": 495.234126984127,
+      "2022": 697.4183266932271,
+      "2023": 970.912,
+      "2024": 3.8214285714285716,
+      "2025": 77.532,
+      "2026": 0.0
+     },
+     "n_aligned_rows": 29975800,
+     "n_items_not_aligned": 386769
+    },
+    "FTSE100": {
+     "mean_daily_local": 56.73037880663531,
+     "share_days_with_local": 0.8925476603119584,
+     "mean_daily_global": 3861.0341668729884,
+     "share_days_with_local_by_year": {
+      "2007": 1.0,
+      "2008": 1.0,
+      "2009": 1.0,
+      "2010": 1.0,
+      "2011": 1.0,
+      "2012": 1.0,
+      "2013": 1.0,
+      "2014": 1.0,
+      "2015": 1.0,
+      "2016": 0.9881422924901185,
+      "2017": 0.9603174603174603,
+      "2018": 0.9881422924901185,
+      "2019": 0.9960474308300395,
+      "2020": 0.9802371541501976,
+      "2021": 0.9604743083003953,
+      "2022": 0.988,
+      "2023": 0.952191235059761,
+      "2024": 0.03937007874015748,
+      "2025": 0.43478260869565216,
+      "2026": 0.0
+     },
+     "mean_daily_local_by_year": {
+      "2007": 65.3108108108108,
+      "2008": 96.13385826771653,
+      "2009": 80.27272727272727,
+      "2010": 144.7905138339921,
+      "2011": 171.58964143426294,
+      "2012": 160.70916334661354,
+      "2013": 121.28458498023716,
+      "2014": 96.27667984189723,
+      "2015": 91.1501976284585,
+      "2016": 59.37549407114624,
+      "2017": 3.9682539682539684,
+      "2018": 28.217391304347824,
+      "2019": 9.126482213438734,
+      "2020": 6.723320158102767,
+      "2021": 4.1976284584980235,
+      "2022": 3.836,
+      "2023": 4.848605577689243,
+      "2024": 0.04330708661417323,
+      "2025": 2.2569169960474307,
+      "2026": 0.0
+     },
+     "n_aligned_rows": 19274801,
+     "n_items_not_aligned": 386718
+    },
+    "NIFTY50": {
+     "mean_daily_local": 35.476457113769406,
+     "share_days_with_local": 0.8546703995927717,
+     "mean_daily_global": 3969.2410282514634,
+     "share_days_with_local_by_year": {
+      "2007": 1.0,
+      "2008": 1.0,
+      "2009": 1.0,
+      "2010": 1.0,
+      "2011": 1.0,
+      "2012": 1.0,
+      "2013": 1.0,
+      "2014": 1.0,
+      "2015": 1.0,
+      "2016": 0.9426229508196722,
+      "2017": 0.7741935483870968,
+      "2018": 0.9877551020408163,
+      "2019": 0.9875518672199171,
+      "2020": 0.9,
+      "2021": 0.9032258064516129,
+      "2022": 0.8709677419354839,
+      "2023": 0.9183673469387755,
+      "2024": 0.016260162601626018,
+      "2025": 0.3895582329317269,
+      "2026": 0.0
+     },
+     "mean_daily_local_by_year": {
+      "2007": 31.694444444444443,
+      "2008": 61.64489795918367,
+      "2009": 60.34854771784232,
+      "2010": 79.148,
+      "2011": 95.27272727272727,
+      "2012": 107.51239669421487,
+      "2013": 87.13765182186235,
+      "2014": 61.80833333333333,
+      "2015": 67.35245901639344,
+      "2016": 28.43032786885246,
+      "2017": 1.907258064516129,
+      "2018": 22.779591836734692,
+      "2019": 5.800829875518672,
+      "2020": 3.432,
+      "2021": 2.717741935483871,
+      "2022": 2.193548387096774,
+      "2023": 3.946938775510204,
+      "2024": 0.02032520325203252,
+      "2025": 1.1967871485943775,
+      "2026": 0.0
+     },
+     "n_aligned_rows": 19167472,
+     "n_items_not_aligned": 386669
+    },
+    "SSE": {
+     "mean_daily_local": 90.36244204018547,
+     "share_days_with_local": 0.9095826893353941,
+     "mean_daily_global": 4017.342349304482,
+     "share_days_with_local_by_year": {
+      "2007": 1.0,
+      "2008": 1.0,
+      "2009": 1.0,
+      "2010": 1.0,
+      "2011": 1.0,
+      "2012": 1.0,
+      "2013": 1.0,
+      "2014": 1.0,
+      "2015": 1.0,
+      "2016": 1.0,
+      "2017": 1.0,
+      "2018": 1.0,
+      "2019": 1.0,
+      "2020": 1.0,
+      "2021": 0.9876543209876543,
+      "2022": 0.9958677685950413,
+      "2023": 0.9917355371900827,
+      "2024": 0.07851239669421488,
+      "2025": 0.49794238683127573,
+      "2026": 0.0
+     },
+     "mean_daily_local_by_year": {
+      "2007": 80.3,
+      "2008": 130.45934959349594,
+      "2009": 122.2827868852459,
+      "2010": 194.68879668049792,
+      "2011": 180.6516393442623,
+      "2012": 209.06584362139918,
+      "2013": 185.60504201680672,
+      "2014": 188.22540983606558,
+      "2015": 215.11475409836066,
+      "2016": 108.47131147540983,
+      "2017": 10.778688524590164,
+      "2018": 72.50205761316873,
+      "2019": 30.524793388429753,
+      "2020": 18.477366255144034,
+      "2021": 7.172839506172839,
+      "2022": 8.02892561983471,
+      "2023": 12.198347107438016,
+      "2024": 0.09504132231404959,
+      "2025": 4.703703703703703,
+      "2026": 0.0
+     },
+     "n_aligned_rows": 19414513,
+     "n_items_not_aligned": 386650
+    }
    }
   }
  },
