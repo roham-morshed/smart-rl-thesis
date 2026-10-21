@@ -21,6 +21,7 @@
   "P4 IMIT arm",
   "P4 AWS grid",
   "P4 selection and config freeze",
-  "G4 leakage tests (pre-lock)"
+  "G4 leakage tests (pre-lock)",
+  "Outputs"
  ]
 }

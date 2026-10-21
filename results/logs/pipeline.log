@@ -44,3 +44,5 @@
 [2026-10-21 19:27:49] DONE P4 selection and config freeze in 0.1 min
 [2026-10-21 19:27:50] START G4 leakage tests (pre-lock): -m pytest -q tests/test_leakage.py
 [2026-10-21 19:31:46] DONE G4 leakage tests (pre-lock) in 3.9 min
+[2026-10-21 19:31:48] START Outputs: scripts/make_outputs.py
+[2026-10-21 19:31:53] DONE Outputs in 0.1 min
