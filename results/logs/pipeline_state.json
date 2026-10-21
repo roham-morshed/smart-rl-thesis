@@ -6,6 +6,7 @@
   "P2 Branch B pre-training",
   "P2 Word2Vec",
   "P2 E1 SentiFlow",
-  "P2 scoring and daily features"
+  "P2 scoring and daily features",
+  "G2 leakage tests"
  ]
 }
