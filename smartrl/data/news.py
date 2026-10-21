@@ -99,7 +99,14 @@ def extract_subset(subset: str, files: list[Path] | None = None) -> dict:
         WHERE CAST(date AS VARCHAR) >= '{lo}' AND CAST(date AS VARCHAR) < '{int(hi[:4]) + 1}-01-01'
     """
     rel = con.execute(q)
-    parts, n_raw, n_short, n_nonbusiness, desks = [], 0, 0, 0, {}
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    PARTS.mkdir(parents=True, exist_ok=True)
+    schema = pa.schema([("source", pa.string()), ("ts_utc", pa.timestamp("us", tz="UTC")), ("day_only", pa.bool_()),
+                        ("headline", pa.string())])
+    writer = pq.ParquetWriter(PARTS / f"{subset}.parquet", schema)
+    n_raw = n_short = n_nonbusiness = n_out = n_day = n_ny_midnight = 0
+    desks: dict = {}
     max_tok, min_tok = cfg["max_tokens"], cfg["min_tokens"]
     day_time = time.fromisoformat(cfg["day_only_time_utc"])
     while True:
@@ -114,25 +121,32 @@ def extract_subset(subset: str, files: list[Path] | None = None) -> dict:
                 desks[k] = desks.get(k, 0) + int(v)
             n_nonbusiness += int((~is_bus).sum())
             chunk = chunk[is_bus]
-        heads = [clean_headline(headline_from_text(t, tt), max_tok) for t, tt in zip(chunk["text"], chunk["tt"])]
+        heads = [clean_headline(headline_from_text(x, tt), max_tok) for x, tt in zip(chunk["text"], chunk["tt"])]
         ntok = np.fromiter((len(h.split(" ")) if h else 0 for h in heads), dtype=np.int32, count=len(heads))
         keep = ntok >= min_tok
         n_short += int((~keep).sum())
         ts = pd.to_datetime(chunk["date"], utc=True, format="mixed")
         midnight = (ts.dt.hour == 0) & (ts.dt.minute == 0) & (ts.dt.second == 0)
-        day_only = (chunk["tp"].fillna("") == "day").to_numpy() | midnight.to_numpy()
-        day_ts = ts.dt.normalize() + pd.Timedelta(hours=day_time.hour, minutes=day_time.minute, seconds=day_time.second)
+        # a timestamp at exactly midnight in New York is a date stamp too (NYT print dates): conservative day-only
+        ny = ts.dt.tz_convert("America/New_York")
+        ny_mid = (ny.dt.hour == 0) & (ny.dt.minute == 0) & (ny.dt.second == 0)
+        day_only = (chunk["tp"].fillna("") == "day").to_numpy() | midnight.to_numpy() | ny_mid.to_numpy()
+        n_ny_midnight += int((ny_mid & ~midnight).sum())
+        # day-only items take 23:59:59 UTC of their (UTC or New York) calendar date
+        cal_date = pd.Series(np.where(ny_mid & ~midnight, ny.dt.date, ts.dt.date), index=ts.index)
+        day_ts = pd.to_datetime(cal_date.astype(str)).dt.tz_localize("UTC") + pd.Timedelta(
+            hours=day_time.hour, minutes=day_time.minute, seconds=day_time.second)
         ts = ts.where(~day_only, day_ts)
-        part = pd.DataFrame({"source": subset, "ts_utc": ts.to_numpy(), "day_only": day_only,
+        part = pd.DataFrame({"source": subset, "ts_utc": ts.dt.as_unit("us"), "day_only": day_only,
                              "headline": np.asarray(heads, dtype=object)})[keep]
-        parts.append(part)
-    out = pd.concat(parts, ignore_index=True) if parts else pd.DataFrame(
-        columns=["source", "ts_utc", "day_only", "headline"])
-    PARTS.mkdir(parents=True, exist_ok=True)
-    out.to_parquet(PARTS / f"{subset}.parquet", index=False)
+        if len(part):
+            writer.write_table(pa.Table.from_pandas(part, schema=schema, preserve_index=False))
+            n_out += len(part)
+            n_day += int(part["day_only"].sum())
+    writer.close()
     return {"n_rows_subset": int(n_total), "n_raw": int(n_raw), "n_short_dropped": n_short,
-            "n_nonbusiness_dropped": n_nonbusiness, "n_after_clean": int(len(out)),
-            "share_day_only": float(out["day_only"].mean()) if len(out) else None,
+            "n_nonbusiness_dropped": n_nonbusiness, "n_after_clean": int(n_out),
+            "share_day_only": n_day / n_out if n_out else None, "n_new_york_midnight_day_only": n_ny_midnight,
             "business_desks_kept": dict(sorted(desks.items(), key=lambda kv: -kv[1])[:40]) if business else None}
 
 

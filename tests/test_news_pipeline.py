@@ -49,6 +49,10 @@ def test_pipeline(tmp_path, monkeypatch):
     assert s2["n_nonbusiness_dropped"] == 1
     parts = pd.read_parquet(tmp_path / "parts" / "nyt_headlines_2010_2021.parquet")
     assert "Fed holds rates steady again" in set(parts["headline"])
+    ny_mid = parts[parts["headline"].str.startswith("SSE plc")].iloc[0]          # 04:00Z = midnight EDT: date stamp
+    assert ny_mid["day_only"] and str(pd.Timestamp(ny_mid["ts_utc"]).tz_convert("UTC")) == "2019-03-12 23:59:59+00:00"
+    not_mid = parts[parts["headline"].str.startswith("U.K.")].iloc[0]           # 05:00Z = 01:00 EDT: a real time
+    assert not not_mid["day_only"]
     p1 = pd.read_parquet(tmp_path / "parts" / "fnspid_news.parquet")
     assert "Apple beats estimates on iPhone sales" in set(p1["headline"])
     day = p1[p1["headline"].str.startswith("FTSE")].iloc[0]
