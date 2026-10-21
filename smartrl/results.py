@@ -89,14 +89,40 @@ def add_note(tree: dict, text: str) -> None:
         notes.append(text)
 
 
+class _FileLock:
+    """Exclusive lock file so that concurrent jobs never overwrite each other's keys (load-modify-save)."""
+
+    def __init__(self, path: Path, timeout: float = 600.0):
+        self.path, self.timeout = path.with_suffix(path.suffix + ".lock"), timeout
+
+    def __enter__(self):
+        import time
+        t0 = time.time()
+        while True:
+            try:
+                self.fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                return self
+            except FileExistsError:
+                if time.time() - t0 > self.timeout:          # stale lock of a killed process
+                    os.unlink(self.path)
+                    t0 = time.time()
+                time.sleep(0.2)
+
+    def __exit__(self, *exc):
+        os.close(self.fd)
+        os.unlink(self.path)
+
+
 def update(items: Iterable[tuple[str | Sequence[str], Any]], notes: Iterable[str] = (),
            path: Path = RESULTS_JSON) -> dict:
-    """Load, write several keys and notes, stamp meta.created_utc, save. Returns the new tree."""
-    tree = load(path)
-    for key, value in items:
-        put(tree, key, value)
-    for n in notes:
-        add_note(tree, n)
-    tree.setdefault("meta", {})["created_utc"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    save(tree, path)
+    """Load, write several keys and notes, stamp meta.created_utc, save (under a file lock). Returns the new tree."""
+    items = list(items)
+    with _FileLock(path):
+        tree = load(path)
+        for key, value in items:
+            put(tree, key, value)
+        for n in notes:
+            add_note(tree, n)
+        tree.setdefault("meta", {})["created_utc"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        save(tree, path)
     return tree
