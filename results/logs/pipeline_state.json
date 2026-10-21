@@ -19,6 +19,7 @@
   "P4 B5 grid",
   "P4 PPO grid",
   "P4 IMIT arm",
-  "P4 AWS grid"
+  "P4 AWS grid",
+  "P4 selection and config freeze"
  ]
 }

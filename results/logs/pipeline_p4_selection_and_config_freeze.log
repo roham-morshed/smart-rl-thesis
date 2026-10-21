@@ -1,0 +1,14 @@
+{
+ "config": "R2_l10_d1.0_lr1e-4",
+ "reward": "R2",
+ "lr": 0.0001,
+ "stm_form": "STM-1",
+ "kappa": 0.5,
+ "z0": 0.5,
+ "aws_H": 60,
+ "aws_alpha": 5,
+ "aws_beta": 1.0,
+ "b5_kappa": 0.5,
+ "b5_z0": 0.5,
+ "imit_theta_bps": 50.0
+}
