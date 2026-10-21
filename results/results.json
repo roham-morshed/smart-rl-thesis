@@ -28,7 +28,7 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-21T07:34:48+00:00",
+  "created_utc": "2026-10-21T08:43:41+00:00",
   "leakage_by_gate": {
    "G1": true
   }
@@ -1528,6 +1528,10 @@
      }
     }
    }
+  },
+  "word2vec": {
+   "n_headlines": 18302487,
+   "vocab_size": 268827
   }
  },
  "p1": {
