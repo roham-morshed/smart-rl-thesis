@@ -25,3 +25,4 @@
 [2026-10-21 15:58:40] START P3 SENTIN refits: scripts/p3_e13.py --stage refits
 [2026-10-21 16:05:54] DONE P3 SENTIN refits in 7.2 min
 [2026-10-21 16:06:17] START P3 H4 comparison: scripts/p3_marketmind.py --stage h4
+[2026-10-21 17:17:14] DONE P3 H4 comparison in 71.0 min
