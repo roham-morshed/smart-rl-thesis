@@ -181,7 +181,10 @@ def train_ppo(spec: TrainSpec, cfg: dict) -> dict:
         venv.env_method("set_omega", 0.0)
     info.update({"curve": val_cb.curve, "best_val_sharpe": val_cb.best[0],
                  "curriculum": cur.trace if cur is not None else None})
-    return {"model_bytes": val_cb.best[1], "obs_rms": val_cb.best[2], "info": info}
+    buf = io.BytesIO()
+    model.save(buf)
+    return {"model_bytes": val_cb.best[1], "obs_rms": val_cb.best[2], "info": info,
+            "final_bytes": buf.getvalue(), "final_rms": pickle.dumps(venv.obs_rms)}
 
 
 def train_sac(spec: TrainSpec, cfg: dict, device: str = "cuda") -> dict:
@@ -206,6 +209,9 @@ def save_policy(out: dict, path: Path) -> None:
     (path / "model.zip").write_bytes(out["model_bytes"])
     (path / "obs_rms.pkl").write_bytes(out["obs_rms"])
     (path / "info.json").write_text(json.dumps(out["info"], default=float), encoding="utf-8")
+    if out.get("final_bytes"):                       # the policy at the end of training (no checkpoint selection)
+        (path / "final_model.zip").write_bytes(out["final_bytes"])
+        (path / "final_obs_rms.pkl").write_bytes(out["final_rms"])
 
 
 class FrozenNorm:
@@ -218,8 +224,9 @@ class FrozenNorm:
         return np.clip((obs - self.rms.mean) / np.sqrt(self.rms.var + self.eps), -self.clip, self.clip).astype(np.float32)
 
 
-def load_policy(path: Path, algo: str = "PPO"):
-    """(model, frozen normalizer) for PolicyEnsemble."""
+def load_policy(path: Path, algo: str = "PPO", which: str = "best"):
+    """(model, frozen normalizer) for PolicyEnsemble; which = 'best' (validation checkpoint) or 'final'."""
     cls = PPO if algo == "PPO" else SAC
-    model = cls.load(io.BytesIO((path / "model.zip").read_bytes()), device="cpu")
-    return model, FrozenNorm(pickle.loads((path / "obs_rms.pkl").read_bytes()))
+    pre = "" if which == "best" else "final_"
+    model = cls.load(io.BytesIO((path / f"{pre}model.zip").read_bytes()), device="cpu")
+    return model, FrozenNorm(pickle.loads((path / f"{pre}obs_rms.pkl").read_bytes()))
