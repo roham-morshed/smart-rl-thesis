@@ -418,10 +418,38 @@ NOTES = [
 ]
 
 
+def subperiod(base: pd.DataFrame, items: list) -> None:
+    """S1 (pre-registered 2026-10-21, frozen.yaml `supplementary.subperiod`): the main E5/E9 statistics on the
+    test years with complete news coverage, under the prefix supp.sub2020_2023."""
+    sp = frozen()["supplementary"]["subperiod"]
+    pre = sp["keys_prefix"]
+    lo, hi = (pd.Timestamp(x) for x in sp["confirmation"])
+    conf = base[(base["fold"] != "forward") & (base["date"] >= lo) & (base["date"] <= hi)]
+    for meth in METHODS:
+        for mkt, mv in metrics_block(conf, meth).items():
+            items += [(f"{pre}.trading.{mkt}.{meth}.{k}", v) for k, v in mv.items()]
+    X = combined_excess(conf, METHODS)
+    st = frozen()["stats"]
+    lw = {}
+    for meth in METHODS[1:]:
+        h = ST.lw_hac(X["SMARTRL"].to_numpy(), X[meth].to_numpy())
+        bt = ST.lw_bootstrap(X["SMARTRL"].to_numpy(), X[meth].to_numpy(), st["bootstrap"]["block"], st["bootstrap"]["reps"])
+        lw[meth] = {"diff": h["diff"], "p_hac": h["p"], "p_boot": bt["p"]}
+        items += [(f"{pre}.tests.lw.{meth}.{k}", v) for k, v in lw[meth].items()]
+    items += [(f"{pre}.tests.h1.p_holm.{m}", v) for m, v in ST.holm({m: lw[m]["p_hac"] for m in H1_SET}).items()]
+    ps = [lw[m]["p_hac"] for m in COMPARED]
+    items += [(f"{pre}.tests.h7.iut_all_significant", bool(all(p < 0.05 for p in ps))), (f"{pre}.tests.h7.max_p", float(max(ps)))]
+    trials = [json.loads(l) for l in (RESULTS / "dev_trials.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+    dsr = ST.deflated_sharpe((X["SMARTRL"] + RF_DAILY).to_numpy(), len(trials),
+                             float(np.var([t["val_sharpe"] for t in trials], ddof=1)), RF_DAILY)
+    items += [(f"{pre}.tests.dsr.{k}", dsr[k]) for k in ("sr_annual", "dsr", "n_trials", "sr_var")]
+
+
 def run_all() -> None:
     base = load("base")
     items: list = []
     trading_and_tests(base, items)
+    subperiod(base, items)
     h2(base, items)
     h5(base, items)
     h6(base, items)
