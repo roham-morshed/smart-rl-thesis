@@ -20,3 +20,5 @@
 [2026-10-21 15:24:26] DONE P3 MarketMind refits in 14.5 min
 [2026-10-21 15:24:28] START P3 E13 pilot: scripts/p3_e13.py --stage pilot
 [2026-10-21 15:25:34] DONE P3 E13 pilot in 1.1 min
+[2026-10-21 15:25:38] START P3 E13 main: scripts/p3_e13.py --stage main
+[2026-10-21 15:57:44] DONE P3 E13 main in 32.1 min
