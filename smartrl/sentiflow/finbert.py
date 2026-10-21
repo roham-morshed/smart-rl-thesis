@@ -14,10 +14,14 @@ PROSUS = "ProsusAI/finbert"
 
 
 def snapshot(repo: str) -> Path:
+    """Local snapshot of `repo`; the Hub is contacted only when the files are not in the cache yet (offline runs)."""
     from huggingface_hub import snapshot_download
-    return Path(snapshot_download(repo, cache_dir=hf.cache_dir(), token=hf.token(),
-                                  allow_patterns=["*.json", "*.txt", "*.bin", "*.safetensors"],
-                                  ignore_patterns=["*.h5", "*.msgpack"]))
+    kw = dict(cache_dir=hf.cache_dir(), allow_patterns=["*.json", "*.txt", "*.bin", "*.safetensors"],
+              ignore_patterns=["*.h5", "*.msgpack"])
+    try:
+        return Path(snapshot_download(repo, local_files_only=True, **kw))
+    except Exception:
+        return Path(snapshot_download(repo, token=hf.token(), **kw))
 
 
 def load_pretrain():

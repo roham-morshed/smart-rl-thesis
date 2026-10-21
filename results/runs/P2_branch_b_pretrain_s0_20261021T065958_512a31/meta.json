@@ -46,5 +46,8 @@
  "params": {
   "cache": "sentiflow\\branch_b\\seed0"
  },
- "events": []
+ "events": [],
+ "end_utc": "2026-10-21T07:04:34+00:00",
+ "seconds": 275.4792288999888,
+ "status": "ok"
 }
