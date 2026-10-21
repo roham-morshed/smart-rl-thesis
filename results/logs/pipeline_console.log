@@ -18,3 +18,5 @@
 [2026-10-21 15:09:53] DONE G2 leakage tests in 4.0 min
 [2026-10-21 15:09:55] START P3 MarketMind refits: scripts/p3_marketmind.py --stage refits
 [2026-10-21 15:24:26] DONE P3 MarketMind refits in 14.5 min
+[2026-10-21 15:24:28] START P3 E13 pilot: scripts/p3_e13.py --stage pilot
+[2026-10-21 15:25:34] DONE P3 E13 pilot in 1.1 min
