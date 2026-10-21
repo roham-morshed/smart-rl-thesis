@@ -10,3 +10,5 @@
 [2026-10-21 11:04:57] DONE P2 Branch B pre-training in 0.1 min
 [2026-10-21 11:04:58] START P2 Word2Vec: scripts/p2_word2vec.py
 [2026-10-21 12:13:44] DONE P2 Word2Vec in 68.8 min
+[2026-10-21 12:13:47] START P2 E1 SentiFlow: scripts/p2_sentiflow.py
+[2026-10-21 12:32:13] DONE P2 E1 SentiFlow in 18.4 min

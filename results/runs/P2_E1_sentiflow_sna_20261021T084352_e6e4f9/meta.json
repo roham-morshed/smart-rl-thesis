@@ -1,0 +1,115 @@
+{
+ "run_id": "P2_E1_sentiflow_sna_20261021T084352_e6e4f9",
+ "experiment": "P2",
+ "name": "E1_sentiflow",
+ "seed": null,
+ "device": "cuda",
+ "config_hash": "d65ab32939268aed7673bef561da0796c684646d9fb390c9b6c38f230edf12a4",
+ "git_commit": "91e147c70a2839bab2570e5d765e33d73cd972d4+dirty",
+ "start_utc": "2026-10-21T08:43:52+00:00",
+ "hardware": {
+  "platform": "Windows-10-10.0.19045-SP0",
+  "python": "3.11.17",
+  "processor": "AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD",
+  "cpu_count": 16,
+  "torch_cuda": "12.4",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 2060",
+  "gpu_mem_gb": 6.0
+ },
+ "packages": {
+  "torch": "2.6.0+cu124",
+  "numpy": "2.4.6",
+  "pandas": "3.0.6",
+  "pyarrow": "26.0.0",
+  "duckdb": "1.5.6",
+  "scipy": "1.17.1",
+  "statsmodels": "0.15.0",
+  "scikit-learn": "1.9.1",
+  "matplotlib": "3.11.2",
+  "arabic-reshaper": "3.0.1",
+  "python-bidi": "0.6.11",
+  "yfinance": "1.7.0",
+  "datasets": "5.1.0",
+  "huggingface-hub": "2.2.0",
+  "transformers": "5.20.1",
+  "gensim": "4.4.0",
+  "pysentiment2": "0.1.1",
+  "gymnasium": "1.2.3",
+  "stable-baselines3": "2.8.0",
+  "arch": "8.0.0",
+  "joblib": "1.6.0",
+  "tqdm": "4.70.1",
+  "PyYAML": "6.0.3",
+  "pytest": "9.1.1"
+ },
+ "params": {
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "smoke": false
+ },
+ "events": [],
+ "summary": {
+  "pooled": {
+   "A": {
+    "acc": 0.7841346153846154,
+    "acc_sd": 0.006033605960582254,
+    "f1": 0.7517669393532981,
+    "f1_sd": 0.0067749238245173185,
+    "ece": 0.09579914963302705,
+    "ece_sd": 0.02651896009223783,
+    "brier": 0.32684751716614696,
+    "brier_sd": 0.0139776108867895
+   },
+   "A_REV": {
+    "acc": 0.7758653846153847,
+    "acc_sd": 0.014862691317364637,
+    "f1": 0.7443558402714567,
+    "f1_sd": 0.00958698467493355,
+    "ece": 0.09552463230318747,
+    "ece_sd": 0.03582320206482107,
+    "brier": 0.3351153233536757,
+    "brier_sd": 0.020171547913125053
+   },
+   "B": {
+    "acc": 0.8448076923076921,
+    "acc_sd": 0.001746721358133162,
+    "f1": 0.8202257766276411,
+    "f1_sd": 0.0023310931313088898,
+    "ece": 0.09726372228505517,
+    "ece_sd": 0.009619953548703994,
+    "brier": 0.25115499629500426,
+    "brier_sd": 0.007185998081471359
+   },
+   "SF": {
+    "acc": 0.8405769230769231,
+    "acc_sd": 0.015871211051356044,
+    "f1": 0.813977631579875,
+    "f1_sd": 0.022796276496901285,
+    "ece": 0.025993465231015127,
+    "ece_sd": 0.004665237647807054,
+    "brier": 0.2326064735518325,
+    "brier_sd": 0.01688076695302387
+   },
+   "LEX": {
+    "acc": 0.541826923076923,
+    "f1": 0.4443214782506408
+   }
+  },
+  "calibration": {
+   "temperature": 1.8526670176984925,
+   "ece_before": 0.094541803692969,
+   "ece_after": 0.025993465231015127,
+   "brier_before": 0.255314274303147,
+   "brier_after": 0.2326064735518325
+  }
+ },
+ "end_utc": "2026-10-21T09:02:12+00:00",
+ "seconds": 1099.7571387000062,
+ "status": "ok"
+}

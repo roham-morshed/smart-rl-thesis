@@ -4,6 +4,7 @@
   "P1 outputs",
   "G1 leakage tests",
   "P2 Branch B pre-training",
-  "P2 Word2Vec"
+  "P2 Word2Vec",
+  "P2 E1 SentiFlow"
  ]
 }

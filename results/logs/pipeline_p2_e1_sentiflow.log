@@ -1,0 +1,261 @@
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12607.04it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+seed 0 done in 167s
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12602.42it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+seed 1 done in 150s
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12607.23it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+seed 2 done in 135s
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12625.72it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+seed 3 done in 135s
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12367.58it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+seed 4 done in 123s
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:14, 12.89it/s]Loading weights:   5%|▌         | 11/201 [00:00<00:16, 11.39it/s]Loading weights:   8%|▊         | 16/201 [00:01<00:24,  7.65it/s]Loading weights:  12%|█▏        | 25/201 [00:02<00:14, 12.17it/s]Loading weights:  26%|██▋       | 53/201 [00:02<00:04, 32.19it/s]Loading weights:  29%|██▉       | 58/201 [00:02<00:04, 29.50it/s]Loading weights:  31%|███       | 62/201 [00:03<00:08, 16.71it/s]Loading weights:  35%|███▍      | 70/201 [00:03<00:06, 21.05it/s]Loading weights:  37%|███▋      | 74/201 [00:04<00:08, 14.88it/s]Loading weights:  44%|████▍     | 89/201 [00:04<00:04, 23.73it/s]Loading weights:  59%|█████▉    | 119/201 [00:04<00:01, 49.15it/s]Loading weights:  64%|██████▍   | 129/201 [00:05<00:01, 36.64it/s]Loading weights:  68%|██████▊   | 137/201 [00:06<00:03, 18.08it/s]Loading weights: 100%|██████████| 201/201 [00:06<00:00, 30.18it/s]
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<?, ?it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 20987.50it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 19650.82it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12613.58it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 15294.36it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12607.04it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12315.59it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12607.04it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 14559.71it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 12762.43it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
