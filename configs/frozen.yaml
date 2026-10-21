@@ -256,3 +256,10 @@ parallel:
   sac_device: cuda    # P0 benchmark: 3 GPU jobs give 120 steps/s versus 83 with 4 CPU jobs
   sac_jobs: 3
   torch_threads_per_job: 1
+
+supplementary:   # pre-registered 2026-10-21, before the G4 lock and before any trading result on 2020+ data
+  e13x:          # leakage decomposition of the base paper's evaluation (scripts/p3_e13x.py)
+    protocols: [X_TRD_UTC, X_TRD_SES, X_TRD_RANDOM, X_NEWS_LEAD]
+  subperiod:     # news coverage collapses after 2023 (P1 report): every P5 statistic is also reported on 2020-2023
+    confirmation: ["2020-01-01", "2023-12-31"]
+    keys_prefix: "supp.sub2020_2023"

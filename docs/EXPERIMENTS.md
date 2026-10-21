@@ -150,3 +150,25 @@ RTX 2060 6 GB, AMD Ryzen 8 cores / 16 threads, 32 GB RAM. PPO on the CPU (DummyV
 | SAC runs (B7, P5 + forward) | 72 | 120 steps/s with 3 jobs on the GPU (CPU: 83 steps/s with 4 jobs) | ≈ 33.2 h on the GPU, parallel to PPO on the CPU |
 
 Recommendation: `parallel.rl_jobs: 6` for PPO (aggregate throughput +35 % over 4 jobs) and SAC with `device: cuda`, 3 parallel jobs.
+
+## Additions registered before gate G4 (2026-10-21)
+
+Both additions were fixed before any trading result on data dated 2020-01-01 or later was computed (the G4
+lock did not exist). They do not change any frozen method; they add evidence.
+
+### E13x — leakage decomposition of the base paper's evaluation (P3)
+- Why: E13 changes four things at once between the published protocols and CAUSAL. E13x removes them one at a
+  time, so the share of the published accuracy that comes from the protocol, rather than from the model, is
+  measured.
+  - Chain of protocols: PUB_R → PUB_C (split) → X_TRD_UTC (no calendar forward-fill) → X_TRD_SES (session
+    news) → CAUSAL (training-row scaling).
+  - X_TRD_RANDOM: CAUSAL with a random split.
+  - X_NEWS_LEAD: CAUSAL with the next session's news, a diagnostic look-ahead.
+- Same models, seeds and training recipe as E13; window to 2022-03-31.
+- Outputs: `e13x.*`; figure F16 (accuracy and AUC along the chain).
+
+### S1 — confirmation sub-period 2020-2023 (P5)
+- Why: local news covers about 90-100 % of trading days in 2008-2023 but only 2-23 % in 2024 (P1 report), so
+  the 2024 fold tests the system largely without fresh sentiment.
+- What: every E5/E9 statistic is computed also on the test years 2020-2023.
+- Outputs: `supp.sub2020_2023.*`. The frozen 2020-2024 keys remain the primary results.
