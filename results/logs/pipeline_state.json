@@ -13,6 +13,7 @@
   "P3 E13 main",
   "P3 SENTIN refits",
   "P3 H4 comparison",
-  "P3 E2 evaluation"
+  "P3 E2 evaluation",
+  "G3 leakage tests"
  ]
 }

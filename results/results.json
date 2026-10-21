@@ -28,10 +28,11 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-21T13:48:29+00:00",
+  "created_utc": "2026-10-21T13:54:37+00:00",
   "leakage_by_gate": {
    "G1": true,
-   "G2": true
+   "G2": true,
+   "G3": true
   }
  },
  "compute": {},

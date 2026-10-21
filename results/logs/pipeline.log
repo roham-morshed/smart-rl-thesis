@@ -28,3 +28,5 @@
 [2026-10-21 17:17:14] DONE P3 H4 comparison in 71.0 min
 [2026-10-21 17:18:20] START P3 E2 evaluation: scripts/p3_marketmind.py --stage eval
 [2026-10-21 17:18:29] DONE P3 E2 evaluation in 0.2 min
+[2026-10-21 17:18:35] START G3 leakage tests: -m pytest -q tests/test_leakage.py
+[2026-10-21 17:24:37] DONE G3 leakage tests in 6.0 min
