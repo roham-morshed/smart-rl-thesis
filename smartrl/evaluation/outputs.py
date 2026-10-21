@@ -99,7 +99,7 @@ def t20(res):
         return None
     rows = []
     for proto in ("PUB_R", "PUB_C", "CAUSAL"):
-        for m in MARKETS + ["MEAN"]:
+        for m in list(MARKETS) + ["MEAN"]:
             block = _get(res, f"e13.{proto}.{m}") or {}
             meta = {k: v for k, v in block.items() if not isinstance(v, dict)}
             for model, v in block.items():
