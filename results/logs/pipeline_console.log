@@ -16,3 +16,5 @@
 [2026-10-21 15:05:50] DONE P2 scoring and daily features in 153.6 min
 [2026-10-21 15:05:54] START G2 leakage tests: -m pytest -q tests/test_leakage.py tests/test_daily_features.py
 [2026-10-21 15:09:53] DONE G2 leakage tests in 4.0 min
+[2026-10-21 15:09:55] START P3 MarketMind refits: scripts/p3_marketmind.py --stage refits
+[2026-10-21 15:24:26] DONE P3 MarketMind refits in 14.5 min

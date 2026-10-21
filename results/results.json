@@ -28,7 +28,7 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-21T11:39:53+00:00",
+  "created_utc": "2026-10-21T11:55:33+00:00",
   "leakage_by_gate": {
    "G1": true,
    "G2": true
@@ -2705,6 +2705,15 @@
    "seeds_used": [
     0
    ]
+  }
+ },
+ "e13": {
+  "sentin": {
+   "choice": "adam_bce",
+   "val_auc": {
+    "sgd_mse": 0.5474602756701497,
+    "adam_bce": 0.5484917561939529
+   }
   }
  }
 }

@@ -190,7 +190,7 @@ sentin:   # reproduction of SenT-In (SPEC §9.1)
   awareness: {embed_dim: 16, hidden: 16}
   informer: {d_model: 64, heads: 4, d_ff: 128, e_layers: 2, d_layers: 1, factor: 5, dropout: 0.1, label_len: 48, distil: true}
   train: {batch: 256, max_epochs: 100, patience: 10, monitor: val_auc}
-  optimiser_choice: SET_IN_E13                    # sgd_mse (as published: SGD lr 1e-3, MSE) | adam_bce (Adam lr 1e-3, BCE)
+  optimiser_choice: adam_bce                    # sgd_mse (as published: SGD lr 1e-3, MSE) | adam_bce (Adam lr 1e-3, BCE)
   seeds: [0, 1, 2]
 
 e13:   # the base paper's own task (SPEC §15)

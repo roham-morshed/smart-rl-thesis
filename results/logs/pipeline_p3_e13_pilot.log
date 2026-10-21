@@ -1,0 +1,9 @@
+sgd_mse SP500 {'epochs': 20, 'best_val_auc': 0.5723905723905724, 'best_epoch': 9}
+sgd_mse FTSE100 {'epochs': 15, 'best_val_auc': 0.564542203497771, 'best_epoch': 4}
+sgd_mse NIFTY50 {'epochs': 11, 'best_val_auc': 0.47441130298273154, 'best_epoch': 0}
+sgd_mse SSE {'epochs': 23, 'best_val_auc': 0.5784970238095238, 'best_epoch': 12}
+adam_bce SP500 {'epochs': 15, 'best_val_auc': 0.5455535749653397, 'best_epoch': 4}
+adam_bce FTSE100 {'epochs': 20, 'best_val_auc': 0.542766864253172, 'best_epoch': 9}
+adam_bce NIFTY50 {'epochs': 30, 'best_val_auc': 0.5447409733124018, 'best_epoch': 19}
+adam_bce SSE {'epochs': 12, 'best_val_auc': 0.560905612244898, 'best_epoch': 1}
+SENTIN choice: adam_bce {'sgd_mse': 0.5474602756701497, 'adam_bce': 0.5484917561939529}
