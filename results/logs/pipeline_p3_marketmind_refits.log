@@ -1,0 +1,67 @@
+MM seed 0 train_end 2009-12-31: 728 train / 86 val rows
+  fit: 19 epochs, best 10, val 0.5164, 5s
+MM seed 0 train_end 2010-12-31: 1623 train / 187 val rows
+  fit: 16 epochs, best 7, val 0.5932, 8s
+MM seed 0 train_end 2011-12-31: 2521 train / 278 val rows
+  fit: 24 epochs, best 15, val 0.4704, 18s
+MM seed 0 train_end 2012-12-31: 3405 train / 380 val rows
+  fit: 25 epochs, best 16, val 0.5768, 25s
+MM seed 0 train_end 2013-12-31: 4292 train / 483 val rows
+  fit: 17 epochs, best 8, val 0.5351, 22s
+MM seed 0 train_end 2014-12-31: 5179 train / 585 val rows
+  fit: 14 epochs, best 5, val 0.5777, 22s
+MM seed 0 train_end 2015-12-31: 6077 train / 680 val rows
+  fit: 17 epochs, best 8, val 0.6362, 31s
+MM seed 0 train_end 2016-12-31: 6969 train / 781 val rows
+  fit: 14 epochs, best 5, val 0.6776, 30s
+MM seed 0 train_end 2017-12-31: 7863 train / 882 val rows
+  fit: 19 epochs, best 10, val 0.4101, 45s
+MM seed 0 train_end 2018-12-31: 8761 train / 976 val rows
+  fit: 19 epochs, best 10, val 0.6770, 51s
+MM seed 0 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 12 epochs, best 3, val 0.4990, 35s
+MM seed 0 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 15 epochs, best 6, val 0.9074, 48s
+MM seed 0 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 18 epochs, best 9, val 0.5458, 63s
+MM seed 0 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 17 epochs, best 8, val 0.5566, 64s
+MM seed 0 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 12 epochs, best 3, val 0.4833, 49s
+MM seed 0 train_end 2024-12-31: 14122 train / 1571 val rows
+  fit: 12 epochs, best 3, val 0.5332, 52s
+MM_NOSENT: exists, skipped
+INFORMER seed 0 train_end 2009-12-31: 728 train / 86 val rows
+  fit: 11 epochs, best 2, val 0.4298, 2s
+INFORMER seed 0 train_end 2010-12-31: 1623 train / 187 val rows
+  fit: 10 epochs, best 1, val 0.5129, 3s
+INFORMER seed 0 train_end 2011-12-31: 2521 train / 278 val rows
+  fit: 17 epochs, best 8, val 0.3991, 7s
+INFORMER seed 0 train_end 2012-12-31: 3405 train / 380 val rows
+  fit: 18 epochs, best 9, val 0.5072, 11s
+INFORMER seed 0 train_end 2013-12-31: 4292 train / 483 val rows
+  fit: 14 epochs, best 5, val 0.4952, 10s
+INFORMER seed 0 train_end 2014-12-31: 5179 train / 585 val rows
+  fit: 22 epochs, best 13, val 0.5643, 20s
+INFORMER seed 0 train_end 2015-12-31: 6077 train / 680 val rows
+  fit: 15 epochs, best 6, val 0.5958, 16s
+INFORMER seed 0 train_end 2016-12-31: 6969 train / 781 val rows
+  fit: 12 epochs, best 3, val 0.5199, 14s
+INFORMER seed 0 train_end 2017-12-31: 7863 train / 882 val rows
+  fit: 21 epochs, best 12, val 0.3912, 28s
+INFORMER seed 0 train_end 2018-12-31: 8761 train / 976 val rows
+  fit: 14 epochs, best 5, val 0.6632, 21s
+INFORMER seed 0 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 13 epochs, best 4, val 0.4893, 21s
+INFORMER seed 0 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 15 epochs, best 6, val 0.8562, 27s
+INFORMER seed 0 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 12 epochs, best 3, val 0.5322, 23s
+INFORMER seed 0 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 12 epochs, best 3, val 0.5793, 25s
+INFORMER seed 0 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 11 epochs, best 2, val 0.4632, 25s
+INFORMER seed 0 train_end 2024-12-31: 14122 train / 1571 val rows
+  fit: 12 epochs, best 3, val 0.5232, 29s
+LSTM_PRICE: exists, skipped
+stage refits done in 14.4 min
