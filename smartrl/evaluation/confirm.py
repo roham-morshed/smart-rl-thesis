@@ -97,7 +97,7 @@ def train_job(fold_name: str, arm: str, market: str, seed: int) -> dict:
     cfg = frozen()
     a = ARMS[arm]
     d = policy_dir(fold_name, arm, market, seed)
-    if (d / "model.zip").exists():
+    if (d / "info.json").exists():              # info.json is written last: a policy cut by a crash is retrained
         return {"skipped": str(d)}
     inp = fold_inputs(fold_name, market)
     f, c = inp["fold"], env_cfg()
