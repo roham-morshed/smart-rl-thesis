@@ -36,3 +36,5 @@
 [2026-10-21 17:25:07] DONE P4 B5 grid in 0.1 min
 [2026-10-21 17:25:09] START P4 PPO grid: scripts/p4_dev.py --stage ppo
 [2026-10-21 19:07:04] DONE P4 PPO grid in 101.9 min
+[2026-10-21 19:07:26] START P4 IMIT arm: scripts/p4_dev.py --stage imit
+[2026-10-21 19:27:26] DONE P4 IMIT arm in 20.0 min
