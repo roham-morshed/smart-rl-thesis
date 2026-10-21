@@ -1,0 +1,32 @@
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<?, ?it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: <project_root>\data\raw\hf_cache\models--yiyanghkust--finbert-pretrain\snapshots\88ab954a39ea6d3ce2b62cff086dd5ad1172c664
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+bert.pooler.dense.bias                     | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+bert.pooler.dense.weight                   | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+seed 0: 200,000/19,382,825 headlines, 1.5 min
+seed 0: 2,200,000/19,382,825 headlines, 15.0 min
+seed 0: 4,200,000/19,382,825 headlines, 29.7 min
+seed 0: 6,200,000/19,382,825 headlines, 44.8 min
+seed 0: 8,200,000/19,382,825 headlines, 60.0 min
+seed 0: 10,200,000/19,382,825 headlines, 75.5 min
+seed 0: 12,200,000/19,382,825 headlines, 91.6 min
+seed 0: 14,200,000/19,382,825 headlines, 108.3 min
+seed 0: 16,200,000/19,382,825 headlines, 125.5 min
+seed 0: 18,200,000/19,382,825 headlines, 142.9 min
+5-seed scoring would take 12.7 h > 12 h: seed 0 only
+SP500 daily features written
+FTSE100 daily features written
+NIFTY50 daily features written
+SSE daily features written

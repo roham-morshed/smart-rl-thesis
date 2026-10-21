@@ -28,7 +28,7 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-21T09:02:12+00:00",
+  "created_utc": "2026-10-21T11:35:10+00:00",
   "leakage_by_gate": {
    "G1": true
   }
@@ -39,7 +39,8 @@
   "ltsf.*: mean (and standard deviation) over seeds 0-2 of the test MSE and MAE on standardised data, all channels, every test window; no reversible instance normalisation (not part of SPEC §15).",
   "data.news.market.*: means and shares over trading days 2010-01-01 .. 2025-12-31 (policy start to the end of the news date range); by-year shares cover every panel year.",
   "sentiflow.pooled: union of the test splits of phrasebank50, fiqa and twitter (phrasebank_all is a subset of phrasebank50 and is not counted twice).",
-  "sentiflow.<DS>.SF: calibrated SentiFlow; A, A_REV and B are the raw branches (their calibration is in sentiflow.calibration_b for B). sentiflow.calibration.temperature is the mean of the five per-seed temperatures."
+  "sentiflow.<DS>.SF: calibrated SentiFlow; A, A_REV and B are the raw branches (their calibration is in sentiflow.calibration_b for B). sentiflow.calibration.temperature is the mean of the five per-seed temperatures.",
+  "sentiflow.scoring.ensemble: five-seed scoring would exceed 12 h, so seed 0 alone scored the corpus (SPEC §3.8)."
  ],
  "p0": {
   "probe": {
@@ -2686,6 +2687,11 @@
      "f1_sd": 0.023385606028680287
     }
    }
+  },
+  "scoring": {
+   "n_headlines": 19382825,
+   "ensemble": false,
+   "hours": 2.5406796084509957
   }
  },
  "p2": {
@@ -2693,6 +2699,11 @@
    "lo": -0.16666661111112963,
    "hi": 0.16666661111112963,
    "val_f1": 0.4612304594076965
+  },
+  "scoring": {
+   "seeds_used": [
+    0
+   ]
   }
  }
 }
