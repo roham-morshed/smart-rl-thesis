@@ -29,5 +29,17 @@
    "theta_bps": null
   },
   "val_sharpe": 1.2452140006759107
+ },
+ "imit": {
+  "config": "50",
+  "params": {
+   "reward": {
+    "name": "IMIT",
+    "scale": 100.0
+   },
+   "lr": 0.0001,
+   "theta_bps": 50.0
+  },
+  "val_sharpe": 1.2938172964709431
  }
 }

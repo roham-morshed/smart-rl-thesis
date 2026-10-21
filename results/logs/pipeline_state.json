@@ -17,6 +17,7 @@
   "G3 leakage tests",
   "P4 STM grid",
   "P4 B5 grid",
-  "P4 PPO grid"
+  "P4 PPO grid",
+  "P4 IMIT arm"
  ]
 }
