@@ -1,0 +1,161 @@
+MM seed 1 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 19 epochs, best 10, val 0.4846, 56s
+MM seed 2 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 20 epochs, best 11, val 0.5234, 59s
+LSTM seed 0 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 13 epochs, best 4, val 0.4728, 8s
+LSTM seed 1 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 15 epochs, best 6, val 0.4717, 9s
+LSTM seed 2 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 13 epochs, best 4, val 0.4615, 8s
+GRU seed 0 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 23 epochs, best 14, val 0.4663, 14s
+GRU seed 1 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 16 epochs, best 7, val 0.4605, 9s
+GRU seed 2 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 16 epochs, best 7, val 0.4611, 9s
+INFORMER seed 1 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 13 epochs, best 4, val 0.5004, 20s
+INFORMER seed 2 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 13 epochs, best 4, val 0.4938, 23s
+PATCHTST seed 0 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 21 epochs, best 12, val 0.5129, 112s
+PATCHTST seed 1 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 19 epochs, best 10, val 0.5518, 102s
+PATCHTST seed 2 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 18 epochs, best 9, val 0.5315, 96s
+DLINEAR seed 0 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 12 epochs, best 3, val 0.5138, 5s
+DLINEAR seed 1 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 16 epochs, best 7, val 0.5090, 7s
+DLINEAR seed 2 train_end 2019-12-31: 9654 train / 1071 val rows
+  fit: 16 epochs, best 7, val 0.5040, 7s
+MM seed 1 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 12 epochs, best 3, val 0.8184, 39s
+MM seed 2 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 18 epochs, best 9, val 0.9482, 62s
+LSTM seed 0 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 12 epochs, best 3, val 0.8040, 10s
+LSTM seed 1 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 12 epochs, best 3, val 0.8509, 9s
+LSTM seed 2 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 14 epochs, best 5, val 0.8195, 11s
+GRU seed 0 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 16 epochs, best 7, val 0.8026, 12s
+GRU seed 1 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 12 epochs, best 3, val 0.7792, 9s
+GRU seed 2 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 14 epochs, best 5, val 0.7980, 11s
+INFORMER seed 1 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 12 epochs, best 3, val 0.8782, 26s
+INFORMER seed 2 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 10 epochs, best 1, val 0.8466, 22s
+PATCHTST seed 0 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 16 epochs, best 7, val 0.9071, 113s
+PATCHTST seed 1 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 18 epochs, best 9, val 0.8910, 128s
+PATCHTST seed 2 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 22 epochs, best 13, val 0.9286, 140s
+DLINEAR seed 0 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 11 epochs, best 2, val 0.8546, 7s
+DLINEAR seed 1 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 12 epochs, best 3, val 0.9071, 7s
+DLINEAR seed 2 train_end 2020-12-31: 10552 train / 1172 val rows
+  fit: 11 epochs, best 2, val 0.8896, 6s
+MM seed 1 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 17 epochs, best 8, val 0.5347, 67s
+MM seed 2 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 17 epochs, best 8, val 0.5589, 73s
+LSTM seed 0 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 15 epochs, best 6, val 0.4790, 14s
+LSTM seed 1 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 12 epochs, best 3, val 0.5030, 10s
+LSTM seed 2 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 13 epochs, best 4, val 0.4923, 12s
+GRU seed 0 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 12 epochs, best 3, val 0.4666, 10s
+GRU seed 1 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 16 epochs, best 7, val 0.4775, 14s
+GRU seed 2 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 10 epochs, best 1, val 0.4649, 9s
+INFORMER seed 1 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 12 epochs, best 3, val 0.5199, 29s
+INFORMER seed 2 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 14 epochs, best 5, val 0.5308, 35s
+PATCHTST seed 0 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 17 epochs, best 8, val 0.5710, 113s
+PATCHTST seed 1 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 16 epochs, best 7, val 0.5670, 110s
+PATCHTST seed 2 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 22 epochs, best 13, val 0.5771, 170s
+DLINEAR seed 0 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 14 epochs, best 5, val 0.4654, 10s
+DLINEAR seed 1 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 12 epochs, best 3, val 0.4770, 8s
+DLINEAR seed 2 train_end 2021-12-31: 11445 train / 1275 val rows
+  fit: 14 epochs, best 5, val 0.4888, 9s
+MM seed 1 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 11 epochs, best 2, val 0.5506, 51s
+MM seed 2 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 14 epochs, best 5, val 0.5720, 65s
+LSTM seed 0 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 15 epochs, best 6, val 0.5018, 15s
+LSTM seed 1 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 14 epochs, best 5, val 0.4829, 14s
+LSTM seed 2 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 12 epochs, best 3, val 0.4866, 12s
+GRU seed 0 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 14 epochs, best 5, val 0.5090, 13s
+GRU seed 1 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 13 epochs, best 4, val 0.4935, 12s
+GRU seed 2 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 12 epochs, best 3, val 0.4885, 11s
+INFORMER seed 1 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 13 epochs, best 4, val 0.5526, 34s
+INFORMER seed 2 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 14 epochs, best 5, val 0.5649, 37s
+PATCHTST seed 0 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 19 epochs, best 10, val 0.5392, 145s
+PATCHTST seed 1 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 17 epochs, best 8, val 0.5820, 128s
+PATCHTST seed 2 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 18 epochs, best 9, val 0.5196, 198s
+DLINEAR seed 0 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 12 epochs, best 3, val 0.5362, 12s
+DLINEAR seed 1 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 12 epochs, best 3, val 0.5223, 12s
+DLINEAR seed 2 train_end 2022-12-31: 12335 train / 1376 val rows
+  fit: 12 epochs, best 3, val 0.5186, 12s
+MM seed 1 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 11 epochs, best 2, val 0.4549, 124s
+MM seed 2 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 15 epochs, best 6, val 0.5481, 174s
+LSTM seed 0 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 11 epochs, best 2, val 0.4222, 20s
+LSTM seed 1 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 11 epochs, best 2, val 0.4160, 19s
+LSTM seed 2 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 11 epochs, best 2, val 0.4242, 22s
+GRU seed 0 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 10 epochs, best 1, val 0.4065, 19s
+GRU seed 1 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 10 epochs, best 1, val 0.4060, 20s
+GRU seed 2 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 11 epochs, best 2, val 0.4120, 22s
+INFORMER seed 1 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 10 epochs, best 1, val 0.4652, 44s
+INFORMER seed 2 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 11 epochs, best 2, val 0.4344, 40s
+PATCHTST seed 0 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 17 epochs, best 8, val 0.4436, 331s
+PATCHTST seed 1 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 16 epochs, best 7, val 0.4740, 308s
+PATCHTST seed 2 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 17 epochs, best 8, val 0.4454, 385s
+DLINEAR seed 0 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 11 epochs, best 2, val 0.4202, 11s
+DLINEAR seed 1 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 11 epochs, best 2, val 0.4220, 12s
+DLINEAR seed 2 train_end 2023-12-31: 13224 train / 1475 val rows
+  fit: 12 epochs, best 3, val 0.4313, 13s
+stage h4 done in 70.9 min

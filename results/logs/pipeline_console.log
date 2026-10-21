@@ -22,3 +22,6 @@
 [2026-10-21 15:25:34] DONE P3 E13 pilot in 1.1 min
 [2026-10-21 15:25:38] START P3 E13 main: scripts/p3_e13.py --stage main
 [2026-10-21 15:57:44] DONE P3 E13 main in 32.1 min
+[2026-10-21 15:58:40] START P3 SENTIN refits: scripts/p3_e13.py --stage refits
+[2026-10-21 16:05:54] DONE P3 SENTIN refits in 7.2 min
+[2026-10-21 16:06:17] START P3 H4 comparison: scripts/p3_marketmind.py --stage h4
