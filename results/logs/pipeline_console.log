@@ -32,3 +32,5 @@
 [2026-10-21 17:24:37] DONE G3 leakage tests in 6.0 min
 [2026-10-21 17:24:52] START P4 STM grid: scripts/p4_dev.py --stage stm
 [2026-10-21 17:24:59] DONE P4 STM grid in 0.1 min
+[2026-10-21 17:25:01] START P4 B5 grid: scripts/p4_dev.py --stage b5
+[2026-10-21 17:25:07] DONE P4 B5 grid in 0.1 min

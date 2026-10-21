@@ -51,5 +51,8 @@
    "scale": "train"
   }
  },
- "events": []
+ "events": [],
+ "end_utc": "2026-10-21T13:55:17+00:00",
+ "seconds": 19.259532299998682,
+ "status": "ok"
 }

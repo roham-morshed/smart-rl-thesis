@@ -34,3 +34,5 @@
 [2026-10-21 17:24:59] DONE P4 STM grid in 0.1 min
 [2026-10-21 17:25:01] START P4 B5 grid: scripts/p4_dev.py --stage b5
 [2026-10-21 17:25:07] DONE P4 B5 grid in 0.1 min
+[2026-10-21 17:25:09] START P4 PPO grid: scripts/p4_dev.py --stage ppo
+[2026-10-21 19:07:04] DONE P4 PPO grid in 101.9 min

@@ -5,3 +5,46 @@ X_TRD_UTC SSE done
 X_TRD_SES SP500 done
 X_TRD_SES FTSE100 done
 X_TRD_SES NIFTY50 done
+X_TRD_SES SSE done
+X_TRD_RANDOM SP500 done
+X_TRD_RANDOM FTSE100 done
+X_TRD_RANDOM NIFTY50 done
+X_TRD_RANDOM SSE done
+X_NEWS_LEAD SP500 done
+X_NEWS_LEAD FTSE100 done
+X_NEWS_LEAD NIFTY50 done
+X_NEWS_LEAD SSE done
+{
+ "X_NEWS_LEAD": {
+  "CNN": 0.531,
+  "GRU": 0.535,
+  "LSTM": 0.53,
+  "SENTIN": 0.496,
+  "SENTIN_SF": 0.504,
+  "SVM": 0.497
+ },
+ "X_TRD_RANDOM": {
+  "CNN": 0.499,
+  "GRU": 0.5,
+  "LSTM": 0.498,
+  "SENTIN": 0.513,
+  "SENTIN_SF": 0.497,
+  "SVM": 0.489
+ },
+ "X_TRD_SES": {
+  "CNN": 0.503,
+  "GRU": 0.533,
+  "LSTM": 0.53,
+  "SENTIN": 0.515,
+  "SENTIN_SF": 0.482,
+  "SVM": 0.478
+ },
+ "X_TRD_UTC": {
+  "CNN": 0.515,
+  "GRU": 0.527,
+  "LSTM": 0.525,
+  "SENTIN": 0.525,
+  "SENTIN_SF": 0.493,
+  "SVM": 0.499
+ }
+}

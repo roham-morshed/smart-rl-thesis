@@ -16,5 +16,18 @@
    "z0": 0.5
   },
   "val_sharpe": 0.7336219211476682
+ },
+ "ppo": {
+  "config": "R2_l10_d1.0_lr1e-4",
+  "params": {
+   "reward": {
+    "name": "R2",
+    "lambda1": 10,
+    "lambda2": 1.0
+   },
+   "lr": 0.0001,
+   "theta_bps": null
+  },
+  "val_sharpe": 1.2452140006759107
  }
 }
