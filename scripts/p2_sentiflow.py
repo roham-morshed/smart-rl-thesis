@@ -46,8 +46,24 @@ def eval_sets(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
     return out
 
 
+def branch_b(tok, encoder, tr: pd.DataFrame, va: pd.DataFrame, seed: int, b_cfg: dict, cache: Path | None):
+    """Branch B for one seed; trained once and cached (it depends only on the labelled sentences and the seed)."""
+    from smartrl.sentiflow.models import BranchB
+    if cache is not None and (cache / "branch_b_model.pt").exists():
+        ck = torch.load(cache / "branch_b_model.pt", map_location="cpu", weights_only=False)
+        mb = BranchB(encoder).to(T.DEV)
+        mb.load_state_dict(ck["state"])
+        return mb.eval(), ck["hist"]
+    texts = lambda d: d["sentence"].astype(str).tolist()
+    mb, hb = T.train_bert(tok, encoder, (texts(tr), tr["label"].to_numpy()), (texts(va), va["label"].to_numpy()), seed, b_cfg)
+    if cache is not None:
+        cache.mkdir(parents=True, exist_ok=True)
+        torch.save({"state": mb.state_dict(), "hist": hb.__dict__}, cache / "branch_b_model.pt")
+    return mb, hb.__dict__
+
+
 def run_seed(seed: int, tr: pd.DataFrame, va: pd.DataFrame, evals: dict[str, pd.DataFrame], wv, cfg: dict,
-             save_dir: Path | None, smoke: bool) -> dict:
+             save_dir: Path | None, smoke: bool, b_cache: Path | None = None) -> dict:
     """Train A, A_rev, B and the gate for one seed; return probabilities on val and every evaluation set."""
     sf = cfg["sentiflow"]
     vocab = word2vec.Vocab(wv, tr["sentence"])
@@ -67,8 +83,8 @@ def run_seed(seed: int, tr: pd.DataFrame, va: pd.DataFrame, evals: dict[str, pd.
     tok, encoder = finbert.load_pretrain()
     b_cfg = {**sf["branch_b"], **({"max_epochs": 1} if smoke else {})}
     texts = lambda d: d["sentence"].astype(str).tolist()
-    mb, hb = T.train_bert(tok, encoder, (texts(tr), tr["label"].to_numpy()), (texts(va), va["label"].to_numpy()), seed, b_cfg)
-    out["hist"]["B"] = hb.__dict__
+    mb, hb = branch_b(tok, encoder, tr, va, seed, b_cfg, b_cache)
+    out["hist"]["B"] = hb
     for name, d in sets.items():
         out[("B", name)] = T.predict_bert(mb, tok, texts(d), b_cfg["max_len"])
     pack = lambda name: {"h_a": out[("A", name)][1], "h_b": out[("B", name)][1], "p_a": out[("A", name)][0],
@@ -113,7 +129,7 @@ def e1(df: pd.DataFrame, wv, cfg: dict, seeds: list[int], smoke: bool, reps: int
     for s in seeds:
         t0 = time.time()
         save = None if smoke else OUT / f"seed{s}"
-        per_seed.append(run_seed(s, tr, va, evals, wv, cfg, save, smoke))
+        per_seed.append(run_seed(s, tr, va, evals, wv, cfg, save, smoke, None if smoke else OUT / "branch_b" / f"seed{s}"))
         print(f"seed {s} done in {time.time() - t0:.0f}s", flush=True)
     res: dict = {}
     # LEX (deterministic): thresholds tuned on the pooled validation split
@@ -190,7 +206,8 @@ def e1b(ar: pd.DataFrame, wv, cfg: dict, seeds: list[int], smoke: bool) -> dict:
         y = te["label"].to_numpy()
         rows = {"B": [], "SF": []}
         for s in seeds:
-            r = run_seed(s, tr, va, {"test": te}, wv, cfg, None, smoke)
+            r = run_seed(s, tr, va, {"test": te}, wv, cfg, None, smoke,
+                         None if smoke else OUT / "branch_b_e1b" / ds / f"seed{s}")
             rows["B"].append({"acc": float((r[("B", "test")][0].argmax(1) == y).mean()),
                               "f1": macro_f1(y, r[("B", "test")][0].argmax(1))})
             psf = C.apply_temperature(r[("SF_raw", "test")][0], r["T_sf"])
@@ -199,11 +216,36 @@ def e1b(ar: pd.DataFrame, wv, cfg: dict, seeds: list[int], smoke: bool) -> dict:
     return out
 
 
+def pretrain_b() -> None:
+    """Branch B for E1 (seeds 0-4, union of the training splits) and E1-b (Araci's split of each PhraseBank set)."""
+    cfg = frozen()
+    df, ar = S.load()
+    tr, va = split_frame(df, "train"), split_frame(df, "val")
+    jobs = [(OUT / "branch_b" / f"seed{s}", tr, va, s) for s in cfg["sentiflow"]["seeds"]]
+    for ds in ("phrasebank_all", "phrasebank50"):
+        d = ar[ar["dataset"] == ds]
+        jobs += [(OUT / "branch_b_e1b" / ds / f"seed{s}", d[d["split"] == "train"].reset_index(drop=True),
+                  d[d["split"] == "val"].reset_index(drop=True), s) for s in cfg["sentiflow"]["seeds"]]
+    for cache, a, b, s in jobs:
+        if (cache / "branch_b_model.pt").exists():
+            continue
+        with run_record("P2", "branch_b_pretrain", s, str(T.DEV), {"cache": str(cache.relative_to(PROCESSED))}):
+            tok, enc = finbert.load_pretrain()
+            mb, hist = branch_b(tok, enc, a, b, s, cfg["sentiflow"]["branch_b"], cache)
+        print(cache.relative_to(PROCESSED), "best epoch", hist["best_epoch"], "val F1", round(hist["best_score"], 4), flush=True)
+        del mb
+        torch.cuda.empty_cache()
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--skip_e1b", action="store_true")
+    ap.add_argument("--pretrain_b", action="store_true", help="train and cache Branch B for every seed and split")
     args = ap.parse_args()
+    if args.pretrain_b:
+        pretrain_b()
+        return
     cfg = frozen()
     df, ar = S.load()
     if args.smoke:
