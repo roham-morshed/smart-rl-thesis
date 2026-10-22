@@ -1,1 +1,2 @@
 [2026-10-21 22:04:27] START train (PPO arms, CPU) and train_sac (B7, GPU) in parallel
+[2026-10-22 07:04:59] PPO arms finished (exit 0) after 9.01 h

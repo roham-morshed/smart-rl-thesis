@@ -30,11 +30,12 @@ def returns_path(variant: str) -> Path:
     return LOGS / f"returns_{variant}.parquet"
 
 
-def stage_train(sac: bool) -> None:
+def stage_train(sac: bool, n_jobs: int | None = None) -> None:
+    """n_jobs overrides the number of parallel workers (execution only; results do not depend on it)."""
     cfg = frozen()
     arms = ["B7"] if sac else [a for a in C.ARMS if a != "B7"]
-    jobs = C.jobs(arms)
-    n_jobs = cfg["parallel"]["sac_jobs"] if sac else cfg["parallel"]["rl_jobs"]
+    jobs = [j for j in C.jobs(arms) if not (C.policy_dir(*j) / "info.json").exists()]
+    n_jobs = n_jobs or (cfg["parallel"]["sac_jobs"] if sac else cfg["parallel"]["rl_jobs"])
     t0 = time.time()
     with run_record("P5", "train_sac" if sac else "train_ppo", None, "cuda" if sac else "cpu",
                     {"n_runs": len(jobs), "n_jobs": n_jobs}):
@@ -94,10 +95,11 @@ def stage_evaluate() -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", required=True, choices=["train", "train_sac", "evaluate", "analyze"])
+    ap.add_argument("--jobs", type=int, default=None, help="parallel workers for the training stages")
     args = ap.parse_args()
     access.request_end("2020-01-02", "policy")          # refuses to start before the G4 lock
     if args.stage in ("train", "train_sac"):
-        stage_train(args.stage == "train_sac")
+        stage_train(args.stage == "train_sac", args.jobs)
     elif args.stage == "evaluate":
         stage_evaluate()
     else:

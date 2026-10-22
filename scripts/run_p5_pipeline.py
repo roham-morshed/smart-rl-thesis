@@ -50,8 +50,30 @@ def run(name: str, args: list[str], state: dict) -> None:
     commit(f"P5 pipeline: {name}")
 
 
+def clean_partial_policies() -> None:
+    """A policy counts as finished only when model.zip, obs_rms.pkl and a readable info.json exist; anything else
+    left by a shutdown is removed so that it is trained again."""
+    import shutil
+    removed = []
+    for d in (ROOT / "data" / "processed" / "policies").glob("*/*/*/seed*"):
+        if d.parent.parent.parent.name == "dev":
+            continue
+        ok = all((d / f).exists() for f in ("model.zip", "obs_rms.pkl", "info.json"))
+        if ok:
+            try:
+                json.loads((d / "info.json").read_text(encoding="utf-8"))
+            except Exception:
+                ok = False
+        if not ok:
+            shutil.rmtree(d, ignore_errors=True)
+            removed.append(str(d.relative_to(ROOT)))
+    if removed:
+        log(f"removed {len(removed)} incomplete policy folders: {removed[:6]}")
+
+
 def main() -> None:
     state = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else {"done": []}
+    clean_partial_policies()
     if "train" not in state["done"]:
         log("START train (PPO arms, CPU) and train_sac (B7, GPU) in parallel")
         t0 = time.time()
@@ -59,7 +81,9 @@ def main() -> None:
         fs = (LOGS / "p5_train_sac.log").open("a", encoding="utf-8")
         p_ppo = subprocess.Popen([PY, "-W", "ignore", "-u", "scripts/p5_confirm.py", "--stage", "train"], cwd=ROOT, env=ENV,
                                  stdout=fp, stderr=subprocess.STDOUT)
-        p_sac = subprocess.Popen([PY, "-W", "ignore", "-u", "scripts/p5_confirm.py", "--stage", "train_sac"], cwd=ROOT,
+        sac_jobs = os.environ.get("SMARTRL_SAC_JOBS", "6")
+        p_sac = subprocess.Popen([PY, "-W", "ignore", "-u", "scripts/p5_confirm.py", "--stage", "train_sac", "--jobs",
+                                  sac_jobs], cwd=ROOT,
                                  env=ENV, stdout=fs, stderr=subprocess.STDOUT)
         rc_ppo = p_ppo.wait()
         log(f"PPO arms finished (exit {rc_ppo}) after {(time.time() - t0) / 3600:.2f} h")
