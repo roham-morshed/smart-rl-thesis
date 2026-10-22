@@ -33,3 +33,5 @@
 [Parallel(n_jobs=6)]: Done 636 tasks      | elapsed: 525.4min
 [Parallel(n_jobs=6)]: Done 660 out of 660 | elapsed: 540.4min finished
 660 trained, 0 already present, 9.01 h
+[Parallel(n_jobs=6)]: Using backend LokyBackend with 6 concurrent workers.
+0 trained, 0 already present, 0.00 h

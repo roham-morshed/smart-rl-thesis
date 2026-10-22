@@ -1,0 +1,2 @@
+[2026-10-22 11:21:24] watchdog started (pid 2776); 676 policies done; processes {'pipeline': 0, 'workers': 0}
+[2026-10-22 11:21:24] pipeline not running (676 policies done); restarting (attempt 1)
