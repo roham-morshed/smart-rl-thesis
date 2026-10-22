@@ -35,3 +35,5 @@
 660 trained, 0 already present, 9.01 h
 [Parallel(n_jobs=6)]: Using backend LokyBackend with 6 concurrent workers.
 0 trained, 0 already present, 0.00 h
+[Parallel(n_jobs=6)]: Using backend LokyBackend with 6 concurrent workers.
+0 trained, 0 already present, 0.00 h

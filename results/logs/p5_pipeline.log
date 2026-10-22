@@ -5,3 +5,4 @@
 [2026-10-22 11:21:38] PPO arms finished (exit 0) after 0.00 h
 [2026-10-22 17:46:01] START train (PPO arms, CPU) and train_sac (B7, GPU) in parallel
 [2026-10-22 17:46:09] PPO arms finished (exit 0) after 0.00 h
+[2026-10-22 20:03:05] STOPPED by request (user pause until further notice): watchdog, pipeline and workers. Policies done: PPO 660/660, SAC 37/72. Resume: RESUME_P5.bat

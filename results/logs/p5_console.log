@@ -2,3 +2,5 @@
 [2026-10-22 07:04:59] PPO arms finished (exit 0) after 9.01 h
 [2026-10-22 11:21:27] START train (PPO arms, CPU) and train_sac (B7, GPU) in parallel
 [2026-10-22 11:21:38] PPO arms finished (exit 0) after 0.00 h
+[2026-10-22 17:46:01] START train (PPO arms, CPU) and train_sac (B7, GPU) in parallel
+[2026-10-22 17:46:09] PPO arms finished (exit 0) after 0.00 h

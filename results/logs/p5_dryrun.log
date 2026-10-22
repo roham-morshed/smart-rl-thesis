@@ -1,0 +1,31 @@
+evaluate conf2020 SP500: 2.6 min
+evaluate conf2020 FTSE100: 2.6 min
+evaluate conf2020 NIFTY50: 2.6 min
+evaluate conf2020 SSE: 2.5 min
+evaluate conf2021 SP500: 2.2 min
+evaluate conf2021 FTSE100: 2.2 min
+evaluate conf2021 NIFTY50: 2.1 min
+evaluate conf2021 SSE: 2.1 min
+evaluate conf2022 SP500: 2.2 min
+evaluate conf2022 FTSE100: 2.2 min
+evaluate conf2022 NIFTY50: 2.2 min
+evaluate conf2022 SSE: 2.1 min
+evaluate conf2023 SP500: 2.2 min
+evaluate conf2023 FTSE100: 2.2 min
+evaluate conf2023 NIFTY50: 2.2 min
+evaluate conf2023 SSE: 2.2 min
+evaluate conf2024 SP500: 2.3 min
+evaluate conf2024 FTSE100: 2.2 min
+evaluate conf2024 NIFTY50: 2.2 min
+evaluate conf2024 SSE: 2.1 min
+evaluate forward SP500: 0.2 min
+evaluate forward FTSE100: 0.2 min
+evaluate forward NIFTY50: 0.2 min
+evaluate forward SSE: 0.2 min
+EVALUATE OK 11.7 min
+3555 keys written
+ANALYZE OK 3.7 min
+OUTPUTS 0.4 min: {'T08': True, 'T09': True, 'T10': True, 'T11': True, 'T12': True, 'T13': True, 'T14': True, 'T15': True, 'T16': True, 'T17': True, 'T18': True, 'T19': True, 'TS1': True, 'F07': True, 'F08': True, 'F09': True, 'F10': True, 'F11': True, 'F12': True, 'F13': True, 'F14': True, 'F16': True, 'T03': True, 'T04': True, 'T05': True, 'T06': True, 'T07': True, 'T20': True, 'F02': True, 'F03': True, 'F04': True, 'F05': True, 'F06': True, 'F15': True}
+CONTRACT: 936 keys, 1 missing, 0 null, 0 unexplained
+DRYRUN COMPLETE
+missing thesis keys in dry run: meta.leakage_tests_passed (written by the G5 leakage step, which the dry run skips)
