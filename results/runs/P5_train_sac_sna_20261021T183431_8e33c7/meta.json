@@ -47,5 +47,14 @@
   "n_runs": 72,
   "n_jobs": 3
  },
- "events": []
+ "events": [
+  {
+   "utc": "2026-10-23T10:27:59+00:00",
+   "message": "stopped on the user's request for a laptop shutdown (2026-10-22 10:14 local); closed afterwards with end = save time of the last policy"
+  }
+ ],
+ "end_utc": "2026-10-22T06:30:01+00:00",
+ "seconds": 42930.50292,
+ "status": "interrupted",
+ "policies_saved": 16
 }

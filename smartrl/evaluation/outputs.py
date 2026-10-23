@@ -539,8 +539,12 @@ def f12(res):
         ax.set_ylim(0, 1)
         ax.set_ylabel(style.market(m) if m != "SSE" else "SSE", fontsize=7)
         _date_axis(ax)
-    axes[0].set_title(style.label("AWS weight of the RL expert (w_RL); shading: bull / bear / sideways",
-                                  "وزن خبره‌ی یادگیری تقویتی (w_RL)"), fontsize=8)
+    from matplotlib.lines import Line2D
+    from matplotlib.patches import Patch
+    names = {"bull": ("Bull", "صعودی"), "bear": ("Bear", "نزولی"), "sideways": ("Sideways", "خنثی")}
+    handles = [Line2D([], [], color="C0", lw=1.2, label=style.label("w_RL", "w_RL"))]
+    handles += [Patch(color=col, label=style.label(*names[r])) for r, col in colors.items()]
+    axes[0].legend(handles=handles, loc="lower center", bbox_to_anchor=(0.5, 1.02), ncol=4, frameon=False, fontsize=7)
     return style.save(fig, "F12")
 
 

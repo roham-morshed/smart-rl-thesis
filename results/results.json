@@ -28,7 +28,7 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-23T05:52:02+00:00",
+  "created_utc": "2026-10-23T10:30:54+00:00",
   "leakage_by_gate": {
    "G1": true,
    "G2": true,
@@ -40,9 +40,9 @@
   "leakage_tests_passed": true
  },
  "compute": {
-  "gpu_hours": 20.075533048999986,
+  "gpu_hours": 40.14860073677776,
   "cpu_hours": 12.988539057750003,
-  "n_runs": 683
+  "n_runs": 686
  },
  "notes": [
   "data.prices.SSE.dividend_source: no cited SSE Composite dividend yield was found (SSE and CSIndex sources searched), so the SSE sleeve earns the index price return without dividends; this understates SSE total returns of invested days and is a limitation (SPEC §2.1 fallback).",
@@ -59,7 +59,10 @@
   "robust.regime: the return of day t carries the regime known at the close of t−1 (trailing 126-day index return).",
   "h6.stability.flip_rate: share of days whose Buy/Hold/Sell label differs from the previous day's label.",
   "h5: placebo exposure paths are reflecting random walks on [0, 1] from e = 1 with Gaussian steps whose size is set so that the mean |Δe| after the band equals the PPO ensemble's (per market-year); p = share of placebo Sharpe ≥ PPO Sharpe over 2020-2024.",
-  "e13.overlap: SMARTRL and BASE score = exposure decided at the close of t (prediction 1[e_t > 0.5]); SENTIN_CAUSAL = seed-averaged P(up) of the E13 CAUSAL test predictions; window 2020-01-01 .. 2022-03-31."
+  "e13.overlap: SMARTRL and BASE score = exposure decided at the close of t (prediction 1[e_t > 0.5]); SENTIN_CAUSAL = seed-averaged P(up) of the E13 CAUSAL test predictions; window 2020-01-01 .. 2022-03-31.",
+  "compute: wall-clock hours of registry run records by device (status ok, plus three P5 SAC stages stopped from outside - two user pauses and a desktop-app update - closed by scripts/p5_register_interrupted.py with end = save time of their last policy; they saved 37 of the 72 B7 policies). compute.n_runs counts run records (a P5 training stage is one record although it trains many policies: 660 PPO-arm policies and 72 SAC policies in P5).",
+  "trading.*.A4_NOCONF: identical to SMARTRL by construction. A4 is AWS with beta = 1 (no confidence term, SPEC ablation table) and the development-phase selection (P4, dev.selected) chose beta = 1.0 for the full system, so the selected SMART-RL already gives the confidence term zero weight; tests.lw.A4_NOCONF (diff 0) confirms the identity.",
+  "h2.coverage.<grp>.n: pooled test days with news coverage cov >= 0.5 (high) or < 0.5 (low); h2.coverage.<grp>.mcnemar_p_exploratory: exact McNemar test of SMART-RL versus A1 decision correctness within the group, added after P5 as an exploratory statistic (not pre-registered, not used by any verdict)."
  ],
  "p0": {
   "probe": {
@@ -9785,7 +9788,9 @@
     "A1_NOSENT": {
      "acc": 0.3888888888888889,
      "f1": 0.35733760075865345
-    }
+    },
+    "n": 36,
+    "mcnemar_p_exploratory": 0.454498291015625
    },
    "low": {
     "SMARTRL": {
@@ -9795,7 +9800,9 @@
     "A1_NOSENT": {
      "acc": 0.3976074614760746,
      "f1": 0.3300463082272917
-    }
+    },
+    "n": 4932,
+    "mcnemar_p_exploratory": 0.25415351344484954
    }
   }
  },

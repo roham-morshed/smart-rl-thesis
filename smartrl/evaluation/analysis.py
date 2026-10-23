@@ -187,6 +187,9 @@ def h2(base: pd.DataFrame, items: list) -> None:
         for grp, mask in (("high", cov >= 0.5), ("low", cov < 0.5)):
             items += [(f"h2.coverage.{grp}.{meth}.acc", float((p[mask] == y[mask]).mean())),
                       (f"h2.coverage.{grp}.{meth}.f1", macro_f1(y[mask], p[mask]))]
+    for grp, mask in (("high", cov >= 0.5), ("low", cov < 0.5)):          # descriptive; the p-value is exploratory
+        items += [(f"h2.coverage.{grp}.n", int(mask.sum())),
+                  (f"h2.coverage.{grp}.mcnemar_p_exploratory", mcnemar_exact(pa[mask] == y[mask], pb[mask] == y[mask])["p"])]
     bt = paired_bootstrap_f1_diff(y, [pa], [pb], reps=frozen()["stats"]["bootstrap"]["reps"])
     items += [("h2.POOLED.mcnemar_p", mcnemar_exact(pa == y, pb == y)["p"]), ("h2.POOLED.f1_diff", bt["est"]),
               ("h2.POOLED.f1_diff_lo", bt["lo"]), ("h2.POOLED.f1_diff_hi", bt["hi"])]

@@ -130,11 +130,11 @@ def run_record(experiment: str, name: str, seed: int | None = None, device: str 
 
 
 def compute_totals() -> dict[str, float]:
-    """gpu_hours, cpu_hours and n_runs over every successful run in the registry."""
+    """gpu_hours, cpu_hours and n_runs over every successful run in the registry (and interrupted stages whose saved outputs are used)."""
     if not REGISTRY.exists():
         return {"gpu_hours": 0.0, "cpu_hours": 0.0, "n_runs": 0}
     con = _registry()
-    rows = con.execute("SELECT device, SUM(seconds), COUNT(*) FROM runs WHERE status='ok' GROUP BY device").fetchall()
+    rows = con.execute("SELECT device, SUM(seconds), COUNT(*) FROM runs WHERE status IN ('ok', 'interrupted') GROUP BY device").fetchall()
     con.close()
     gpu = sum(s for d, s, _ in rows if d and d.startswith("cuda")) / 3600
     cpu = sum(s for d, s, _ in rows if not (d and d.startswith("cuda"))) / 3600

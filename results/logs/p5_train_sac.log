@@ -9,3 +9,12 @@
 [Parallel(n_jobs=6)]: Using backend LokyBackend with 6 concurrent workers.
 [Parallel(n_jobs=6)]: Done   1 tasks      | elapsed: 120.5min
 [Parallel(n_jobs=6)]: Done   6 tasks      | elapsed: 128.1min
+[Parallel(n_jobs=6)]: Using backend LokyBackend with 6 concurrent workers.
+[Parallel(n_jobs=6)]: Done   1 tasks      | elapsed: 117.4min
+[Parallel(n_jobs=6)]: Done   6 tasks      | elapsed: 125.7min
+[Parallel(n_jobs=6)]: Done  13 tasks      | elapsed: 353.7min
+[Parallel(n_jobs=6)]: Done  20 tasks      | elapsed: 470.8min
+[Parallel(n_jobs=6)]: Done  28 out of  35 | elapsed: 617.3min remaining: 154.3min
+[Parallel(n_jobs=6)]: Done  32 out of  35 | elapsed: 694.9min remaining: 65.1min
+[Parallel(n_jobs=6)]: Done  35 out of  35 | elapsed: 721.9min finished
+35 trained, 0 already present, 12.03 h
