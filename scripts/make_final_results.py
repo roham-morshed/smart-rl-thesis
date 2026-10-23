@@ -209,8 +209,11 @@ def main() -> None:
 
     # ------------------------------------------------------------------ 3
     w("## 3. Hypotheses: pre-registered verdicts and positive reading\n")
-    w("Verdicts follow the rules fixed in SPEC §12 before P5 (also printed by `scripts/p5_verdicts.py`). The "
-      "\"supported evidence\" column gives the parts of each hypothesis that the data do support.\n")
+    w("Verdicts follow the rules fixed in SPEC §12 before P5 (also printed by `scripts/p5_verdicts.py`). As in "
+      "thesis chapter 4, a hypothesis whose criterion spans several comparisons (H1, H3, H4, H5) is \"partially "
+      "supported\" when its condition holds in some but not all of them; H6 (two of three metrics) and H7 "
+      "(intersection–union test) have no partial outcome. The \"supported evidence\" column gives the parts of each "
+      "hypothesis that the data do support.\n")
     stmt = {
         "H1": "SMART-RL improves cumulative return, Sharpe and drawdown over price-only and single-module methods (B2–B7)",
         "H2": "sentiment raises decision accuracy against the no-sentiment system",

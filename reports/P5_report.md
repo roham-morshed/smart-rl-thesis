@@ -11,8 +11,8 @@ Summary (written in English at Roham's request, 2026-10-23, so the report can be
   - SMART-RL's drawdown is smaller than buy-and-hold's in every market and every test year.
 - **Forward test (2025-01 to 2026-09):** Sharpe 1.045 for SMART-RL, against 1.022 for buy-and-hold and 0.815 for the
   base paper's strategy.
-- **Pre-registered verdicts:** the strict rules (Holm, intersection–union) are not met for H1–H7, so no Sharpe
-  superiority is claimed.
+- **Pre-registered verdicts:** H3 and H5 are partially supported. H1, H2, H4, H6 and H7 are not supported under the
+  strict rules (Holm, intersection–union), so no Sharpe superiority is claimed.
 - **Supported, defensible contributions:**
   - Risk reduction.
   - AWS stabilises decisions: turnover halves (p = 0.003) and the decision flip rate falls (p < 0.001).

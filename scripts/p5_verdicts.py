@@ -1,4 +1,7 @@
 """Apply the verdict rules of SPEC §12 (fixed before P5) to results/results.json and print a Markdown table.
+H1, H3, H4 and H5 use the thesis's rule (chapter 4): a condition met in only some of the required comparisons is
+"partially supported" (SPEC §12 states this for H1); H6 (two of three metrics) and H7 (intersection-union test) have
+no partial outcome.
 
 Reads only results.json; writes nothing. The thesis applies the same rules to the same keys.
 
@@ -29,6 +32,11 @@ def fmt(v) -> str:
     return "n/a" if v is None else (f"{v:.4f}" if isinstance(v, float) else str(v))
 
 
+def part(n: int, total: int) -> str:
+    """Thesis rule (chapter 4) for H1, H3, H4 and H5: condition met in some but not all comparisons = partial."""
+    return "supported" if n == total else ("partially supported" if n > 0 else "not supported")
+
+
 def h1(t: dict, pre: str) -> tuple[str, str]:
     ps = {b: get(t, f"{pre}tests.h1.p_holm.{b}") for b in H1_BASELINES}
     if any(p is None for p in ps.values()):
@@ -50,31 +58,32 @@ def h2(t: dict) -> tuple[str, str]:
 def h3(t: dict) -> tuple[str, str]:
     sf, a, b = (get(t, f"sentiflow.pooled.{m}.f1") for m in ("SF", "A", "B"))
     pa, pb = get(t, "sentiflow.tests.pooled.mcnemar_sf_a_median_p"), get(t, "sentiflow.tests.pooled.mcnemar_sf_b_median_p")
-    if None in (sf, a, b, pa, pb):
+    da, db = get(t, "sentiflow.tests.pooled.f1_diff_sf_a"), get(t, "sentiflow.tests.pooled.f1_diff_sf_b")
+    if None in (sf, a, b, pa, pb, da, db):
         return "n/a", "missing keys"
-    ok = sf > a and sf > b and pa < ALPHA and pb < ALPHA
-    return ("supported" if ok else "not supported"), (f"F1 SF {fmt(sf)}, A {fmt(a)}, B {fmt(b)}; median McNemar p "
-                                                      f"SF-A {fmt(pa)}, SF-B {fmt(pb)}")
+    n = int(da > 0 and pa < ALPHA) + int(db > 0 and pb < ALPHA)
+    return part(n, 2), (f"{n}/2 branches: F1 SF {fmt(sf)}, A {fmt(a)}, B {fmt(b)}; median McNemar p "
+                        f"SF-A {fmt(pa)}, SF-B {fmt(pb)}")
 
 
 def h4(t: dict) -> tuple[str, str]:
     mm = get(t, "marketmind.h20.MM.pinball")
-    rows, ok = [], mm is not None
+    rows, n = [], 0
     for b in ("LSTM", "GRU"):
         pb, p = get(t, f"marketmind.h20.{b}.pinball"), get(t, f"marketmind.dm.h20.{b}.p")
         if None in (pb, p) or mm is None:
             return "n/a", "missing keys"
-        ok = ok and mm < pb and p < ALPHA
+        n += int(mm < pb and p < ALPHA)
         rows.append(f"{b} {fmt(pb)} (DM p {fmt(p)})")
-    return ("supported" if ok else "not supported"), f"pinball h20 MM {fmt(mm)} vs " + ", ".join(rows)
+    return part(n, 2), f"{n}/2: pinball h20 MM {fmt(mm)} vs " + ", ".join(rows)
 
 
 def h5(t: dict) -> tuple[str, str]:
     ps = {m: get(t, f"h5.{m}.p") for m in MARKETS}
     if any(p is None for p in ps.values()):
         return "n/a", "missing p-values"
-    ok = all(p < ALPHA for p in ps.values())
-    return ("supported" if ok else "not supported"), "placebo p: " + ", ".join(f"{m} {fmt(p)}" for m, p in ps.items())
+    n = sum(p < ALPHA for p in ps.values())
+    return part(n, 4), f"{n}/4 markets, placebo p: " + ", ".join(f"{m} {fmt(p)}" for m, p in ps.items())
 
 
 def h6(t: dict) -> tuple[str, str]:
