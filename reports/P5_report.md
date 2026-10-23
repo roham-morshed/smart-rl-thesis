@@ -31,7 +31,7 @@ Summary (written in English at Roham's request, 2026-10-23, so the report can be
 | step | runtime |
 | --- | --- |
 | PPO-family arms: SMART-RL, B6, A1, A2, A5 (5 seeds); BC, IMIT (3 seeds); 6 folds × 4 markets; 660 policies, CPU, 6 workers | 9.0 h |
-| SAC (B7), 72 policies on the GPU in four stages (two user pauses and one desktop-app update in between) | 32.2 h wall clock in total |
+| SAC (B7), 72 policies on the GPU in four stages (two user pauses and one desktop-app update in between) | 32.1 h wall clock in total |
 | evaluate: 24 fold × market tasks, base, 0/5/20 bps and one-day delay variants | 4.2 min |
 | analyze: all P5 keys | 2.0 min |
 | G5 leakage tests (11 passed, 1 skipped because it only applies before the lock) | 4.1 min |
