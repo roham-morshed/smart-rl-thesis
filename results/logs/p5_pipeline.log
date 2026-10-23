@@ -9,3 +9,5 @@
 [2026-10-22 21:09:30] START train (PPO arms, CPU) and train_sac (B7, GPU) in parallel
 [2026-10-22 21:09:38] PPO arms finished (exit 0) after 0.00 h
 [2026-10-23 09:11:35] SAC finished (exit 0) after 12.03 h
+[2026-10-23 09:11:36] START evaluate
+[2026-10-23 09:15:50] DONE evaluate in 4.2 min
