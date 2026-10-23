@@ -28,14 +28,16 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-23T05:47:55+00:00",
+  "created_utc": "2026-10-23T05:52:02+00:00",
   "leakage_by_gate": {
    "G1": true,
    "G2": true,
    "G3": true,
-   "G4": true
+   "G4": true,
+   "G5": true
   },
-  "g4_lock_utc": "2026-10-21T18:33:49+00:00"
+  "g4_lock_utc": "2026-10-21T18:33:49+00:00",
+  "leakage_tests_passed": true
  },
  "compute": {
   "gpu_hours": 20.075533048999986,

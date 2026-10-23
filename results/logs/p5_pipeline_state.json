@@ -3,6 +3,7 @@
   "train",
   "evaluate",
   "analyze",
-  "g5_leakage"
+  "g5_leakage",
+  "outputs"
  ]
 }
