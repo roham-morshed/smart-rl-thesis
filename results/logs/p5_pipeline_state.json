@@ -1,6 +1,7 @@
 {
  "done": [
   "train",
-  "evaluate"
+  "evaluate",
+  "analyze"
  ]
 }
