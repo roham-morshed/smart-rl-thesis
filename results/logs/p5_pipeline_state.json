@@ -2,6 +2,7 @@
  "done": [
   "train",
   "evaluate",
-  "analyze"
+  "analyze",
+  "g5_leakage"
  ]
 }
