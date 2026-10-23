@@ -28,7 +28,7 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-23T10:30:54+00:00",
+  "created_utc": "2026-10-23T18:33:49+00:00",
   "leakage_by_gate": {
    "G1": true,
    "G2": true,
@@ -62,7 +62,8 @@
   "e13.overlap: SMARTRL and BASE score = exposure decided at the close of t (prediction 1[e_t > 0.5]); SENTIN_CAUSAL = seed-averaged P(up) of the E13 CAUSAL test predictions; window 2020-01-01 .. 2022-03-31.",
   "compute: wall-clock hours of registry run records by device (status ok, plus three P5 SAC stages stopped from outside - two user pauses and a desktop-app update - closed by scripts/p5_register_interrupted.py with end = save time of their last policy; they saved 37 of the 72 B7 policies). compute.n_runs counts run records (a P5 training stage is one record although it trains many policies: 660 PPO-arm policies and 72 SAC policies in P5).",
   "trading.*.A4_NOCONF: identical to SMARTRL by construction. A4 is AWS with beta = 1 (no confidence term, SPEC ablation table) and the development-phase selection (P4, dev.selected) chose beta = 1.0 for the full system, so the selected SMART-RL already gives the confidence term zero weight; tests.lw.A4_NOCONF (diff 0) confirms the identity.",
-  "h2.coverage.<grp>.n: pooled test days with news coverage cov >= 0.5 (high) or < 0.5 (low); h2.coverage.<grp>.mcnemar_p_exploratory: exact McNemar test of SMART-RL versus A1 decision correctness within the group, added after P5 as an exploratory statistic (not pre-registered, not used by any verdict)."
+  "h2.coverage.<grp>.n: pooled test days with news coverage cov >= 0.5 (high) or < 0.5 (low); h2.coverage.<grp>.mcnemar_p_exploratory: exact McNemar test of SMART-RL versus A1 decision correctness within the group, added after P5 as an exploratory statistic (not pre-registered, not used by any verdict).",
+  "diag.*: post-hoc descriptive diagnostics computed after P5 by scripts/p5_diagnostics.py to explain notable results (delay effect, news coverage, SenT-In output, BASE exposure); not pre-registered and not used by any verdict."
  ],
  "p0": {
   "probe": {
@@ -11063,6 +11064,138 @@
    "FTSE100": 0.248868778280543,
    "NIFTY50": 0.22401847575057737,
    "SSE": 0.28537735849056606
+  }
+ },
+ "diag": {
+  "autocorr_lag1": {
+   "SP500": -0.1819581584537801,
+   "FTSE100": -0.04181308290051628,
+   "NIFTY50": -0.07097437281695493,
+   "SSE": 0.03511488030054648
+  },
+  "delay_sharpe": {
+   "SP500": {
+    "SMARTRL": {
+     "base": 0.6482403068713111,
+     "delay": 0.7002982346568031
+    },
+    "B6_PPOPRICE": {
+     "base": 0.3678320136358896,
+     "delay": 0.40904300851891956
+    },
+    "B8_STATIC": {
+     "base": 0.7031452161231704,
+     "delay": 0.6792219885048765
+    },
+    "BASE": {
+     "base": 0.6511905799287407,
+     "delay": 0.6511905799287407
+    }
+   },
+   "FTSE100": {
+    "SMARTRL": {
+     "base": 0.27364023437543344,
+     "delay": 0.30169239475410276
+    },
+    "B6_PPOPRICE": {
+     "base": 0.19129730347293203,
+     "delay": 0.2422744054064252
+    },
+    "B8_STATIC": {
+     "base": 0.23160962498186063,
+     "delay": 0.25653921580684463
+    },
+    "BASE": {
+     "base": 0.24641606039168673,
+     "delay": 0.5743038504885122
+    }
+   },
+   "NIFTY50": {
+    "SMARTRL": {
+     "base": 0.9398625347724975,
+     "delay": 0.9838801105107584
+    },
+    "B6_PPOPRICE": {
+     "base": 0.5479551890769042,
+     "delay": 0.5961514596657601
+    },
+    "B8_STATIC": {
+     "base": 0.8853717992792562,
+     "delay": 0.896883791548384
+    },
+    "BASE": {
+     "base": 0.8477909637315142,
+     "delay": 0.7308741681944154
+    }
+   },
+   "SSE": {
+    "SMARTRL": {
+     "base": 0.11437174928928467,
+     "delay": 0.11435895738211446
+    },
+    "B6_PPOPRICE": {
+     "base": 0.37232798515821947,
+     "delay": 0.19886283640800673
+    },
+    "B8_STATIC": {
+     "base": 0.12069799387683817,
+     "delay": 0.13494407889458562
+    },
+    "BASE": {
+     "base": -0.12674756389626574,
+     "delay": -0.18964690353180402
+    }
+   }
+  },
+  "news_volume": {
+   "SP500": {
+    "train_median_2010_2018": 3861.0,
+    "test_median_2020_2023": 648.5
+   },
+   "FTSE100": {
+    "train_median_2010_2018": 98.0,
+    "test_median_2020_2023": 4.0
+   },
+   "NIFTY50": {
+    "train_median_2010_2018": 63.5,
+    "test_median_2020_2023": 3.0
+   },
+   "SSE": {
+    "train_median_2010_2018": 160.0,
+    "test_median_2020_2023": 8.0
+   }
+  },
+  "aws_coverage": {
+   "high_n": 36,
+   "low_n": 4932
+  },
+  "sentin_causal": {
+   "SP500": {
+    "p_up_min": 0.4536444942156474,
+    "p_up_max": 0.49919745326042175,
+    "share_above_half": 0.0
+   },
+   "FTSE100": {
+    "p_up_min": 0.4311539928118388,
+    "p_up_max": 0.4918268620967865,
+    "share_above_half": 0.0
+   },
+   "NIFTY50": {
+    "p_up_min": 0.5261345505714417,
+    "p_up_max": 0.5513772567113241,
+    "share_above_half": 1.0
+   },
+   "SSE": {
+    "p_up_min": 0.5506743788719177,
+    "p_up_max": 0.616854727268219,
+    "share_above_half": 1.0
+   }
+  },
+  "base_invested_share": {
+   "SP500": 1.0,
+   "FTSE100": 0.4734337827121332,
+   "NIFTY50": 0.7890056588520614,
+   "SSE": 0.7698019801980198
   }
  }
 }

@@ -312,21 +312,24 @@ def main() -> None:
 
     # ------------------------------------------------------------------ 7
     w("## 7. Adaptive weighting (AWS) behaviour (T16, F12)\n")
-    w(table(["market", "mean w_RL", "sd w_RL", "regret (log-wealth)"],
+    w(table(["market", "mean w_RL", "sd w_RL", "regret (log-wealth, mean per test year)"],
             [[MKT[m], f3(f"aws.{m}.w_rl_mean"), f3(f"aws.{m}.w_rl_sd"), f3(f"aws.{m}.regret")] for m in MARKETS]) + "\n")
     w(table(["condition", "mean w_RL"], [["bull regime", f3("aws.regime.bull.w_rl_mean")],
                                          ["bear regime", f3("aws.regime.bear.w_rl_mean")],
                                          ["sideways regime", f3("aws.regime.sideways.w_rl_mean")],
-                                         ["high news coverage", f3("aws.coverage.high.w_rl_mean")],
-                                         ["low news coverage", f3("aws.coverage.low.w_rl_mean")]]) + "\n")
+                                         [f"high news coverage (n = {int(g('diag.aws_coverage.high_n'))} market-days, "
+                                          "too few to interpret)", f3("aws.coverage.high.w_rl_mean")],
+                                         [f"low news coverage (n = {int(g('diag.aws_coverage.low_n')):,} market-days)",
+                                          f3("aws.coverage.low.w_rl_mean")]]) + "\n")
     w(table(["stability", "SMART-RL (with AWS)", "A3 (no AWS)", "paired test p"],
             [["daily turnover", f"{g('h6.stability.SMARTRL.turnover'):.4f}", f"{g('h6.stability.A3_NOAWS.turnover'):.4f}",
               pv("h6.stability.tests.turnover_p")],
              ["decision flip rate", f3("h6.stability.SMARTRL.flip_rate"), f3("h6.stability.A3_NOAWS.flip_rate"),
               pv("h6.stability.tests.flip_p")]]) + "\n")
     regs = [g(f"aws.{m}.regret") for m in MARKETS]
-    w(f"Regret is small (log-wealth gap to the better expert in hindsight of {min(regs):.3f}–{max(regs):.3f} over five "
-      "years), i.e. AWS tracks the better of its two experts closely without knowing in advance which one it is.\n")
+    w(f"Regret is small (log-wealth gap to the better expert in hindsight of {min(regs):.3f}–{max(regs):.3f} per test "
+      "year on average), i.e. AWS tracks the better of its two experts closely without knowing in advance which one it "
+      "is.\n")
 
     # ------------------------------------------------------------------ 8
     w("## 8. Robustness (T17, T18, F13)\n")
@@ -344,6 +347,16 @@ def main() -> None:
       "and 2022 sell-offs. SMART-RL beats buy-and-hold in bull and sideways regimes and ranks "
       f"{rank_by('robust.regime.sideways', 'sharpe', METHODS).index('SMARTRL') + 1} of {len(METHODS)} in sideways "
       "markets.\n")
+    w("### 8.3 Why a one-day execution delay raises the Sharpe (post-hoc diagnostic, `diag.*`)\n")
+    w("The delay code was checked: the decision of the close of t−1 earns the return of t+1, so there is no look-ahead. "
+      "The gain comes from the short-term reversal of index returns in 2020–2024. Risk-off moves made after a down day "
+      "miss the next-day rebound; made one day later, they do not. The gain appears only where the lag-1 "
+      "autocorrelation is negative.\n")
+    w(table(["market", "lag-1 autocorrelation 2020–2024", "SMART-RL Sharpe (base → delay)", "B6 Sharpe (base → delay)",
+             "BASE Sharpe (base → delay)"],
+            [[MKT[m], f"{g(f'diag.autocorr_lag1.{m}'):+.3f}"] +
+             [f"{f3(f'diag.delay_sharpe.{m}.{x}.base')} → {f3(f'diag.delay_sharpe.{m}.{x}.delay')}"
+              for x in ("SMARTRL", "B6_PPOPRICE", "BASE")] for m in MARKETS]) + "\n")
 
     # ------------------------------------------------------------------ 9
     w("## 9. Forward test 2025-01 to 2026-09 (T19, F14)\n")
@@ -404,7 +417,10 @@ def main() -> None:
       f"in the development diagnostic the best checkpoint gave a dev-test Sharpe of "
       f"{f3('dev.diagnostic.checkpoint.AWS_best.test.sharpe')} against {f3('dev.diagnostic.checkpoint.AWS_final.test.sharpe')} "
       "for the final one (`dev.diagnostic.checkpoint.*`). The imitation-reward arm reached the highest test Sharpe of "
-      "the PPO arms; behaviour cloning gave the most stable learning curve.\n")
+      "the PPO arms; behaviour cloning gave the most stable learning curve. The H6 arms are 3-seed ensembles "
+      "(seeds 0–2) for a like-for-like comparison with BC and IMIT, so CURR's test Sharpe "
+      f"({f3('h6.CURR.test_sharpe')}) differs from A3's ({f3('trading.COMBINED.A3_NOAWS.sharpe')}), which is the full "
+      "5-seed ensemble of the same PPO.\n")
 
     # ------------------------------------------------------------------ 14
     w("## 14. SentiFlow, financial sentiment (E1, H3; T03, T04, F02, F03)\n")
@@ -463,6 +479,17 @@ def main() -> None:
     w("The published accuracy of 0.873 (Chauhan et al. 2025) is not reached by any protocol. Removing the forward-filled "
       "calendar rows alone takes SenT-In from about 0.64 to chance, and the up-share of the test labels explains the "
       "remaining accuracy. This is a reusable lesson for evaluating news-driven direction models.\n")
+    w("SenT-In's output is almost constant under the causal protocol: its seed-averaged P(up) stays in a narrow band "
+      "close to 0.5, and which side of 0.5 it falls on decides every prediction (`diag.sentin_causal.*`). The same "
+      "holds for BASE in trading. It is invested on " +
+      ", ".join(f"{MKT[m]} {pct(f'diag.base_invested_share.{m}', 0)}" for m in MARKETS) +
+      " of the confirmation days, so in the S&P 500 BASE equals buy-and-hold: Sharpe "
+      f"{f3('trading.SP500.BASE.sharpe')} vs {f3('trading.SP500.B1_BH.sharpe')}, drawdown {pct('trading.SP500.BASE.mdd')} "
+      f"vs {pct('trading.SP500.B1_BH.mdd')}.\n")
+    w(table(["market", "SenT-In P(up) min", "SenT-In P(up) max", "share of days P(up) > 0.5", "BASE invested share"],
+            [[MKT[m], f3(f"diag.sentin_causal.{m}.p_up_min"), f3(f"diag.sentin_causal.{m}.p_up_max"),
+              pct(f"diag.sentin_causal.{m}.share_above_half", 0), pct(f"diag.base_invested_share.{m}", 0)]
+             for m in MARKETS]) + "\n")
     w("Overlap window 2020-01-01..2022-03-31, AUC of next-day direction (`e13.overlap.<market>.<model>.auc`):\n")
     w(table(["market", "SMART-RL", "BASE", "SenT-In (causal)"],
             [[MKT[m]] + [f3(f"e13.overlap.{m}.{x}.auc") for x in ("SMARTRL", "BASE", "SENTIN_CAUSAL")] for m in MARKETS]) + "\n")
@@ -502,8 +529,14 @@ def main() -> None:
         f"S&P 500 {pct('data.news.market.SP500.share_days_with_local_by_year.2024', 0)}, FTSE 100 "
         f"{pct('data.news.market.FTSE100.share_days_with_local_by_year.2024', 0)}), and on {int(g('h2.coverage.low.n'))} "
         f"of {int(g('h2.coverage.low.n') + g('h2.coverage.high.n'))} test days local volume was below half of the training "
-        "median. Addressed by the pre-registered 2020–2023 sub-period (section 10); with fuller news the sentiment "
-        "module could contribute more.",
+        "median. The cause is source composition: Bloomberg/Reuters ends in 2016. Median local items per day, 2010–2018 "
+        "against 2020–2023: " +
+        ", ".join(f"{MKT[m]} {g(f'diag.news_volume.{m}.train_median_2010_2018'):,.0f} → "
+                  f"{g(f'diag.news_volume.{m}.test_median_2020_2023'):,.0f}" for m in MARKETS) +
+        " (`diag.news_volume.*`). In the test years the sentiment module therefore relied mostly on the global (all-market) "
+        "index. The coverage definition was not changed after the lock. Future work: normalise coverage with a "
+        "trailing window. Also addressed by the pre-registered 2020–2023 sub-period (section 10); with fuller local "
+        "news the sentiment module could contribute more.",
         "**SSE dividends.** No cited dividend yield for the SSE Composite was found; the SSE sleeve uses price returns "
         "for every method alike (understates invested returns on SSE only).",
         "**Corpus scoring with one seed.** Five-seed scoring of 19.4 M headlines would exceed the 12 h budget; seed 0 "
@@ -528,7 +561,7 @@ def main() -> None:
         "11 tests and skipped the one that only applies before the lock.",
         "A dry run of evaluate → analyze → outputs on a scratch copy before the final run found no error "
         "(`results/logs/p5_dryrun.log`).",
-        "Re-running the H2 analysis reproduced all 58 stored values exactly (deterministic bootstrap seeds).",
+        "Re-running the H2 analysis reproduced all 58 stored values exactly (deterministic bootstrap seeds). Three results that looked odd were traced to their causes (section 8.3, section 16, section 19): none is a bug.",
         "Fixed during the audit: (1) compute hours now include three SAC stages stopped from outside (two pauses, one "
         "desktop-app update) that saved 37 of the 72 SAC policies (scripts/p5_register_interrupted.py); (2) figure F12 "
         "had a title inside the image, replaced by a legend; (3) the A4 = SMART-RL identity is now explained in the "
