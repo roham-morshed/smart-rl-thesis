@@ -78,12 +78,14 @@ def subset_files(subset: str) -> list[Path]:
     return out
 
 
-def extract_subset(subset: str, files: list[Path] | None = None) -> dict:
-    """Write data/processed/news_parts/<subset>.parquet (source, ts_utc, day_only, headline) and return counts."""
+def extract_subset(subset: str, files: list[Path] | None = None, date_range: list[str] | None = None,
+                   parts_dir: Path | None = None) -> dict:
+    """Write <parts_dir>/<subset>.parquet (source, ts_utc, day_only, headline) and return counts. Defaults: the frozen
+    news.date_range and data/processed/news_parts (P6 passes 2005-2006 and its own folder)."""
     import duckdb
     cfg = frozen()["news"]
     files = files if files is not None else subset_files(subset)
-    lo, hi = cfg["date_range"]
+    lo, hi = date_range or cfg["date_range"]
     business = subset in cfg.get("business_only_subsets", [])
     con = duckdb.connect()
     flist = "[" + ",".join("'" + str(p).replace("\\", "/") + "'" for p in files) + "]"
@@ -101,10 +103,11 @@ def extract_subset(subset: str, files: list[Path] | None = None) -> dict:
     rel = con.execute(q)
     import pyarrow as pa
     import pyarrow.parquet as pq
-    PARTS.mkdir(parents=True, exist_ok=True)
+    parts_dir = parts_dir or PARTS
+    parts_dir.mkdir(parents=True, exist_ok=True)
     schema = pa.schema([("source", pa.string()), ("ts_utc", pa.timestamp("us", tz="UTC")), ("day_only", pa.bool_()),
                         ("headline", pa.string())])
-    writer = pq.ParquetWriter(PARTS / f"{subset}.parquet", schema)
+    writer = pq.ParquetWriter(parts_dir / f"{subset}.parquet", schema)
     n_raw = n_short = n_nonbusiness = n_out = n_day = n_ny_midnight = 0
     desks: dict = {}
     max_tok, min_tok = cfg["max_tokens"], cfg["min_tokens"]
@@ -163,10 +166,13 @@ def tag_patterns() -> dict[str, tuple[str | None, str | None]]:
                   _boundary_regex(v["acronyms"]) if v.get("acronyms") else None) for tag, v in kw.items()}
 
 
-def dedupe_and_tag(subsets: list[str]) -> dict:
-    """Global dedup over all parts, then tags; writes news_items.parquet (id, source, ts_utc, headline, tags...)."""
+def dedupe_and_tag(subsets: list[str], parts_dir: Path | None = None, out: Path | None = None) -> dict:
+    """Global dedup over all parts, then tags; writes news_items.parquet (id, source, ts_utc, headline, tags...).
+    P6 passes its own parts folder and output file."""
     import duckdb
-    files = ",".join("'" + str(PARTS / f"{s}.parquet").replace("\\", "/") + "'" for s in subsets)
+    parts_dir, out = parts_dir or PARTS, out or ITEMS
+    files = ",".join("'" + str(parts_dir / f"{s}.parquet").replace("\\", "/") + "'" for s in subsets
+                     if (parts_dir / f"{s}.parquet").exists())
     con = duckdb.connect()
     con.execute("SET preserve_insertion_order=false")
     con.execute(f"""
@@ -200,7 +206,7 @@ def dedupe_and_tag(subsets: list[str]) -> dict:
                {', '.join(cols)}
         FROM ranked WHERE rn = 1
     """)
-    con.execute(f"COPY kept TO '{str(ITEMS).replace(chr(92), '/')}' (FORMAT PARQUET)")
+    con.execute(f"COPY kept TO '{str(out).replace(chr(92), '/')}' (FORMAT PARQUET)")
     n_after = con.execute("SELECT count(*) FROM kept").fetchone()[0]
     by_src = con.execute("SELECT source, count(*), min(ts_utc), max(ts_utc) FROM kept GROUP BY source").fetchall()
     tags = {t: con.execute(f"SELECT count(*) FROM kept WHERE tag_{t}").fetchone()[0] for t in pats}

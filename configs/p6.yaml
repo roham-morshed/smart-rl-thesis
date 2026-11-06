@@ -1,0 +1,82 @@
+# Phase P6 settings (docs/P6_BASE_PROTOCOL.md, version 2, pre-registered in commit aaf78ff).
+# configs/frozen.yaml is not changed; every P6 run record stores the SHA-256 of this file (params.p6_hash).
+protocol: {file: docs/P6_BASE_PROTOCOL.md, version: 2, commit: aaf78ff}
+
+e14:
+  window: ["2005-01-01", "2022-03-31"]        # calendar dates; the last date only provides the next close
+  history_start: "2003-01-01"                 # look-back windows and long features only, never labelled rows
+  expected: {calendar_dates: 6299, labelled_rows: 6298, pub_train: 5038, pub_test: 1260}
+  pub_c: {train_end: "2018-10-17", test_start: "2018-10-18", test_end: "2022-03-30"}
+  random_seed: 2026                           # PUB_R permutation, PUB_R validation draw, bootstrap
+  val_share: 0.10                             # validation slice of the training rows, only for recipes that use one
+  lookback: 96
+  inputs: [open, high, low, close, volume]    # + the sentiment index as the last column
+  nifty: {source_csv: data/raw/nifty50_2003_2008.csv, yahoo_from: "2007-09-17", check_days: 20, max_rel_diff: 0.001}
+  causal_train_share: 0.80
+  news_start: "2005-01-01"
+  seeds: [0, 1, 2]
+  threshold: 0.5                              # probability models; SVM uses decision > 0, MM_DIR q50 >= 0 (GE) / > 0 (GT)
+  a_paper:                                    # protocol §2.2, paper Table 2
+    gru_hidden: 128
+    conv_filters: 64
+    kernel: 3
+    pool: 2
+    dropout: 0.1
+    max_len: 48
+    epochs: 400
+    optimizer: adam                           # Table 2 gives lr 0.01 but no optimiser
+    lr: 0.01
+    batch: 64
+    max_scoring_hours: 3
+  svm: {C: 1.0, gamma: scale, window: 10}
+  paper_nn: {optimizer: adam, lr: 0.01, batch: 64, epochs: 100, dropout: 0.1, pool: 2}   # CNN_P, LSTM_P, GRU_P
+  cnn: {filters: 32, kernel: 3}
+  rnn: {hidden: 64, layers: 2}
+  sentin_paper: {gru_hidden: 64, optimizer: sgd, lr: 0.001, batch: 256, epochs: 100, dropout: 0.1}  # Table 3, MSE on sigmoid
+  mm_cls: {lr: 0.001, weight_decay: 0.0001, batch: 128, max_epochs: 60, patience: 8, grad_clip: 1.0}  # SPEC §4.5 + BCE
+  settings:
+    full: [PUB_C_GE, PUB_R_GE, CAUSAL]
+    gt: [PUB_C_GT, PUB_R_GT]
+    la: [PUB_C_GE_LA, PUB_R_GE_LA]
+    robust: [PUB_C_GE_ROBUST]
+  models:
+    full: [SVM_P, CNN_P, LSTM_P, GRU_P, SENTIN_PAPER, SENTIN_E13, SENTIN_SF_PAPER, SENTIN_SF_E13, MM_CLS, MM_DIR]
+    gt: [GRU_P, SENTIN_PAPER, SENTIN_SF_PAPER, MM_CLS, MM_DIR]
+    la: [SVM_P, GRU_P, SENTIN_PAPER, SENTIN_SF_PAPER, MM_CLS]
+    robust: [SENTIN_PAPER, MM_CLS]
+  tests: {mean_block: 10, reps: 10000, seed: 2026, alpha: 0.05}
+  primary: [[MM_CLS, SENTIN_PAPER], [SENTIN_SF_PAPER, SENTIN_PAPER]]
+  v2: [[MM_CLS, SENTIN_E13], [SENTIN_SF_E13, SENTIN_E13]]
+  v4: [[MM_CLS, SENTIN_PAPER], [SENTIN_SF_PAPER, SENTIN_PAPER], [MM_CLS, SENTIN_E13], [SENTIN_SF_E13, SENTIN_E13]]
+  paper_sentin_acc: {SP500: 0.8159, FTSE100: 0.9579, SSE: 0.8770, NIFTY50: 0.8414}   # Tables 4-7, drawn in F19
+
+e15:
+  train: ["2010-01-01", "2017-10-17"]
+  val: ["2017-10-18", "2018-10-17"]
+  test: ["2018-10-18", "2022-03-31"]
+  sub: ["2020-01-01", "2022-03-31"]
+  costs_bps: [10, 20]
+
+# Readings of points the protocol leaves open (recorded in reports/P6_report.md).
+interpretations:
+  mm_cls_frozen: >-
+    "MarketMind encoder, tokens and sentiment gate frozen (SPEC §4.1-4.3)" is read as the frozen SPEC design:
+    the model is trained from scratch on each protocol's training rows. Weights of earlier MarketMind fits are not
+    reused, because they were trained on dates inside the E14 test periods.
+  mm_on_calendar_rows: >-
+    Under PUB_C and PUB_R the MarketMind price features (SPEC §2.2) and SentiFlow features (§3.9) are computed on the
+    forward-filled calendar rows (the paper's row grid); under CAUSAL on each market's trading days.
+  mm_dir_targets: >-
+    MM_DIR trains its quantile heads on training rows whose 20-row target is known; under PUB_C the target window must
+    end inside the training rows (as in the annual refits).
+  sentin_paper_gru: >-
+    The GRU (eqs 7-11) runs over the weighted encoder inputs; its hidden states replace the Informer value embedding
+    of the encoder tokens. The decoder tokens are the last 48 GRU states plus one GRU step on the zero placeholder.
+  a_paper_padding: >-
+    Headlines are padded to 48 tokens; GRU outputs at padded positions are zeroed before the convolution (as in
+    Branch A). The convolution has no padding (48 -> 46), MaxPool1d(2) -> 23, flatten 23 x 64.
+  rnn_dropout: dropout 0.1 between the two recurrent layers and on the last hidden state.
+  robust_scaling: (x - median) / IQR fitted on the same rows as the q01/q99 scaling, no clipping.
+  la_ghost_row: >-
+    LA windows end at row t+1 with close = C_t and the open, high, low, volume and sentiment of t+1. For MM_CLS the
+    price features of that row are recomputed from the modified close (r_k, rv, range, rsi, macd, gaps, dd252, vchg).

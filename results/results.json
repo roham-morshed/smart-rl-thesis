@@ -28,7 +28,7 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-10-23T18:33:49+00:00",
+  "created_utc": "2026-11-06T18:39:31+00:00",
   "leakage_by_gate": {
    "G1": true,
    "G2": true,
@@ -63,7 +63,11 @@
   "compute: wall-clock hours of registry run records by device (status ok, plus three P5 SAC stages stopped from outside - two user pauses and a desktop-app update - closed by scripts/p5_register_interrupted.py with end = save time of their last policy; they saved 37 of the 72 B7 policies). compute.n_runs counts run records (a P5 training stage is one record although it trains many policies: 660 PPO-arm policies and 72 SAC policies in P5).",
   "trading.*.A4_NOCONF: identical to SMARTRL by construction. A4 is AWS with beta = 1 (no confidence term, SPEC ablation table) and the development-phase selection (P4, dev.selected) chose beta = 1.0 for the full system, so the selected SMART-RL already gives the confidence term zero weight; tests.lw.A4_NOCONF (diff 0) confirms the identity.",
   "h2.coverage.<grp>.n: pooled test days with news coverage cov >= 0.5 (high) or < 0.5 (low); h2.coverage.<grp>.mcnemar_p_exploratory: exact McNemar test of SMART-RL versus A1 decision correctness within the group, added after P5 as an exploratory statistic (not pre-registered, not used by any verdict).",
-  "diag.*: post-hoc descriptive diagnostics computed after P5 by scripts/p5_diagnostics.py to explain notable results (delay effect, news coverage, SenT-In output, BASE exposure); not pre-registered and not used by any verdict."
+  "diag.*: post-hoc descriptive diagnostics computed after P5 by scripts/p5_diagnostics.py to explain notable results (delay effect, news coverage, SenT-In output, BASE exposure); not pre-registered and not used by any verdict.",
+  "e14.data.*: calendar rows 2005-01-01..2022-03-31 (the last date only provides the next close); NIFTY 50 before 2007-09-17 from NSE Indices (niftyindices.com), Yahoo from 2007-09-17; nifty_splice_maxdiff = max relative close difference on the first 20 common days.",
+  "e14.causal.zero_change: trading-day samples of 2005-01-01..2022-03-31 with C_{t+1} = C_t (the only rows where labels GE and GT differ under CAUSAL).",
+  "e14.news: headline counts per UTC year of the multisource corpus (P1 rules; 2005-2006 extracted in P6 with the same code), local = the market's tag, global = every kept headline.",
+  "e14.a_paper: the base paper's GRU-CNN sentiment classifier trained with its Table 2 recipe (400 epochs, lr 0.01, Adam, batch 64, dropout 0.1, pool 2, no early stopping), mean and sd over seeds 0-2 on the SPEC §2.4 test splits."
  ],
  "p0": {
   "probe": {
@@ -11196,6 +11200,377 @@
    "FTSE100": 0.4734337827121332,
    "NIFTY50": 0.7890056588520614,
    "SSE": 0.7698019801980198
+  }
+ },
+ "e14": {
+  "data": {
+   "SP500": {
+    "calendar_rows": 6299,
+    "labelled_rows": 6298,
+    "trading_rows": 4342,
+    "first_date": "2005-01-01",
+    "last_date": "2022-03-31"
+   },
+   "FTSE100": {
+    "calendar_rows": 6299,
+    "labelled_rows": 6298,
+    "trading_rows": 4358,
+    "first_date": "2005-01-01",
+    "last_date": "2022-03-31"
+   },
+   "NIFTY50": {
+    "calendar_rows": 6299,
+    "labelled_rows": 6298,
+    "trading_rows": 4237,
+    "first_date": "2005-01-01",
+    "last_date": "2022-03-31",
+    "nifty_splice_maxdiff": 4.296170252882092e-08
+   },
+   "SSE": {
+    "calendar_rows": 6299,
+    "labelled_rows": 6298,
+    "trading_rows": 4186,
+    "first_date": "2005-01-01",
+    "last_date": "2022-03-31"
+   }
+  },
+  "causal": {
+   "zero_change": {
+    "SP500": 2,
+    "FTSE100": 6,
+    "NIFTY50": 4,
+    "SSE": 0
+   }
+  },
+  "news": {
+   "SP500": {
+    "2005": {
+     "local": 9519,
+     "global": 33535
+    },
+    "2006": {
+     "local": 9987,
+     "global": 44343
+    },
+    "2007": {
+     "local": 346518,
+     "global": 665860
+    },
+    "2008": {
+     "local": 847218,
+     "global": 1624240
+    },
+    "2009": {
+     "local": 794003,
+     "global": 1499249
+    },
+    "2010": {
+     "local": 1015419,
+     "global": 1965233
+    },
+    "2011": {
+     "local": 1313220,
+     "global": 2391713
+    },
+    "2012": {
+     "local": 1294935,
+     "global": 2421145
+    },
+    "2013": {
+     "local": 1038361,
+     "global": 1867489
+    },
+    "2014": {
+     "local": 1010727,
+     "global": 1787374
+    },
+    "2015": {
+     "local": 1114484,
+     "global": 1897368
+    },
+    "2016": {
+     "local": 576870,
+     "global": 801719
+    },
+    "2017": {
+     "local": 287799,
+     "global": 313293
+    },
+    "2018": {
+     "local": 366524,
+     "global": 650086
+    },
+    "2019": {
+     "local": 390169,
+     "global": 417718
+    },
+    "2020": {
+     "local": 223929,
+     "global": 256018
+    },
+    "2021": {
+     "local": 124814,
+     "global": 156844
+    },
+    "2022": {
+     "local": 44963,
+     "global": 53919
+    }
+   },
+   "FTSE100": {
+    "2005": {
+     "local": 281,
+     "global": 33535
+    },
+    "2006": {
+     "local": 455,
+     "global": 44343
+    },
+    "2007": {
+     "local": 11790,
+     "global": 665860
+    },
+    "2008": {
+     "local": 24385,
+     "global": 1624240
+    },
+    "2009": {
+     "local": 20311,
+     "global": 1499249
+    },
+    "2010": {
+     "local": 36673,
+     "global": 1965233
+    },
+    "2011": {
+     "local": 43073,
+     "global": 2391713
+    },
+    "2012": {
+     "local": 40289,
+     "global": 2421145
+    },
+    "2013": {
+     "local": 30680,
+     "global": 1867489
+    },
+    "2014": {
+     "local": 24368,
+     "global": 1787374
+    },
+    "2015": {
+     "local": 23035,
+     "global": 1897368
+    },
+    "2016": {
+     "local": 15023,
+     "global": 801719
+    },
+    "2017": {
+     "local": 1001,
+     "global": 313293
+    },
+    "2018": {
+     "local": 7141,
+     "global": 650086
+    },
+    "2019": {
+     "local": 2304,
+     "global": 417718
+    },
+    "2020": {
+     "local": 1709,
+     "global": 256018
+    },
+    "2021": {
+     "local": 1055,
+     "global": 156844
+    },
+    "2022": {
+     "local": 246,
+     "global": 53919
+    }
+   },
+   "NIFTY50": {
+    "2005": {
+     "local": 140,
+     "global": 33535
+    },
+    "2006": {
+     "local": 264,
+     "global": 44343
+    },
+    "2007": {
+     "local": 6591,
+     "global": 665860
+    },
+    "2008": {
+     "local": 15100,
+     "global": 1624240
+    },
+    "2009": {
+     "local": 14534,
+     "global": 1499249
+    },
+    "2010": {
+     "local": 19804,
+     "global": 1965233
+    },
+    "2011": {
+     "local": 23086,
+     "global": 2391713
+    },
+    "2012": {
+     "local": 25997,
+     "global": 2421145
+    },
+    "2013": {
+     "local": 21501,
+     "global": 1867489
+    },
+    "2014": {
+     "local": 14828,
+     "global": 1787374
+    },
+    "2015": {
+     "local": 16424,
+     "global": 1897368
+    },
+    "2016": {
+     "local": 6937,
+     "global": 801719
+    },
+    "2017": {
+     "local": 475,
+     "global": 313293
+    },
+    "2018": {
+     "local": 5583,
+     "global": 650086
+    },
+    "2019": {
+     "local": 1395,
+     "global": 417718
+    },
+    "2020": {
+     "local": 857,
+     "global": 256018
+    },
+    "2021": {
+     "local": 673,
+     "global": 156844
+    },
+    "2022": {
+     "local": 127,
+     "global": 53919
+    }
+   },
+   "SSE": {
+    "2005": {
+     "local": 699,
+     "global": 33535
+    },
+    "2006": {
+     "local": 673,
+     "global": 44343
+    },
+    "2007": {
+     "local": 16268,
+     "global": 665860
+    },
+    "2008": {
+     "local": 32050,
+     "global": 1624240
+    },
+    "2009": {
+     "local": 29827,
+     "global": 1499249
+    },
+    "2010": {
+     "local": 46928,
+     "global": 1965233
+    },
+    "2011": {
+     "local": 44143,
+     "global": 2391713
+    },
+    "2012": {
+     "local": 50767,
+     "global": 2421145
+    },
+    "2013": {
+     "local": 44169,
+     "global": 1867489
+    },
+    "2014": {
+     "local": 45926,
+     "global": 1787374
+    },
+    "2015": {
+     "local": 52428,
+     "global": 1897368
+    },
+    "2016": {
+     "local": 26472,
+     "global": 801719
+    },
+    "2017": {
+     "local": 2621,
+     "global": 313293
+    },
+    "2018": {
+     "local": 17642,
+     "global": 650086
+    },
+    "2019": {
+     "local": 7357,
+     "global": 417718
+    },
+    "2020": {
+     "local": 4494,
+     "global": 256018
+    },
+    "2021": {
+     "local": 1738,
+     "global": 156844
+    },
+    "2022": {
+     "local": 446,
+     "global": 53919
+    }
+   }
+  },
+  "a_paper": {
+   "phrasebank50": {
+    "acc": 0.7167125803489439,
+    "acc_sd": 0.014856464359378764,
+    "macro_f1": 0.6443014968177276,
+    "macro_f1_sd": 0.02699752413492747
+   },
+   "phrasebank_all": {
+    "acc": 0.8285714285714286,
+    "acc_sd": 0.014547859349066168,
+    "macro_f1": 0.7818450144475833,
+    "macro_f1_sd": 0.01732005195857031
+   },
+   "fiqa": {
+    "acc": 0.5289421157684631,
+    "acc_sd": 0.017285936203282216,
+    "macro_f1": 0.4909010320954095,
+    "macro_f1_sd": 0.019867913607270696
+   },
+   "twitter": {
+    "acc": 0.7832069643358608,
+    "acc_sd": 0.010995097978349844,
+    "macro_f1": 0.6941326209987374,
+    "macro_f1_sd": 0.0131426394418223
+   },
+   "pooled": {
+    "acc": 0.7395833333333334,
+    "acc_sd": 0.006125485530005232,
+    "macro_f1": 0.671260978281143,
+    "macro_f1_sd": 0.011461262474916549
+   }
   }
  }
 }
