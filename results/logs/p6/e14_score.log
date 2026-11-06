@@ -1,0 +1,4 @@
+A_PAPER seed 0 scored 11,235,054 headlines in 4.0 min
+A_PAPER seed 1 scored 11,235,054 headlines in 4.1 min
+A_PAPER seed 2 scored 11,235,054 headlines in 3.6 min
+{'n_headlines': 11235054, 'seeds_used': [0, 1, 2], 'hours': 0.1944174322154787}

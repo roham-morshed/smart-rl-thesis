@@ -1,0 +1,10 @@
+MM seed 0 train_end 2018-10-17: 8579 train / 956 val rows
+  fit: 21 epochs, best 12, val 0.5885, 109s
+LSTM_PRICE seed 0 train_end 2018-10-17: 8579 train / 956 val rows
+  fit: 22 epochs, best 13, val 0.4700, 29s
+BASE SP500: {'epochs': 12, 'best_val_auc': 0.5378030011542901, 'best_epoch': 1}
+BASE FTSE100: {'epochs': 22, 'best_val_auc': 0.5647727272727273, 'best_epoch': 11}
+BASE NIFTY50: {'epochs': 13, 'best_val_auc': 0.4615231259968102, 'best_epoch': 2}
+BASE SSE: {'epochs': 23, 'best_val_auc': 0.5867443751694226, 'best_epoch': 12}
+BASE_PAPER waits for the E14 daily indices (python scripts/p6_e14.py --stage daily)
+exit 0

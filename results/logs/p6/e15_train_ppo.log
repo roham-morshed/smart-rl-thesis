@@ -1,0 +1,11 @@
+40 policies to train
+[Parallel(n_jobs=6)]: Using backend LokyBackend with 6 concurrent workers.
+[Parallel(n_jobs=6)]: Done   1 tasks      | elapsed:  5.8min
+[Parallel(n_jobs=6)]: Done   6 tasks      | elapsed:  5.9min
+[Parallel(n_jobs=6)]: Done  13 tasks      | elapsed: 15.4min
+[Parallel(n_jobs=6)]: Done  20 tasks      | elapsed: 19.5min
+[Parallel(n_jobs=6)]: Done  29 tasks      | elapsed: 23.7min
+[Parallel(n_jobs=6)]: Done  34 out of  40 | elapsed: 27.0min remaining:  4.8min
+[Parallel(n_jobs=6)]: Done  40 out of  40 | elapsed: 30.3min finished
+40 trained in 0.51 h
+exit 0

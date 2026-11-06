@@ -1,0 +1,4 @@
+BASE_PAPER SP500: {'epochs': 100, 'final_train_loss': 0.24984353218292546}
+BASE_PAPER FTSE100: {'epochs': 100, 'final_train_loss': 0.2512398202244828}
+BASE_PAPER NIFTY50: {'epochs': 100, 'final_train_loss': 0.2528843820209029}
+BASE_PAPER SSE: {'epochs': 100, 'final_train_loss': 0.25035966640717716}
