@@ -1,0 +1,6 @@
+[Parallel(n_jobs=4)]: Using backend LokyBackend with 4 concurrent workers.
+[Parallel(n_jobs=4)]: Done  10 tasks      | elapsed:  1.7min
+[Parallel(n_jobs=4)]: Done  18 out of  20 | elapsed:  2.8min remaining:   18.3s
+[Parallel(n_jobs=4)]: Done  20 out of  20 | elapsed:  2.8min finished
+MM_CLS : MM_CLS is significantly better than SenT-In under the paper's conditions; in PUB_C_GE the advantage comes from rows whose label is fixed by the filling (V1 p 0.810); in PUB_C_GE it holds also against the stronger reproduction of SenT-In (V2 p 0.000); in PUB_R_GE the advantage comes from rows whose label is fixed by the filling (V1 p 0.748); in PUB_R_GE it holds also against the stronger reproduction of SenT-In (V2 p 0.000).
+SENTIN_SF_PAPER : SENTIN_SF_PAPER is not significantly better than SenT-In under the paper's conditions (Holm-adjusted one-sided p 1.000 in PUB_C_GE and 1.000 in PUB_R_GE).

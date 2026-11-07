@@ -28,7 +28,7 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-11-07T07:56:25+00:00",
+  "created_utc": "2026-11-07T07:59:23+00:00",
   "leakage_by_gate": {
    "G1": true,
    "G2": true,
@@ -69,7 +69,9 @@
   "e14.news: headline counts per UTC year of the multisource corpus (P1 rules; 2005-2006 extracted in P6 with the same code), local = the market's tag, global = every kept headline.",
   "e14.a_paper: the base paper's GRU-CNN sentiment classifier trained with its Table 2 recipe (400 epochs, lr 0.01, Adam, batch 64, dropout 0.1, pool 2, no early stopping), mean and sd over seeds 0-2 on the SPEC §2.4 test splits.",
   "e14.<SET>.<MKT>.<MODEL>: test metrics, mean (and sd) over seeds 0-2 (SVM deterministic); .inf = the same metrics on the informative_row test rows (the next calendar date is a session). Thresholds: P(up) > 0.5; SVM decision > 0; MM_DIR q50 >= 0 (GE) or > 0 (GT). MM_DIR in the GT settings is its GE fit scored against the GT labels (protocol run matrix).",
-  "e14.labels: always-positive rule on the PUB test rows (diagnostic, no training)."
+  "e14.labels: always-positive rule on the PUB test rows (diagnostic, no training).",
+  "e14.tests: protocol §2.7. Statistic = mean over the four indices of the metric difference (ours - SENTIN_PAPER unless named), seed-averaged scores of all test rows; one-sided p (H1: ours better) from a paired stationary block bootstrap stratified by index (test rows sorted by date, mean block 10, 10 000 resamples, seed 2026, centred); lo/hi = two-sided 95 % percentile interval; p_holm = Holm over the four primary tests (secondary metrics: Holm within each metric); mcnemar_p = exact McNemar on the threshold predictions pooled over the indices (two-sided); delong = two-sided DeLong per index with Holm over the four indices. tests_inf = V1 (informative rows). V2 (vs SENTIN_E13), V3 (GT settings) and V4 (CAUSAL) are stored under e14.tests without p_holm.",
+  "e14.claims: sentences produced by the claim rules of protocol §2.7, written verbatim into reports/P6_report.md."
  ],
  "p0": {
   "probe": {
@@ -15855,6 +15857,584 @@
      }
     }
    }
+  },
+  "tests": {
+   "PUB_C_GE": {
+    "MM_CLS_vs_SENTIN_PAPER": {
+     "auc_diff": 0.19414087658487475,
+     "lo": 0.17263658825087597,
+     "hi": 0.21569194352822216,
+     "p": 9.999000099990002e-05,
+     "acc_diff": -0.016269841269841295,
+     "acc_p": 0.9956004399560044,
+     "mcnemar_p": 0.014025051756126889,
+     "f1_diff": -0.03875184254873121,
+     "f1_p": 1.0,
+     "prauc_diff": 0.1713305660791495,
+     "prauc_p": 9.999000099990002e-05,
+     "n_rows": 5040,
+     "p_holm": 0.00039996000399960006,
+     "acc_p_holm": 1.0,
+     "mcnemar_p_holm": 0.04207515526838067,
+     "f1_p_holm": 1.0,
+     "prauc_p_holm": 0.00039996000399960006,
+     "delong": {
+      "SP500": {
+       "p": 6.964805121750283e-12,
+       "p_holm": 6.964805121750283e-12
+      },
+      "FTSE100": {
+       "p": 6.28912616410221e-22,
+       "p_holm": 2.515650465640884e-21
+      },
+      "NIFTY50": {
+       "p": 8.720110513135233e-13,
+       "p_holm": 1.7440221026270465e-12
+      },
+      "SSE": {
+       "p": 1.2590775932547082e-18,
+       "p_holm": 3.777232779764125e-18
+      }
+     }
+    },
+    "SENTIN_SF_PAPER_vs_SENTIN_PAPER": {
+     "auc_diff": -0.0012479449413940469,
+     "lo": -0.004521765005871919,
+     "hi": 0.0022470274722230497,
+     "p": 0.7756224377562244,
+     "acc_diff": 0.0,
+     "acc_p": 1.0,
+     "mcnemar_p": 1.0,
+     "f1_diff": 0.0,
+     "f1_p": 1.0,
+     "prauc_diff": -0.0029888878845164835,
+     "prauc_p": 0.9731026897310269,
+     "n_rows": 5040,
+     "p_holm": 1.0,
+     "acc_p_holm": 1.0,
+     "mcnemar_p_holm": 1.0,
+     "f1_p_holm": 1.0,
+     "prauc_p_holm": 0.9731026897310269,
+     "delong": {
+      "SP500": {
+       "p": 0.16152929102396585,
+       "p_holm": 0.6461171640958634
+      },
+      "FTSE100": {
+       "p": 0.21171495160546316,
+       "p_holm": 0.6461171640958634
+      },
+      "NIFTY50": {
+       "p": 0.9272058386412843,
+       "p_holm": 0.9272058386412843
+      },
+      "SSE": {
+       "p": 0.3701554069937263,
+       "p_holm": 0.7403108139874526
+      }
+     }
+    },
+    "MM_CLS_vs_SENTIN_E13": {
+     "auc_diff": 0.1440932165748726,
+     "lo": 0.1247974347360607,
+     "hi": 0.16360234639580526,
+     "p": 9.999000099990002e-05,
+     "acc_diff": -0.016269841269841295,
+     "acc_p": 0.9956004399560044,
+     "mcnemar_p": 0.014025051756126889,
+     "f1_diff": -0.03875184254873121,
+     "f1_p": 1.0,
+     "prauc_diff": 0.13174455367659807,
+     "prauc_p": 9.999000099990002e-05,
+     "n_rows": 5040,
+     "delong": {
+      "SP500": {
+       "p": 0.039767654275244105,
+       "p_holm": 0.039767654275244105
+      },
+      "FTSE100": {
+       "p": 8.727047990406626e-32,
+       "p_holm": 3.4908191961626503e-31
+      },
+      "NIFTY50": {
+       "p": 1.3746530514581254e-10,
+       "p_holm": 2.749306102916251e-10
+      },
+      "SSE": {
+       "p": 2.0958091481975506e-11,
+       "p_holm": 6.287427444592651e-11
+      }
+     }
+    },
+    "SENTIN_SF_E13_vs_SENTIN_E13": {
+     "auc_diff": 0.013265600392658783,
+     "lo": -0.0020201437269542414,
+     "hi": 0.028439334636393827,
+     "p": 0.042695730426957304,
+     "acc_diff": 0.0,
+     "acc_p": 1.0,
+     "mcnemar_p": 1.0,
+     "f1_diff": 0.0,
+     "f1_p": 1.0,
+     "prauc_diff": 0.014215952248204072,
+     "prauc_p": 0.005699430056994301,
+     "n_rows": 5040,
+     "delong": {
+      "SP500": {
+       "p": 0.00016471397789411872,
+       "p_holm": 0.0006588559115764749
+      },
+      "FTSE100": {
+       "p": 0.28645682686958684,
+       "p_holm": 0.5729136537391737
+      },
+      "NIFTY50": {
+       "p": 0.02560444343835599,
+       "p_holm": 0.07681333031506797
+      },
+      "SSE": {
+       "p": 0.5059667613293761,
+       "p_holm": 0.5729136537391737
+      }
+     }
+    }
+   },
+   "PUB_R_GE": {
+    "MM_CLS_vs_SENTIN_PAPER": {
+     "auc_diff": 0.20331054834806456,
+     "lo": 0.18279864712722285,
+     "hi": 0.224145898986724,
+     "p": 9.999000099990002e-05,
+     "acc_diff": -0.016666666666666663,
+     "acc_p": 0.9952004799520048,
+     "mcnemar_p": 0.008909218118452663,
+     "f1_diff": -0.03727813520377285,
+     "f1_p": 1.0,
+     "prauc_diff": 0.17826934824471338,
+     "prauc_p": 9.999000099990002e-05,
+     "n_rows": 5040,
+     "p_holm": 0.00039996000399960006,
+     "acc_p_holm": 1.0,
+     "mcnemar_p_holm": 0.03563687247381065,
+     "f1_p_holm": 1.0,
+     "prauc_p_holm": 0.00039996000399960006,
+     "delong": {
+      "SP500": {
+       "p": 8.878831701629492e-19,
+       "p_holm": 1.7757663403258984e-18
+      },
+      "FTSE100": {
+       "p": 5.6055963743855574e-14,
+       "p_holm": 5.6055963743855574e-14
+      },
+      "NIFTY50": {
+       "p": 7.729718712558273e-21,
+       "p_holm": 2.3189156137674822e-20
+      },
+      "SSE": {
+       "p": 1.18583668804173e-25,
+       "p_holm": 4.74334675216692e-25
+      }
+     }
+    },
+    "SENTIN_SF_PAPER_vs_SENTIN_PAPER": {
+     "auc_diff": -0.0008817093879868731,
+     "lo": -0.0033810087966912746,
+     "hi": 0.0016297416394166196,
+     "p": 0.7689231076892311,
+     "acc_diff": 0.0,
+     "acc_p": 1.0,
+     "mcnemar_p": 1.0,
+     "f1_diff": 0.0,
+     "f1_p": 1.0,
+     "prauc_diff": 0.00018246025069973415,
+     "prauc_p": 0.42625737426257376,
+     "n_rows": 5040,
+     "p_holm": 1.0,
+     "acc_p_holm": 1.0,
+     "mcnemar_p_holm": 1.0,
+     "f1_p_holm": 1.0,
+     "prauc_p_holm": 0.8525147485251475,
+     "delong": {
+      "SP500": {
+       "p": 0.7317770977028479,
+       "p_holm": 0.9734924943731356
+      },
+      "FTSE100": {
+       "p": 0.4867462471865678,
+       "p_holm": 0.9734924943731356
+      },
+      "NIFTY50": {
+       "p": 0.17140325378283583,
+       "p_holm": 0.6856130151313433
+      },
+      "SSE": {
+       "p": 0.1932903776892243,
+       "p_holm": 0.6856130151313433
+      }
+     }
+    },
+    "MM_CLS_vs_SENTIN_E13": {
+     "auc_diff": 0.13560304586611527,
+     "lo": 0.1170611831175473,
+     "hi": 0.15371134190295843,
+     "p": 9.999000099990002e-05,
+     "acc_diff": -0.016666666666666663,
+     "acc_p": 0.9952004799520048,
+     "mcnemar_p": 0.008909218118452663,
+     "f1_diff": -0.03727813520377285,
+     "f1_p": 1.0,
+     "prauc_diff": 0.11739046650788515,
+     "prauc_p": 9.999000099990002e-05,
+     "n_rows": 5040,
+     "delong": {
+      "SP500": {
+       "p": 0.9605523901285338,
+       "p_holm": 0.9605523901285338
+      },
+      "FTSE100": {
+       "p": 2.1314548398122167e-28,
+       "p_holm": 8.525819359248867e-28
+      },
+      "NIFTY50": {
+       "p": 3.932949932204585e-27,
+       "p_holm": 1.1798849796613755e-26
+      },
+      "SSE": {
+       "p": 0.0008065820355141329,
+       "p_holm": 0.0016131640710282658
+      }
+     }
+    },
+    "SENTIN_SF_E13_vs_SENTIN_E13": {
+     "auc_diff": -0.030740980122814107,
+     "lo": -0.04755199371909512,
+     "hi": -0.014171788191967048,
+     "p": 1.0,
+     "acc_diff": 0.0,
+     "acc_p": 1.0,
+     "mcnemar_p": 1.0,
+     "f1_diff": 0.0,
+     "f1_p": 1.0,
+     "prauc_diff": -0.023092710571532976,
+     "prauc_p": 0.9999000099990001,
+     "n_rows": 5040,
+     "delong": {
+      "SP500": {
+       "p": 0.9770463636530075,
+       "p_holm": 1.0
+      },
+      "FTSE100": {
+       "p": 0.049257840152888664,
+       "p_holm": 0.14777352045866599
+      },
+      "NIFTY50": {
+       "p": 0.6958325574795332,
+       "p_holm": 1.0
+      },
+      "SSE": {
+       "p": 5.567483015182886e-12,
+       "p_holm": 2.2269932060731543e-11
+      }
+     }
+    }
+   },
+   "PUB_C_GT": {
+    "MM_CLS_vs_SENTIN_PAPER": {
+     "auc_diff": 0.2415883662109771,
+     "lo": 0.22202988178476604,
+     "hi": 0.260151125164356,
+     "p": 9.999000099990002e-05,
+     "acc_diff": 0.01944444444444443,
+     "acc_p": 0.010298970102989701,
+     "mcnemar_p": 0.020167496401764802,
+     "f1_diff": 0.5092999082071245,
+     "f1_p": 9.999000099990002e-05,
+     "prauc_diff": 0.16665671687787464,
+     "prauc_p": 9.999000099990002e-05,
+     "n_rows": 5040,
+     "delong": {
+      "SP500": {
+       "p": 1.0468098857333305e-28,
+       "p_holm": 2.093619771466661e-28
+      },
+      "FTSE100": {
+       "p": 3.482857351176284e-27,
+       "p_holm": 3.482857351176284e-27
+      },
+      "NIFTY50": {
+       "p": 2.7591535876441225e-33,
+       "p_holm": 1.103661435057649e-32
+      },
+      "SSE": {
+       "p": 2.0795894251830537e-29,
+       "p_holm": 6.238768275549161e-29
+      }
+     }
+    },
+    "SENTIN_SF_PAPER_vs_SENTIN_PAPER": {
+     "auc_diff": 0.0062867949183064015,
+     "lo": -0.0009657578153559898,
+     "hi": 0.013860142762605466,
+     "p": 0.05469453054694531,
+     "acc_diff": 0.0,
+     "acc_p": 1.0,
+     "mcnemar_p": 1.0,
+     "f1_diff": 0.0,
+     "f1_p": 1.0,
+     "prauc_diff": 0.005048699931164205,
+     "prauc_p": 0.0665933406659334,
+     "n_rows": 5040,
+     "delong": {
+      "SP500": {
+       "p": 0.05288654449875873,
+       "p_holm": 0.21154617799503492
+      },
+      "FTSE100": {
+       "p": 0.6797915017596863,
+       "p_holm": 0.7139793839294712
+      },
+      "NIFTY50": {
+       "p": 0.0818509904568982,
+       "p_holm": 0.2455529713706946
+      },
+      "SSE": {
+       "p": 0.3569896919647356,
+       "p_holm": 0.7139793839294712
+      }
+     }
+    }
+   },
+   "PUB_R_GT": {
+    "MM_CLS_vs_SENTIN_PAPER": {
+     "auc_diff": 0.2359029429699399,
+     "lo": 0.21359232919659485,
+     "hi": 0.258048280152652,
+     "p": 9.999000099990002e-05,
+     "acc_diff": 0.023015873015873017,
+     "acc_p": 0.0022997700229977,
+     "mcnemar_p": 0.00738887284409676,
+     "f1_diff": 0.5274082202149106,
+     "f1_p": 9.999000099990002e-05,
+     "prauc_diff": 0.15632447880897843,
+     "prauc_p": 9.999000099990002e-05,
+     "n_rows": 5040,
+     "delong": {
+      "SP500": {
+       "p": 4.2748977213180235e-23,
+       "p_holm": 4.2748977213180235e-23
+      },
+      "FTSE100": {
+       "p": 2.415218830585764e-29,
+       "p_holm": 9.660875322343056e-29
+      },
+      "NIFTY50": {
+       "p": 3.6320380788182434e-28,
+       "p_holm": 1.089611423645473e-27
+      },
+      "SSE": {
+       "p": 7.73859243194289e-26,
+       "p_holm": 1.547718486388578e-25
+      }
+     }
+    },
+    "SENTIN_SF_PAPER_vs_SENTIN_PAPER": {
+     "auc_diff": 0.005180830403282752,
+     "lo": 0.0005247515917537221,
+     "hi": 0.0101548585138419,
+     "p": 0.0212978702129787,
+     "acc_diff": 0.0,
+     "acc_p": 1.0,
+     "mcnemar_p": 1.0,
+     "f1_diff": 0.0,
+     "f1_p": 1.0,
+     "prauc_diff": 0.0030423665752713352,
+     "prauc_p": 0.10598940105989402,
+     "n_rows": 5040,
+     "delong": {
+      "SP500": {
+       "p": 0.12748859810297983,
+       "p_holm": 0.38246579430893946
+      },
+      "FTSE100": {
+       "p": 0.09482870642592241,
+       "p_holm": 0.37931482570368963
+      },
+      "NIFTY50": {
+       "p": 0.5070625015618331,
+       "p_holm": 0.84994050995134
+      },
+      "SSE": {
+       "p": 0.42497025497567,
+       "p_holm": 0.84994050995134
+      }
+     }
+    }
+   },
+   "CAUSAL": {
+    "MM_CLS_vs_SENTIN_PAPER": {
+     "auc_diff": -0.025857480130579175,
+     "lo": -0.05344919444902283,
+     "hi": 0.0033855572910028676,
+     "p": 0.967003299670033,
+     "acc_diff": -0.016146675576797692,
+     "acc_p": 0.9812018798120188,
+     "mcnemar_p": 0.07155375590825563,
+     "f1_diff": -0.17782344019662055,
+     "f1_p": 1.0,
+     "prauc_diff": -0.019016829825286546,
+     "prauc_p": 0.9611038896110389,
+     "n_rows": 3423,
+     "delong": {
+      "SP500": {
+       "p": 0.07621624781294173,
+       "p_holm": 0.3048649912517669
+      },
+      "FTSE100": {
+       "p": 0.7339128195574642,
+       "p_holm": 1.0
+      },
+      "NIFTY50": {
+       "p": 0.37058091907479507,
+       "p_holm": 1.0
+      },
+      "SSE": {
+       "p": 0.33811333669638255,
+       "p_holm": 1.0
+      }
+     }
+    },
+    "SENTIN_SF_PAPER_vs_SENTIN_PAPER": {
+     "auc_diff": -0.0014307521397645684,
+     "lo": -0.008941822056864498,
+     "hi": 0.005588105512233042,
+     "p": 0.6637336266373363,
+     "acc_diff": 0.0,
+     "acc_p": 1.0,
+     "mcnemar_p": 1.0,
+     "f1_diff": 0.0,
+     "f1_p": 1.0,
+     "prauc_diff": -0.004051785187025619,
+     "prauc_p": 0.8485151484851515,
+     "n_rows": 3423,
+     "delong": {
+      "SP500": {
+       "p": 0.9315356770720593,
+       "p_holm": 1.0
+      },
+      "FTSE100": {
+       "p": 0.4463753534169659,
+       "p_holm": 1.0
+      },
+      "NIFTY50": {
+       "p": 0.1365467227400931,
+       "p_holm": 0.5461868909603724
+      },
+      "SSE": {
+       "p": 0.43207190942070395,
+       "p_holm": 1.0
+      }
+     }
+    },
+    "MM_CLS_vs_SENTIN_E13": {
+     "auc_diff": -0.018353943408832743,
+     "lo": -0.04487607931925992,
+     "hi": 0.00907286253392376,
+     "p": 0.9125087491250875,
+     "acc_diff": 0.01708652663920314,
+     "acc_p": 0.07079292070792921,
+     "mcnemar_p": 0.1845681997508486,
+     "f1_diff": 0.016141476967368035,
+     "f1_p": 0.0038996100389961006,
+     "prauc_diff": -0.005665461386280879,
+     "prauc_p": 0.6988301169883012,
+     "n_rows": 3423,
+     "delong": {
+      "SP500": {
+       "p": 0.36801204667890075,
+       "p_holm": 1.0
+      },
+      "FTSE100": {
+       "p": 0.8710460721629162,
+       "p_holm": 1.0
+      },
+      "NIFTY50": {
+       "p": 0.9313550977059977,
+       "p_holm": 1.0
+      },
+      "SSE": {
+       "p": 0.17619103279325743,
+       "p_holm": 0.7047641311730297
+      }
+     }
+    },
+    "SENTIN_SF_E13_vs_SENTIN_E13": {
+     "auc_diff": -0.02319708848765495,
+     "lo": -0.04383165361877279,
+     "hi": -0.0026009068419705593,
+     "p": 0.9864013598640136,
+     "acc_diff": -0.0005530262183214424,
+     "acc_p": 0.5194480551944806,
+     "mcnemar_p": 1.0,
+     "f1_diff": 0.004477637183102123,
+     "f1_p": 0.22907709229077092,
+     "prauc_diff": -0.019530114450935943,
+     "prauc_p": 0.9907009299070093,
+     "n_rows": 3423,
+     "delong": {
+      "SP500": {
+       "p": 0.02821486029957519,
+       "p_holm": 0.11285944119830076
+      },
+      "FTSE100": {
+       "p": 0.08147178063932924,
+       "p_holm": 0.2444153419179877
+      },
+      "NIFTY50": {
+       "p": 0.8197115945176952,
+       "p_holm": 1.0
+      },
+      "SSE": {
+       "p": 0.5148744219312562,
+       "p_holm": 1.0
+      }
+     }
+    }
+   }
+  },
+  "tests_inf": {
+   "PUB_C_GE": {
+    "MM_CLS_vs_SENTIN_PAPER": {
+     "auc_diff": -0.01357432564374804,
+     "lo": -0.04246790697206928,
+     "hi": 0.01628676522438084,
+     "p": 0.8098190180981902
+    },
+    "SENTIN_SF_PAPER_vs_SENTIN_PAPER": {
+     "auc_diff": 0.00048111558273641886,
+     "lo": -0.0031515546826807145,
+     "hi": 0.00485352154419814,
+     "p": 0.42445755424457554
+    }
+   },
+   "PUB_R_GE": {
+    "MM_CLS_vs_SENTIN_PAPER": {
+     "auc_diff": -0.009618906935860011,
+     "lo": -0.037621948829962885,
+     "hi": 0.018514648309077394,
+     "p": 0.7476252374762524
+    },
+    "SENTIN_SF_PAPER_vs_SENTIN_PAPER": {
+     "auc_diff": -0.0007844720883708745,
+     "lo": -0.003580989248329127,
+     "hi": 0.0020693280771154677,
+     "p": 0.7281271872812719
+    }
+   }
+  },
+  "claims": {
+   "MM_CLS": "MM_CLS is significantly better than SenT-In under the paper's conditions; in PUB_C_GE the advantage comes from rows whose label is fixed by the filling (V1 p 0.810); in PUB_C_GE it holds also against the stronger reproduction of SenT-In (V2 p 0.000); in PUB_R_GE the advantage comes from rows whose label is fixed by the filling (V1 p 0.748); in PUB_R_GE it holds also against the stronger reproduction of SenT-In (V2 p 0.000).",
+   "SENTIN_SF_PAPER": "SENTIN_SF_PAPER is not significantly better than SenT-In under the paper's conditions (Holm-adjusted one-sided p 1.000 in PUB_C_GE and 1.000 in PUB_R_GE)."
   }
  }
 }
