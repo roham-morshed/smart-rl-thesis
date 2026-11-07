@@ -96,6 +96,7 @@ def main() -> None:
         state["done"].append("e14_data")
         STATE.write_text(json.dumps(state, indent=1), encoding="utf-8")
         log("E14 data ready")
+    skipped = []
     for name, args in STEPS:
         if name in state["done"]:
             continue
@@ -104,6 +105,11 @@ def main() -> None:
         with (LOGS / f"pipeline_{name}.log").open("a", encoding="utf-8") as f:
             r = subprocess.run([PY, "-W", "ignore", "-u", *args], cwd=ROOT, env=ENV, stdout=f, stderr=subprocess.STDOUT)
         if r.returncode != 0:
+            if name.endswith("_outputs"):                  # tables/figures never block the training steps
+                log(f"OUTPUT STEP FAILED {name} (exit {r.returncode}); continuing, re-run it later")
+                skipped.append(name)
+                commit(f"P6 pipeline: {name} failed, continued")
+                continue
             log(f"FAILED {name} (exit {r.returncode}) after {(time.time() - t0) / 60:.1f} min")
             commit(f"P6 pipeline stopped at {name}")
             sys.exit(1)
@@ -111,7 +117,7 @@ def main() -> None:
         state["done"].append(name)
         STATE.write_text(json.dumps(state, indent=1), encoding="utf-8")
         commit(f"P6 pipeline: {name}")
-    log("P6 PIPELINE COMPLETE")
+    log("P6 PIPELINE COMPLETE" + (f" (output steps to re-run: {', '.join(skipped)})" if skipped else ""))
 
 
 if __name__ == "__main__":

@@ -9,3 +9,4 @@
 [2026-11-07 11:29:25] DONE e14_tests in 2.9 min
 [2026-11-07 11:29:27] START e14_outputs
 [2026-11-07 11:30:33] FAILED e14_outputs (exit 1) after 1.1 min
+[2026-11-07 13:17:20] e14_outputs fixed (F17 used two estimators) and re-run by hand; pipeline restarted

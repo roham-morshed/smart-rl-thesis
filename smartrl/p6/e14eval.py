@@ -269,6 +269,19 @@ def auc_intervals(reps: int = 2000) -> list:
     return items
 
 
+def auc_points() -> list:
+    """AUC of the seed-averaged scores per setting, index and model: the point estimate that belongs to the e14.ci
+    interval (the e14.<SET> keys hold the mean of the per-seed AUCs, a different estimator)."""
+    items = []
+    for setting in ("PUB_C_GE", "PUB_R_GE", "CAUSAL"):
+        for model in p6()["e14"]["models"]["full"]:
+            A = seed_avg(setting, model)
+            for m in MARKETS:
+                g = A[A["market"] == m]
+                items.append((f"e14.ci.{setting}.{m}.{model}.auc", ST.auc_fast(g["y"].to_numpy(int), g["score"].to_numpy(float))))
+    return items
+
+
 def stage_outputs(args) -> None:
     import matplotlib.pyplot as plt
     from ..figures import style
@@ -276,6 +289,10 @@ def stage_outputs(args) -> None:
         R.update(auc_intervals(), ["e14.ci: 95 % stationary-bootstrap percentile intervals (mean block 10, 2000 "
                                    "resamples, seed 2026) of each model's AUC per index on seed-averaged scores; "
                                    "drawn in figure F17, not used by any test."])
+    if _g(R.load(), "e14.ci.PUB_C_GE.SP500.MM_CLS.auc") is None:
+        R.update(auc_points(), ["e14.ci.<SET>.<MKT>.<MODEL>.auc: AUC of the seed-averaged scores, the point estimate of "
+                                "the e14.ci interval and of the tests (e14.<SET>.<MKT>.<MODEL>.auc is the mean of the "
+                                "per-seed AUCs); F17 draws this point with its interval."])
     t = R.load()
     TABLES.mkdir(parents=True, exist_ok=True)
     rows = []
@@ -323,11 +340,11 @@ def stage_outputs(args) -> None:
         w = 0.8 / len(MARKETS)
         for j, m in enumerate(PAPER_ORDER):
             x = np.arange(len(models)) + (j - 1.5) * w
-            v = [_g(t, f"e14.{setting}.{m}.{mo}.auc") or np.nan for mo in models]
-            lo = [_g(t, f"e14.ci.{setting}.{m}.{mo}.auc_lo") or np.nan for mo in models]
-            hi = [_g(t, f"e14.ci.{setting}.{m}.{mo}.auc_hi") or np.nan for mo in models]
-            ax.errorbar(x, v, yerr=[np.array(v) - np.array(lo), np.array(hi) - np.array(v)], fmt="o", ms=3, capsize=2,
-                        lw=0.8, label=style.market(m))
+            v = np.array([_g(t, f"e14.ci.{setting}.{m}.{mo}.auc") or np.nan for mo in models], float)
+            lo = np.array([_g(t, f"e14.ci.{setting}.{m}.{mo}.auc_lo") or np.nan for mo in models], float)
+            hi = np.array([_g(t, f"e14.ci.{setting}.{m}.{mo}.auc_hi") or np.nan for mo in models], float)
+            err = np.vstack([np.clip(v - lo, 0, None), np.clip(hi - v, 0, None)])
+            ax.errorbar(x, v, yerr=err, fmt="o", ms=3, capsize=2, lw=0.8, label=style.market(m))
         ax.axhline(0.5, color="grey", lw=0.6, ls="--")
         ax.set_ylabel(f"AUC-ROC ({setting})", fontsize=7)
         ax.grid(alpha=0.3)
