@@ -1,0 +1,60 @@
+{
+ "run_id": "P6_E14_PUB_C_GE_CNN_P_NIFTY50_s2_20261106T222306_00dde0",
+ "experiment": "P6",
+ "name": "E14_PUB_C_GE_CNN_P_NIFTY50",
+ "seed": 2,
+ "device": "cuda",
+ "config_hash": "c1a5ebbd9f40fe9a5804482dc7a4986517bdcdecd66f8e5770df155f03c5adf5",
+ "git_commit": "529f6712f66827ba6ab936a175a82abf4b7cdfbc+dirty",
+ "start_utc": "2026-11-06T22:23:06+00:00",
+ "hardware": {
+  "platform": "Windows-10-10.0.19045-SP0",
+  "python": "3.11.17",
+  "processor": "AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD",
+  "cpu_count": 16,
+  "torch_cuda": "12.4",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 2060",
+  "gpu_mem_gb": 6.0
+ },
+ "packages": {
+  "torch": "2.6.0+cu124",
+  "numpy": "2.4.6",
+  "pandas": "3.0.6",
+  "pyarrow": "26.0.0",
+  "duckdb": "1.5.6",
+  "scipy": "1.17.1",
+  "statsmodels": "0.15.0",
+  "scikit-learn": "1.9.1",
+  "matplotlib": "3.11.2",
+  "arabic-reshaper": "3.0.1",
+  "python-bidi": "0.6.11",
+  "yfinance": "1.7.0",
+  "datasets": "5.1.0",
+  "huggingface-hub": "2.2.0",
+  "transformers": "5.20.1",
+  "gensim": "4.4.0",
+  "pysentiment2": "0.1.1",
+  "gymnasium": "1.2.3",
+  "stable-baselines3": "2.8.0",
+  "arch": "8.0.0",
+  "joblib": "1.6.0",
+  "tqdm": "4.70.1",
+  "PyYAML": "6.0.3",
+  "pytest": "9.1.1"
+ },
+ "params": {
+  "setting": "PUB_C_GE",
+  "model": "CNN_P",
+  "market": "NIFTY50",
+  "p6_hash": "703366973a1de3064c83add31d8677a933338e6c062573fb58ec3b9450b1ebcd"
+ },
+ "events": [],
+ "info": {
+  "epochs": 100,
+  "final_train_loss": 0.5533835837627129
+ },
+ "seconds": 79.91016759997001,
+ "end_utc": "2026-11-06T22:24:26+00:00",
+ "status": "ok"
+}
