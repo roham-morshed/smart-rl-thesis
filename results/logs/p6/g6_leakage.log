@@ -1,0 +1,4 @@
+........s...                                                             [100%]
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_leakage.py:114: G4 lock present
+11 passed, 1 skipped in 245.81s (0:04:05)

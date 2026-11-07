@@ -28,7 +28,7 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-11-07T13:59:40+00:00",
+  "created_utc": "2026-11-07T14:42:12+00:00",
   "leakage_by_gate": {
    "G1": true,
    "G2": true,
@@ -75,7 +75,8 @@
   "e14.ci: 95 % stationary-bootstrap percentile intervals (mean block 10, 2000 resamples, seed 2026) of each model's AUC per index on seed-averaged scores; drawn in figure F17, not used by any test.",
   "e14.ci.<SET>.<MKT>.<MODEL>.auc: AUC of the seed-averaged scores, the point estimate of the e14.ci interval and of the tests (e14.<SET>.<MKT>.<MODEL>.auc is the mean of the per-seed AUCs); F17 draws this point with its interval.",
   "e15: trading in the base paper's test window (protocol §3). One split per market: train 2010-01-01 .. 2017-10-17, validation 2017-10-18 .. 2018-10-17, one test run 2018-10-18 .. 2022-03-31 (no refits inside it). SMART-RL with the frozen configuration (five PPO seeds, AWS warm-started through the validation year); MarketMind and LSTM_PRICE features from the annual refits before 2018-10-18 and from one fit on data before 2018-10-18 for the test window; BASE = SENTIN (E13 recipe) and BASE_PAPER = SENTIN_PAPER (Table 3 recipe, S_PAPER) fitted once on trading days before 2018-10-18. The frozen configuration was selected on development validation data that end in 2018-06, before this window starts.",
-  "e15.full / e15.sub2020: metrics on 2018-10-18 .. 2022-03-31 and on its sub-window 2020-01-01 .. 2022-03-31 (same run); e15.cost20: the same policies at 20 bps; e15.dir: decisions as next-day direction calls (prediction 1[e_t > 0.5], score e_t, label 1[C_{t+1} > C_t]); e15.tests: SMART-RL minus method on COMBINED (Ledoit-Wolf HAC and bootstrap p, one-sided; stationary-bootstrap 95 % intervals of the MDD and cumulative-return differences); descriptive, no new hypothesis. e15.p5overlap: P5 daily returns on 2020-01-01 .. 2022-03-31."
+  "e15.full / e15.sub2020: metrics on 2018-10-18 .. 2022-03-31 and on its sub-window 2020-01-01 .. 2022-03-31 (same run); e15.cost20: the same policies at 20 bps; e15.dir: decisions as next-day direction calls (prediction 1[e_t > 0.5], score e_t, label 1[C_{t+1} > C_t]); e15.tests: SMART-RL minus method on COMBINED (Ledoit-Wolf HAC and bootstrap p, one-sided; stationary-bootstrap 95 % intervals of the MDD and cumulative-return differences); descriptive, no new hypothesis. e15.p5overlap: P5 daily returns on 2020-01-01 .. 2022-03-31.",
+  "e14.compute / e15.compute: P6 run records with status ok (results/runs/P6_*): n_runs, and gpu_hours / cpu_hours = summed run durations by device as in compute.* (parallel jobs counted separately); e14.compute.n_model_runs = run records of the E14 run matrix (one per setting, index or pooled model, and seed); e15.compute.policies.<ARM> = trained E15 policies on disk."
  ],
  "p0": {
   "probe": {
@@ -17071,6 +17072,12 @@
      }
     }
    }
+  },
+  "compute": {
+   "n_runs": 474,
+   "gpu_hours": 39.34042389311118,
+   "cpu_hours": 0.09953204447224076,
+   "n_model_runs": 461
   }
  },
  "e15": {
@@ -19162,6 +19169,16 @@
      "turnover": 0.06777033873495134,
      "win_rate": 0.5702054794520548
     }
+   }
+  },
+  "compute": {
+   "n_runs": 14,
+   "gpu_hours": 4.289846813166676,
+   "cpu_hours": 0.5139542639444536,
+   "policies": {
+    "SMARTRL": 20,
+    "B6": 20,
+    "B7": 12
    }
   }
  }
