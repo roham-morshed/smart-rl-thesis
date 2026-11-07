@@ -28,7 +28,7 @@
    "PyYAML": "6.0.3",
    "pytest": "9.1.1"
   },
-  "created_utc": "2026-11-07T07:59:23+00:00",
+  "created_utc": "2026-11-07T08:00:31+00:00",
   "leakage_by_gate": {
    "G1": true,
    "G2": true,
@@ -71,7 +71,8 @@
   "e14.<SET>.<MKT>.<MODEL>: test metrics, mean (and sd) over seeds 0-2 (SVM deterministic); .inf = the same metrics on the informative_row test rows (the next calendar date is a session). Thresholds: P(up) > 0.5; SVM decision > 0; MM_DIR q50 >= 0 (GE) or > 0 (GT). MM_DIR in the GT settings is its GE fit scored against the GT labels (protocol run matrix).",
   "e14.labels: always-positive rule on the PUB test rows (diagnostic, no training).",
   "e14.tests: protocol §2.7. Statistic = mean over the four indices of the metric difference (ours - SENTIN_PAPER unless named), seed-averaged scores of all test rows; one-sided p (H1: ours better) from a paired stationary block bootstrap stratified by index (test rows sorted by date, mean block 10, 10 000 resamples, seed 2026, centred); lo/hi = two-sided 95 % percentile interval; p_holm = Holm over the four primary tests (secondary metrics: Holm within each metric); mcnemar_p = exact McNemar on the threshold predictions pooled over the indices (two-sided); delong = two-sided DeLong per index with Holm over the four indices. tests_inf = V1 (informative rows). V2 (vs SENTIN_E13), V3 (GT settings) and V4 (CAUSAL) are stored under e14.tests without p_holm.",
-  "e14.claims: sentences produced by the claim rules of protocol §2.7, written verbatim into reports/P6_report.md."
+  "e14.claims: sentences produced by the claim rules of protocol §2.7, written verbatim into reports/P6_report.md.",
+  "e14.ci: 95 % stationary-bootstrap percentile intervals (mean block 10, 2000 resamples, seed 2026) of each model's AUC per index on seed-averaged scores; drawn in figure F17, not used by any test."
  ],
  "p0": {
   "probe": {
@@ -16435,6 +16436,518 @@
   "claims": {
    "MM_CLS": "MM_CLS is significantly better than SenT-In under the paper's conditions; in PUB_C_GE the advantage comes from rows whose label is fixed by the filling (V1 p 0.810); in PUB_C_GE it holds also against the stronger reproduction of SenT-In (V2 p 0.000); in PUB_R_GE the advantage comes from rows whose label is fixed by the filling (V1 p 0.748); in PUB_R_GE it holds also against the stronger reproduction of SenT-In (V2 p 0.000).",
    "SENTIN_SF_PAPER": "SENTIN_SF_PAPER is not significantly better than SenT-In under the paper's conditions (Holm-adjusted one-sided p 1.000 in PUB_C_GE and 1.000 in PUB_R_GE)."
+  },
+  "ci": {
+   "PUB_C_GE": {
+    "SP500": {
+     "SVM_P": {
+      "auc_lo": 0.5170850216246266,
+      "auc_hi": 0.5837182209429403
+     },
+     "CNN_P": {
+      "auc_lo": 0.6419393392196591,
+      "auc_hi": 0.6980478598944176
+     },
+     "LSTM_P": {
+      "auc_lo": 0.5578958475881295,
+      "auc_hi": 0.6250714989684751
+     },
+     "GRU_P": {
+      "auc_lo": 0.5247783264402107,
+      "auc_hi": 0.5905697194596747
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.47863105364553465,
+      "auc_hi": 0.5476408495391344
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.6188556076992664,
+      "auc_hi": 0.6853737988211767
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.47660815909907855,
+      "auc_hi": 0.5423061886719129
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.6705883581944185,
+      "auc_hi": 0.7180283800731034
+     },
+     "MM_CLS": {
+      "auc_lo": 0.6610560908839455,
+      "auc_hi": 0.7094187177949427
+     },
+     "MM_DIR": {
+      "auc_lo": 0.32830369128143766,
+      "auc_hi": 0.38676390990814313
+     }
+    },
+    "FTSE100": {
+     "SVM_P": {
+      "auc_lo": 0.5073897137716195,
+      "auc_hi": 0.5686254943348185
+     },
+     "CNN_P": {
+      "auc_lo": 0.6172025045476726,
+      "auc_hi": 0.6755518307547342
+     },
+     "LSTM_P": {
+      "auc_lo": 0.533178189463398,
+      "auc_hi": 0.6000338652053827
+     },
+     "GRU_P": {
+      "auc_lo": 0.5177897409952082,
+      "auc_hi": 0.583282225068155
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.494542347034749,
+      "auc_hi": 0.5492619107628366
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.45033332690591565,
+      "auc_hi": 0.5076136532541626
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.4888336422705342,
+      "auc_hi": 0.5446073132604845
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.46933252793130215,
+      "auc_hi": 0.5372153702859889
+     },
+     "MM_CLS": {
+      "auc_lo": 0.7109832173535642,
+      "auc_hi": 0.7564606621292971
+     },
+     "MM_DIR": {
+      "auc_lo": 0.3621129894712932,
+      "auc_hi": 0.41906938517652514
+     }
+    },
+    "NIFTY50": {
+     "SVM_P": {
+      "auc_lo": 0.47433467083970726,
+      "auc_hi": 0.5436607704646961
+     },
+     "CNN_P": {
+      "auc_lo": 0.4433207436183105,
+      "auc_hi": 0.5120280975323208
+     },
+     "LSTM_P": {
+      "auc_lo": 0.4953701320108463,
+      "auc_hi": 0.5614788572871411
+     },
+     "GRU_P": {
+      "auc_lo": 0.496653557666991,
+      "auc_hi": 0.5620284974459014
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.4880524736511712,
+      "auc_hi": 0.5511426791285936
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.5063001044909827,
+      "auc_hi": 0.5686261478934196
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.4882691355677513,
+      "auc_hi": 0.5503936863298933
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.4842668365634955,
+      "auc_hi": 0.5449159534615279
+     },
+     "MM_CLS": {
+      "auc_lo": 0.6734118634302089,
+      "auc_hi": 0.7229590114713632
+     },
+     "MM_DIR": {
+      "auc_lo": 0.3654647902065116,
+      "auc_hi": 0.4313163912472424
+     }
+    },
+    "SSE": {
+     "SVM_P": {
+      "auc_lo": 0.4894992784081275,
+      "auc_hi": 0.5523755903666665
+     },
+     "CNN_P": {
+      "auc_lo": 0.5706963260170208,
+      "auc_hi": 0.6439179711623902
+     },
+     "LSTM_P": {
+      "auc_lo": 0.47011723987015824,
+      "auc_hi": 0.5359889112356933
+     },
+     "GRU_P": {
+      "auc_lo": 0.48526996520645094,
+      "auc_hi": 0.555523557518555
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.493066154939778,
+      "auc_hi": 0.5555967284190926
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.5739018346412238,
+      "auc_hi": 0.6420686515278836
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.49607908604798934,
+      "auc_hi": 0.5587336335994814
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.5860275009163525,
+      "auc_hi": 0.6529184077478921
+     },
+     "MM_CLS": {
+      "auc_lo": 0.715058214955463,
+      "auc_hi": 0.7612453366111598
+     },
+     "MM_DIR": {
+      "auc_lo": 0.38068550548820296,
+      "auc_hi": 0.44254058554091597
+     }
+    }
+   },
+   "PUB_R_GE": {
+    "SP500": {
+     "SVM_P": {
+      "auc_lo": 0.5890293931294206,
+      "auc_hi": 0.6535260047069922
+     },
+     "CNN_P": {
+      "auc_lo": 0.6743525294387266,
+      "auc_hi": 0.7223255960775895
+     },
+     "LSTM_P": {
+      "auc_lo": 0.5891845232629587,
+      "auc_hi": 0.6511023252220428
+     },
+     "GRU_P": {
+      "auc_lo": 0.6147919680570515,
+      "auc_hi": 0.6776187816707864
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.48058871147270615,
+      "auc_hi": 0.5429438817709098
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.6884814716063415,
+      "auc_hi": 0.7384830443475061
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.47933578203100213,
+      "auc_hi": 0.5424340666074424
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.6883288742891434,
+      "auc_hi": 0.7396131787814391
+     },
+     "MM_CLS": {
+      "auc_lo": 0.6852971366965945,
+      "auc_hi": 0.7398848887740902
+     },
+     "MM_DIR": {
+      "auc_lo": 0.39395752961075303,
+      "auc_hi": 0.4565695225356683
+     }
+    },
+    "FTSE100": {
+     "SVM_P": {
+      "auc_lo": 0.5583953728019284,
+      "auc_hi": 0.6224945222552615
+     },
+     "CNN_P": {
+      "auc_lo": 0.6367969208643283,
+      "auc_hi": 0.696457215955061
+     },
+     "LSTM_P": {
+      "auc_lo": 0.47329791869681065,
+      "auc_hi": 0.5414296269727403
+     },
+     "GRU_P": {
+      "auc_lo": 0.5146854174392119,
+      "auc_hi": 0.5798268755570984
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.5051754475982646,
+      "auc_hi": 0.5650400515396301
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.4390536664051994,
+      "auc_hi": 0.49354912841893606
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.5090710533432056,
+      "auc_hi": 0.5650805777166645
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.46441573935608726,
+      "auc_hi": 0.531559522030683
+     },
+     "MM_CLS": {
+      "auc_lo": 0.6758871041832365,
+      "auc_hi": 0.7318145597191336
+     },
+     "MM_DIR": {
+      "auc_lo": 0.43165886961415745,
+      "auc_hi": 0.49822162391803737
+     }
+    },
+    "NIFTY50": {
+     "SVM_P": {
+      "auc_lo": 0.5108190085071931,
+      "auc_hi": 0.5765736954926867
+     },
+     "CNN_P": {
+      "auc_lo": 0.5791974573653933,
+      "auc_hi": 0.6451138572205667
+     },
+     "LSTM_P": {
+      "auc_lo": 0.48270284570564553,
+      "auc_hi": 0.5515663906053624
+     },
+     "GRU_P": {
+      "auc_lo": 0.48340514557897646,
+      "auc_hi": 0.5516416990950201
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.48252997202253806,
+      "auc_hi": 0.550533494477402
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.44856746553655347,
+      "auc_hi": 0.5135926255002019
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.482769243038719,
+      "auc_hi": 0.549414978061589
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.45274804867062196,
+      "auc_hi": 0.5250882262358452
+     },
+     "MM_CLS": {
+      "auc_lo": 0.7004461571176644,
+      "auc_hi": 0.7528035907829077
+     },
+     "MM_DIR": {
+      "auc_lo": 0.4278065292034054,
+      "auc_hi": 0.49949940956182964
+     }
+    },
+    "SSE": {
+     "SVM_P": {
+      "auc_lo": 0.48567810253576066,
+      "auc_hi": 0.5540255329988244
+     },
+     "CNN_P": {
+      "auc_lo": 0.5594458578913639,
+      "auc_hi": 0.6341215127893702
+     },
+     "LSTM_P": {
+      "auc_lo": 0.4978624221752838,
+      "auc_hi": 0.5656361322394649
+     },
+     "GRU_P": {
+      "auc_lo": 0.49823466819132795,
+      "auc_hi": 0.5725326282370223
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.47145629295082886,
+      "auc_hi": 0.5366199730882502
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.6491720987284431,
+      "auc_hi": 0.7066730241066452
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.46510063290343745,
+      "auc_hi": 0.5326780241868205
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.48358787007186194,
+      "auc_hi": 0.5467194060599088
+     },
+     "MM_CLS": {
+      "auc_lo": 0.7145342828602947,
+      "auc_hi": 0.7637131323918928
+     },
+     "MM_DIR": {
+      "auc_lo": 0.4932753448785652,
+      "auc_hi": 0.562556478767587
+     }
+    }
+   },
+   "CAUSAL": {
+    "SP500": {
+     "SVM_P": {
+      "auc_lo": 0.456053573190279,
+      "auc_hi": 0.5328101605113044
+     },
+     "CNN_P": {
+      "auc_lo": 0.4960835509138381,
+      "auc_hi": 0.5042463612107956
+     },
+     "LSTM_P": {
+      "auc_lo": 0.44366190250157955,
+      "auc_hi": 0.5212496627227046
+     },
+     "GRU_P": {
+      "auc_lo": 0.4986428272059511,
+      "auc_hi": 0.5841251139774164
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.4977830173090154,
+      "auc_hi": 0.5686395455598808
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.4687767561684765,
+      "auc_hi": 0.5423886929888136
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.49815102555985796,
+      "auc_hi": 0.5715755139259221
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.44441615144708646,
+      "auc_hi": 0.5127748087603471
+     },
+     "MM_CLS": {
+      "auc_lo": 0.43743757453265314,
+      "auc_hi": 0.5090687022751175
+     },
+     "MM_DIR": {
+      "auc_lo": 0.4471090375280883,
+      "auc_hi": 0.5196504848803991
+     }
+    },
+    "FTSE100": {
+     "SVM_P": {
+      "auc_lo": 0.4864527499111039,
+      "auc_hi": 0.5650296137989649
+     },
+     "CNN_P": {
+      "auc_lo": 0.5,
+      "auc_hi": 0.5
+     },
+     "LSTM_P": {
+      "auc_lo": 0.49179160910470676,
+      "auc_hi": 0.5575280031082158
+     },
+     "GRU_P": {
+      "auc_lo": 0.4418515138902766,
+      "auc_hi": 0.5149168502442449
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.45437404328318814,
+      "auc_hi": 0.528008801053905
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.47317858123421364,
+      "auc_hi": 0.5401233255502864
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.45200739759012815,
+      "auc_hi": 0.5227949066081067
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.426295040687585,
+      "auc_hi": 0.49909100795126216
+     },
+     "MM_CLS": {
+      "auc_lo": 0.46907312706568965,
+      "auc_hi": 0.5363395187553509
+     },
+     "MM_DIR": {
+      "auc_lo": 0.49105329344682874,
+      "auc_hi": 0.5592358328139019
+     }
+    },
+    "NIFTY50": {
+     "SVM_P": {
+      "auc_lo": 0.45706614574265775,
+      "auc_hi": 0.5316439974902912
+     },
+     "CNN_P": {
+      "auc_lo": 0.4720281129767326,
+      "auc_hi": 0.5187778541362937
+     },
+     "LSTM_P": {
+      "auc_lo": 0.4902413892091519,
+      "auc_hi": 0.5574387454088917
+     },
+     "GRU_P": {
+      "auc_lo": 0.43614756737040467,
+      "auc_hi": 0.5204243796923551
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.4865248197152703,
+      "auc_hi": 0.5675843847518274
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.46386605307540274,
+      "auc_hi": 0.5317731797022918
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.47978932717694045,
+      "auc_hi": 0.5600836320563417
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.44697679647504884,
+      "auc_hi": 0.5353813055443036
+     },
+     "MM_CLS": {
+      "auc_lo": 0.4567735162962245,
+      "auc_hi": 0.5371311997807429
+     },
+     "MM_DIR": {
+      "auc_lo": 0.477982846595774,
+      "auc_hi": 0.5506382828261367
+     }
+    },
+    "SSE": {
+     "SVM_P": {
+      "auc_lo": 0.4691647823193696,
+      "auc_hi": 0.5502951316849575
+     },
+     "CNN_P": {
+      "auc_lo": 0.43322047029697464,
+      "auc_hi": 0.4948147131817131
+     },
+     "LSTM_P": {
+      "auc_lo": 0.4686211108547158,
+      "auc_hi": 0.5406972288012376
+     },
+     "GRU_P": {
+      "auc_lo": 0.46351097474727065,
+      "auc_hi": 0.5326464488758547
+     },
+     "SENTIN_PAPER": {
+      "auc_lo": 0.4496709806120548,
+      "auc_hi": 0.5179431046176547
+     },
+     "SENTIN_E13": {
+      "auc_lo": 0.46358776943041896,
+      "auc_hi": 0.5315088661727317
+     },
+     "SENTIN_SF_PAPER": {
+      "auc_lo": 0.45391216516371224,
+      "auc_hi": 0.5217502529413383
+     },
+     "SENTIN_SF_E13": {
+      "auc_lo": 0.4486332902186509,
+      "auc_hi": 0.5145568521016592
+     },
+     "MM_CLS": {
+      "auc_lo": 0.43263444824589087,
+      "auc_hi": 0.49761283262506106
+     },
+     "MM_DIR": {
+      "auc_lo": 0.48042284553271974,
+      "auc_hi": 0.5467455836896317
+     }
+    }
+   }
   }
  }
 }

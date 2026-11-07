@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "<project_root>\scripts\p6_e14.py", line 165, in <module>
+    main()
+  File "<project_root>\scripts\p6_e14.py", line 161, in main
+    getattr(e14eval, f"stage_{args.stage}")(args)
+  File "<project_root>\smartrl\p6\e14eval.py", line 329, in stage_outputs
+    ax.errorbar(x, v, yerr=[np.array(v) - np.array(lo), np.array(hi) - np.array(v)], fmt="o", ms=3, capsize=2,
+  File "<conda_env>\Lib\site-packages\matplotlib\_api\deprecation.py", line 477, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<conda_env>\Lib\site-packages\matplotlib\__init__.py", line 1531, in inner
+    return func(
+           ^^^^^
+  File "<conda_env>\Lib\site-packages\matplotlib\axes\_axes.py", line 4232, in errorbar
+    raise ValueError(
+ValueError: 'yerr' must not contain negative values
