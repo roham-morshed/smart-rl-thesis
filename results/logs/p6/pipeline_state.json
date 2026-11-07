@@ -8,6 +8,7 @@
   "e14_outputs",
   "e15_ppo",
   "e15_sac",
-  "e15_eval"
+  "e15_eval",
+  "e15_outputs"
  ]
 }

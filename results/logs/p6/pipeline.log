@@ -16,3 +16,5 @@
 [2026-11-07 17:29:00] DONE e15_sac in 251.5 min
 [2026-11-07 17:29:01] START e15_eval
 [2026-11-07 17:29:42] DONE e15_eval in 0.7 min
+[2026-11-07 17:29:44] START e15_outputs
+[2026-11-07 17:29:47] DONE e15_outputs in 0.1 min
