@@ -6,6 +6,7 @@
   "e14_eval",
   "e14_tests",
   "e14_outputs",
-  "e15_ppo"
+  "e15_ppo",
+  "e15_sac"
  ]
 }
