@@ -9,5 +9,4 @@ results/registry.sqlite
 __pycache__/
 *.pyc
 .pytest_cache/
-smartrl-thesis-kit.zip
 results/*_smoke.json
