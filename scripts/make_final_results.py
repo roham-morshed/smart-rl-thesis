@@ -74,6 +74,220 @@ def rank_by(block: str, metric: str, methods: list[str], reverse=True) -> list[s
     return sorted(methods, key=lambda m: g(f"{block}.{m}.{metric}"), reverse=reverse)
 
 
+# ------------------------------------------------------------------ P6 (E14, E15): the base paper's own conditions
+P6_ORDER = ["SP500", "FTSE100", "SSE", "NIFTY50"]                 # the paper's order
+P6_MODELS = [("SVM_P", "SVM (paper recipe)"), ("CNN_P", "CNN (paper recipe)"), ("LSTM_P", "LSTM (paper recipe)"),
+             ("GRU_P", "GRU (paper recipe)"), ("SENTIN_PAPER", "SenT-In, paper recipe"),
+             ("SENTIN_E13", "SenT-In, E13 recipe (stronger)"), ("SENTIN_SF_PAPER", "SenT-In + SentiFlow, paper recipe"),
+             ("SENTIN_SF_E13", "SenT-In + SentiFlow, E13 recipe"), ("MM_CLS", "MarketMind classifier (proposed)"),
+             ("MM_DIR", "MarketMind q50 direction")]
+P6_MET = ["acc", "f1", "auc", "prauc"]
+P6_TRADE = METHODS[:-1] + ["BASE", "BASE_PAPER"]
+
+
+def d3(key: str) -> str:
+    return f"{g(key):+.3f}"
+
+
+def ci3(pre: str) -> str:
+    return f"[{g(pre + '.lo'):+.3f}, {g(pre + '.hi'):+.3f}]"
+
+
+def p6_published() -> dict:
+    """SenT-In as published (Chauhan et al. 2025, Tables 4-7), quoted in scripts/p6_report.py."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from p6_report import PUBLISHED
+    return PUBLISHED
+
+
+def p6_reached(settings) -> list[tuple[str, str, str, str]]:
+    pub = p6_published()
+    out = []
+    for s in settings:
+        for m in P6_ORDER:
+            for mo, _ in P6_MODELS:
+                for i, k in enumerate(P6_MET):
+                    v = R.lookup(T, f"e14.{s}.{m}.{mo}.{k}")
+                    if v is not R.MISSING and v >= pub[m][i]:
+                        out.append((s, m, mo, k))
+    return out
+
+
+def p6_la_max() -> tuple[float, str, str, str]:
+    best = []
+    for s in ("PUB_C_GE_LA", "PUB_R_GE_LA"):
+        for m in P6_ORDER:
+            for mo, _ in P6_MODELS:
+                v = R.lookup(T, f"e14.{s}.{m}.{mo}.acc")
+                if v is not R.MISSING:
+                    best.append((v, s, m, mo))
+    return max(best)
+
+
+def p6_findings() -> list[str]:
+    c, r = "e14.PUB_C_GE.MEAN", "e14.PUB_R_GE.MEAN"
+    tc, tr = "e14.tests.PUB_C_GE.MM_CLS_vs_SENTIN_PAPER", "e14.tests.PUB_R_GE.MM_CLS_vs_SENTIN_PAPER"
+    dl = max(g(f"{t}.delong.{m}.p_holm") for t in (tc, tr) for m in P6_ORDER)
+    e = "e15.full.COMBINED"
+    return [
+        f"**Better than the base paper under its own conditions, on its own metrics (E14, pre-registered).** With the "
+        f"paper's exact window and row count ({g('e14.data.SP500.labelled_rows')} calendar rows per index, 2005-01 to "
+        "2022-03, non-trading days filled) and its 80:20 split, the proposed MarketMind classifier beats SenT-In rebuilt "
+        "with the paper's own training recipe on both threshold-free metrics of the paper, in both readings of the split: "
+        f"AUC-ROC {f3(c + '.MM_CLS.auc')} vs {f3(c + '.SENTIN_PAPER.auc')} (chronological) and {f3(r + '.MM_CLS.auc')} "
+        f"vs {f3(r + '.SENTIN_PAPER.auc')} (random); PR-AUC {f3(c + '.MM_CLS.prauc')} vs {f3(c + '.SENTIN_PAPER.prauc')} "
+        f"and {f3(r + '.MM_CLS.prauc')} vs {f3(r + '.SENTIN_PAPER.prauc')}; "
+        + ("Holm-adjusted p < 0.001 in both readings" if max(g(tc + '.p_holm'), g(tr + '.p_holm')) < 0.001 else
+           f"Holm-adjusted p {pv(tc + '.p_holm')} and {pv(tr + '.p_holm')}")
+        + (", DeLong p < 0.001 in every index" if dl < 0.001 else "") + " (`e14.tests.*`). It "
+        "also beats our stronger SenT-In reproduction (AUC-ROC "
+        f"{d3('e14.tests.PUB_C_GE.MM_CLS_vs_SENTIN_E13.auc_diff')} / {d3('e14.tests.PUB_R_GE.MM_CLS_vs_SENTIN_E13.auc_diff')}). "
+        "SenT-In with the paper's recipe predicts \"up\" on every row, which gives it the slightly higher accuracy "
+        f"({f3(c + '.SENTIN_PAPER.acc')} vs {f3(c + '.MM_CLS.acc')}) and F1; with the strict label 1[C(t+1) > C(t)] "
+        "MarketMind is better on all four metrics. The pre-registered validity check V1 shows where the advantage comes "
+        "from: rows whose label is fixed by the filling of non-trading days; on rows followed by a trading session every "
+        "model, SenT-In included, is at chance (section 17).",
+        f"**In the base paper's own test window (E15, {g('e15.window.first_test_day')} to "
+        f"{g('e15.window.last_test_day')}).** SMART-RL, run once with the locked configuration, reached a COMBINED Sharpe "
+        f"of {f3(e + '.SMARTRL.sharpe')} against {f3(e + '.BASE.sharpe')} for SenT-In as a trading signal (difference "
+        f"not significant, p {pv('e15.tests.BASE.p_hac')}) and a maximum drawdown of {pct(e + '.SMARTRL.mdd')} against "
+        f"{pct(e + '.B1_BH.mdd')} for buy-and-hold, which SenT-In with the paper's recipe equals because it is always "
+        f"invested (95 % interval of the drawdown difference {ci3('e15.tests.B1_BH.mdd_diff')}); its Sharpe is below "
+        f"buy-and-hold's ({f3(e + '.B1_BH.sharpe')}; p {pv('e15.tests.B1_BH.p_hac')} for SMART-RL being higher).",
+    ]
+
+
+def p6_section(w) -> None:
+    pub = p6_published()
+    name = dict(P6_MODELS)
+    w("## 17. The base paper's task under its exact conditions (E14) and trading in its test window (E15) "
+      "(T21–T25, F17–F19)\n")
+    w("Pre-registered in `docs/P6_BASE_PROTOCOL.md` (commit `aaf78ff`) before any run; every setting in "
+      "`configs/p6.yaml`; gate report `reports/P6_report.md` (gate G6 passed). E14 repeats the paper's next-day "
+      f"direction task with its exact window ({g('e14.data.SP500.first_date')} to {g('e14.data.SP500.last_date')}, "
+      f"{g('e14.data.SP500.labelled_rows')} labelled calendar rows per index, non-trading days filled with the previous "
+      "day's values), label GE = 1[C(t+1) ≥ C(t)] (the label the paper's metric pattern implies), the 80:20 split read "
+      f"chronologically (`PUB_C`, test {g('e14.PUB_C_GE.SP500.test_start')} to {g('e14.PUB_C_GE.SP500.test_end')}) and "
+      "randomly (`PUB_R`), SenT-In rebuilt with the paper's GRU layer (eqs 7–11) and its Table 3 recipe "
+      "(`SENTIN_PAPER`), the paper's baselines and sentiment classifier with its Table 2 recipe, and the proposed "
+      f"MarketMind classifier with SentiFlow features (`MM_CLS`). {g('e14.compute.n_model_runs')} model runs; "
+      f"{sum(g(f'e15.compute.policies.{a}') for a in ('SMARTRL', 'B6', 'B7'))} E15 policies.\n")
+
+    w("### 17.1 The paper's layout with the published SenT-In numbers (T22)\n")
+    w("Per index in the paper's order; \"SenT-In, published\" is quoted from Chauhan et al. (2025), Tables 4–7, and is "
+      "not a result of this project (`e14.<SET>.<index>.<model>.<acc|f1|auc|prauc>`).\n")
+    rows = []
+    for m in P6_ORDER:
+        rows.append([MKT[m], "SenT-In, published"] + [f"{x:.3f}" for x in pub[m]] * 2)
+        for mo in ("SENTIN_PAPER", "SENTIN_E13", "MM_CLS"):
+            rows.append(["", name[mo]] + [f3(f"e14.{s}.{m}.{mo}.{k}") for s in ("PUB_C_GE", "PUB_R_GE") for k in P6_MET])
+    w(table(["index", "model", "PUB_C Acc", "PUB_C F1", "PUB_C AUC-ROC", "PUB_C PR-AUC", "PUB_R Acc", "PUB_R F1",
+             "PUB_R AUC-ROC", "PUB_R PR-AUC"], rows) + "\n")
+
+    w("### 17.2 All models, mean over the four indices (T21)\n")
+    w(table(["model", "PUB_C Acc", "PUB_C F1", "PUB_C AUC-ROC", "PUB_C PR-AUC", "PUB_R Acc", "PUB_R F1",
+             "PUB_R AUC-ROC", "PUB_R PR-AUC"],
+            [[nm] + [f3(f"e14.{s}.MEAN.{mo}.{k}") for s in ("PUB_C_GE", "PUB_R_GE") for k in P6_MET]
+             for mo, nm in P6_MODELS]) + "\n")
+
+    w("### 17.3 Pre-registered tests (T25)\n")
+    w("Primary family: one-sided H1 ours > SenT-In (paper recipe); statistic = mean over the four indices of the "
+      "AUC-ROC difference on seed-averaged scores; paired stationary block bootstrap stratified by index (mean block "
+      "10 rows, 10 000 resamples); Holm over the four tests. Secondary metrics: PR-AUC and F1 by the same bootstrap, "
+      "accuracy by the exact McNemar test (two-sided) on the 0.5-threshold predictions; Holm within each metric "
+      "(`e14.tests.<SET>.<A>_vs_SENTIN_PAPER.*`).\n")
+    rows = []
+    for s in ("PUB_C_GE", "PUB_R_GE"):
+        for a in ("MM_CLS", "SENTIN_SF_PAPER"):
+            k = f"e14.tests.{s}.{a}_vs_SENTIN_PAPER"
+            rows.append([s, a, d3(k + ".auc_diff"), ci3(k), pv(k + ".p_holm"),
+                         f"{d3(k + '.prauc_diff')} ({pv(k + '.prauc_p_holm')})",
+                         f"{d3(k + '.acc_diff')} ({pv(k + '.mcnemar_p')})", f"{d3(k + '.f1_diff')} ({pv(k + '.f1_p')})"])
+    w(table(["setting", "ours", "AUC-ROC diff", "95 % interval", "Holm p", "PR-AUC diff (Holm p)",
+             "Accuracy diff (McNemar p)", "F1 diff (p)"], rows) + "\n")
+    w("Claim sentences produced by the pre-registered claim rules (verbatim, `e14.claims.*`; \"p 0.000\" is the "
+      "bootstrap floor 1/10 001):\n")
+    for k in ("MM_CLS", "SENTIN_SF_PAPER"):
+        w(f"> {g(f'e14.claims.{k}')}\n")
+
+    w("### 17.4 Validity checks (pre-registered; they set the wording)\n")
+    rows = []
+    for s in ("PUB_C_GE", "PUB_R_GE"):
+        for a in ("MM_CLS", "SENTIN_SF_PAPER"):
+            k = f"e14.tests_inf.{s}.{a}_vs_SENTIN_PAPER"
+            rows.append(["V1 informative rows", s, f"{a} vs SENTIN_PAPER", d3(k + ".auc_diff"), ci3(k), pv(k + ".p")])
+    for s in ("PUB_C_GE", "PUB_R_GE"):
+        for a in ("MM_CLS", "SENTIN_SF_E13"):
+            k = f"e14.tests.{s}.{a}_vs_SENTIN_E13"
+            rows.append(["V2 stronger base", s, f"{a} vs SENTIN_E13", d3(k + ".auc_diff"), ci3(k), pv(k + ".p")])
+    for s in ("PUB_C_GT", "PUB_R_GT"):
+        for a in ("MM_CLS", "SENTIN_SF_PAPER"):
+            k = f"e14.tests.{s}.{a}_vs_SENTIN_PAPER"
+            rows.append(["V3 label GT", s, f"{a} vs SENTIN_PAPER", d3(k + ".auc_diff"), ci3(k), pv(k + ".p")])
+    for a, b in (("MM_CLS", "SENTIN_PAPER"), ("SENTIN_SF_PAPER", "SENTIN_PAPER"), ("MM_CLS", "SENTIN_E13"),
+                 ("SENTIN_SF_E13", "SENTIN_E13")):
+        k = f"e14.tests.CAUSAL.{a}_vs_{b}"
+        rows.append(["V4 CAUSAL", "CAUSAL", f"{a} vs {b}", d3(k + ".auc_diff"), ci3(k), pv(k + ".p")])
+    w(table(["check", "setting", "comparison", "AUC-ROC diff", "95 % interval", "one-sided p"], rows) + "\n")
+    inf = [g(f"e14.PUB_C_GE.{m}.informative_share") for m in P6_ORDER]
+    t3 = "e14.tests.{}.MM_CLS_vs_SENTIN_PAPER"
+    w(f"- V1: informative rows ({min(inf):.3f}–{max(inf):.3f} of the `PUB_C_GE` test rows) are followed by a "
+      f"trading session. On them mean AUC-ROC is {f3('e14.PUB_C_GE.MEAN.MM_CLS.inf.auc')} for `MM_CLS` and "
+      f"{f3('e14.PUB_C_GE.MEAN.SENTIN_PAPER.inf.auc')} for SenT-In. The other rows precede a filled date, so "
+      "C(t+1) = C(t) and their GE label is always 1; MarketMind recognises them from the calendar pattern of its "
+      "inputs, SenT-In (paper recipe) gives every row the same score.")
+    w(f"- V3: with the strict label `MM_CLS` is better on all four metrics (accuracy "
+      f"{d3(t3.format('PUB_C_GT') + '.acc_diff')} / {d3(t3.format('PUB_R_GT') + '.acc_diff')}, McNemar p "
+      f"{pv(t3.format('PUB_C_GT') + '.mcnemar_p')} / {pv(t3.format('PUB_R_GT') + '.mcnemar_p')}; F1 "
+      f"{f3('e14.PUB_C_GT.MEAN.MM_CLS.f1')} vs {f3('e14.PUB_C_GT.MEAN.SENTIN_PAPER.f1')}).")
+    w(f"- V4: under the causal protocol every model is near chance (mean AUC-ROC "
+      f"{min(g(f'e14.CAUSAL.MEAN.{mo}.auc') for mo, _ in P6_MODELS):.3f}–"
+      f"{max(g(f'e14.CAUSAL.MEAN.{mo}.auc') for mo, _ in P6_MODELS):.3f}), as in E13.\n")
+
+    w("### 17.5 The published SenT-In numbers\n")
+    reach = p6_reached(("PUB_C_GE", "PUB_R_GE"))
+    la = p6_la_max()
+    cells = sorted({(s, m, k) for s, m, _, k in reach})
+    metname = {"acc": "accuracy", "f1": "F1", "auc": "AUC-ROC", "prauc": "PR-AUC"}
+    if cells:
+        txt = ("The only published values any model reaches under the stated conditions: "
+               + ", ".join(f"{MKT[m]} {metname[k]} in `{s}`" for s, m, k in cells) + ". ")
+        if all(k == "f1" for *_, k in cells):
+            txt += ("The published F1 there (" + ", ".join(f"{pub[m][1]:.3f}" for _, m, _ in cells) + ") is below the "
+                    "F1 of the always-up rule on the same test rows ("
+                    + ", ".join(f"{g(f'e14.labels.{m}.GE.{s[:5]}.allpos_f1'):.3f}" for s, m, _ in cells)
+                    + "), so models that predict \"up\" on (almost) every row exceed it. ")
+    else:
+        txt = "No model reaches any published SenT-In value under the stated conditions. "
+    w(txt + "Every published accuracy (" + ", ".join(f"{MKT[m]} {pub[m][0]:.3f}" for m in P6_ORDER) + "), AUC-ROC "
+      "and PR-AUC is above every model in every index. With the look-ahead diagnostic `LA` (the target day's open, "
+      "high, low, volume and sentiment visible, its close hidden) the best accuracy is "
+      f"{la[0]:.3f} (`{la[3]}`, {MKT[la[2]]}, `{la[1]}`; figure F19). The published numbers cannot be reproduced "
+      "from the paper's description, so the defensible comparison is the head-to-head under identical conditions.\n")
+
+    w("### 17.6 E15: trading in the paper's test window (T23, T24, F18)\n")
+    w(f"Train 2010-01-01 to 2017-10-17, validation to 2018-10-17, one test run {g('e15.window.first_test_day')} to "
+      f"{g('e15.window.last_test_day')} with no refits; SMART-RL with the locked configuration (selected on "
+      "development data ending 2018-06); 10 bps (`e15.full.COMBINED.*`, `e15.cost20.COMBINED.*`, "
+      "`e15.sub2020.COMBINED.*`). BASE = SenT-In with the E13 recipe, BASE_PAPER = SenT-In with the paper's recipe.\n")
+    w(table(["method", "Sharpe", "ann. return", "max drawdown", "cum. return", "turnover", "Sharpe 20 bps",
+             "Sharpe 2020-01 to 2022-03"],
+            [[{**NAME, "BASE": "BASE: SenT-In, E13 recipe", "BASE_PAPER": "BASE_PAPER: SenT-In, paper recipe"}[x]]
+             + [f3(f"e15.full.COMBINED.{x}.sharpe"), pct(f"e15.full.COMBINED.{x}.ann_return"),
+                    pct(f"e15.full.COMBINED.{x}.mdd"), pct(f"e15.full.COMBINED.{x}.cum_return"),
+                    f3(f"e15.full.COMBINED.{x}.turnover"), f3(f"e15.cost20.COMBINED.{x}.sharpe"),
+                    f3(f"e15.sub2020.COMBINED.{x}.sharpe")] for x in P6_TRADE]) + "\n")
+    w(table(["SMART-RL minus", "Sharpe diff", "p (LW HAC)", "p (bootstrap)", "max-drawdown diff [95 %]",
+             "cum.-return diff [95 %]"],
+            [[b, d3(f"e15.tests.{b}.diff"), pv(f"e15.tests.{b}.p_hac"), pv(f"e15.tests.{b}.p_boot"),
+              f"{d3(f'e15.tests.{b}.mdd_diff.est')} {ci3(f'e15.tests.{b}.mdd_diff')}",
+              f"{d3(f'e15.tests.{b}.cr_diff.est')} {ci3(f'e15.tests.{b}.cr_diff')}"]
+             for b in ("BASE", "BASE_PAPER", "B1_BH")]) + "\n")
+    w("Decisions as next-day direction calls, mean over the four markets (`e15.dir.MEAN.*`): " + "; ".join(
+        f"{x} accuracy {f3(f'e15.dir.MEAN.{x}.acc')}, AUC-ROC {f3(f'e15.dir.MEAN.{x}.auc')}"
+        for x in ("SMARTRL", "BASE", "BASE_PAPER")) + f" (up share {f3('e15.dir.MEAN.SMARTRL.up_share')}).\n")
+
+
 # ------------------------------------------------------------------ verdicts (SPEC §12 rules, as scripts/p5_verdicts.py)
 def verdicts() -> list[tuple[str, str, str]]:
     sys.path.insert(0, str(ROOT / "scripts"))
@@ -104,8 +318,8 @@ def main() -> None:
       "University, Shiraz Branch.*\n")
     w(f"Generated by `scripts/make_final_results.py` from `results/results.json` (written {meta['created_utc']}; "
       f"configuration hash `{meta['config_hash'][:16]}…`, locked at G4 on {meta.get('g4_lock_utc', 'n/a')}). Every number "
-      "below is read from results.json by key; the key is shown in `code` so each number can be traced. Tables T01–T20, "
-      "TS1 and figures F01–F16 are in `results/tables` and `results/figures`.\n")
+      "below is read from results.json by key; the key is shown in `code` so each number can be traced. Tables T01–T25, "
+      "TS1 and figures F01–F19 are in `results/tables` and `results/figures`.\n")
 
     # ------------------------------------------------------------------ 0
     w("## 0. Reading guide\n")
@@ -117,6 +331,9 @@ def main() -> None:
       "trading days), run once with the locked configuration (models trained to 2023, validated on 2024).")
     w("- **Costs:** 10 bps per unit of turnover in every base result; 0, 5 and 20 bps and a one-day execution delay "
       "in the robustness study.")
+    w("- **Base paper's own conditions (P6, pre-registered):** E14 repeats the base paper's next-day direction task "
+      "with its exact window, row count, label pattern and 80:20 split; E15 trades in the paper's test window "
+      "2018-10-18 to 2022-03-31 (section 17).")
     w("- **p-values:** one-sided for \"SMART-RL is better than X\" unless stated otherwise; Holm correction within "
       "each hypothesis family, as pre-registered.\n")
 
@@ -125,7 +342,7 @@ def main() -> None:
     w("Each statement is exact and supported by the cited keys. They are phrased positively without claiming more "
       "than the statistics show.\n")
     s, b1 = f"{C}.SMARTRL", f"{C}.B1_BH"
-    items = [
+    items = p6_findings() + [
         f"**Better risk-adjusted return than the market with much less risk.** On the COMBINED portfolio 2020–2024, "
         f"SMART-RL reached a Sharpe ratio of {f3(s + '.sharpe')} against {f3(b1 + '.sharpe')} for buy-and-hold, while "
         f"cutting the maximum drawdown from {pct(b1 + '.mdd')} to {pct(s + '.mdd')} (a {rel(s + '.mdd', b1 + '.mdd')} "
@@ -498,7 +715,10 @@ def main() -> None:
             [[MKT[m]] + [f3(f"e13.overlap.{m}.{x}.auc") for x in ("SMARTRL", "BASE", "SENTIN_CAUSAL")] for m in MARKETS]) + "\n")
 
     # ------------------------------------------------------------------ 17
-    w("## 17. Development phase 2010–2019 (E4, T07)\n")
+    p6_section(w)
+
+    # ------------------------------------------------------------------ 18
+    w("## 18. Development phase 2010–2019 (E4, T07)\n")
     w(table(["component", "selected", "development validation Sharpe"],
             [["PPO reward and learning rate", f"{g('dev.selected.config')}", f3(f"dev.ppo.{g('dev.selected.config')}.val_sharpe")],
              ["Sentiment trading module", f"{g('dev.selected.stm_form')}, κ = {g('dev.selected.kappa')}, z0 = {g('dev.selected.z0')}",
@@ -510,8 +730,8 @@ def main() -> None:
     w(f"{int(g('dev.n_trials'))} trials logged; selection rule fixed in advance (highest mean validation Sharpe of the "
       "four markets).\n")
 
-    # ------------------------------------------------------------------ 18
-    w("## 18. Data (T01, T02, F01, F04)\n")
+    # ------------------------------------------------------------------ 19
+    w("## 19. Data (T01, T02, F01, F04)\n")
     w(table(["market", "trading days", "period", "dividend source", "mean local news / day", "share of days with local news"],
             [[MKT[m], f"{g(f'data.prices.{m}.n_days'):,}", f"{g(f'data.prices.{m}.start')} .. {g(f'data.prices.{m}.end')}",
               g(f"data.prices.{m}.dividend_source"), f"{g(f'data.news.market.{m}.mean_daily_local'):,.1f}",
@@ -522,8 +742,8 @@ def main() -> None:
       "; ".join(f"{d} {g(f'data.sentiment_sets.{d}.n_train'):,}/{g(f'data.sentiment_sets.{d}.n_val'):,}/"
                 f"{g(f'data.sentiment_sets.{d}.n_test'):,}" for d in ("phrasebank50", "phrasebank_all", "fiqa", "twitter")) + ".\n")
 
-    # ------------------------------------------------------------------ 19
-    w("## 19. Limitations and how the thesis addresses them\n")
+    # ------------------------------------------------------------------ 20
+    w("## 20. Limitations and how the thesis addresses them\n")
     lim = [
         "**Statistical power.** Five test years per market give limited power to separate Sharpe ratios that differ "
         "by less than 0.1; the strict pre-registered rules (Holm, intersection–union) were applied without relaxation. "
@@ -555,8 +775,8 @@ def main() -> None:
         w(f"- {t}")
     w("")
 
-    # ------------------------------------------------------------------ 20
-    w("## 20. Audit of the run (training and design)\n")
+    # ------------------------------------------------------------------ 21
+    w("## 21. Audit of the run (training and design)\n")
     audit = [
         f"All {n_pol} P5 policies are complete (model, normaliser and info files present; no NaN in any validation "
         "curve; 30 checkpoints per PPO run and 20 per SAC run).",
@@ -564,7 +784,7 @@ def main() -> None:
         "11 tests and skipped the one that only applies before the lock.",
         "A dry run of evaluate → analyze → outputs on a scratch copy before the final run found no error "
         "(`results/logs/p5_dryrun.log`).",
-        "Re-running the H2 analysis reproduced all 58 stored values exactly (deterministic bootstrap seeds). Three results that looked odd were traced to their causes (section 8.3, section 16, section 19): none is a bug.",
+        "Re-running the H2 analysis reproduced all 58 stored values exactly (deterministic bootstrap seeds). Three results that looked odd were traced to their causes (section 8.3, section 16, section 20): none is a bug.",
         "Fixed during the audit: (1) compute hours now include three SAC stages stopped from outside (two pauses, one "
         "desktop-app update) that saved 37 of the 72 SAC policies (scripts/p5_register_interrupted.py); (2) figure F12 "
         "had a title inside the image, replaced by a legend; (3) the A4 = SMART-RL identity is now explained in the "
@@ -576,14 +796,14 @@ def main() -> None:
         w(f"- {t}")
     w("")
 
-    # ------------------------------------------------------------------ 21
-    w("## 21. Notes stored in results.json\n")
+    # ------------------------------------------------------------------ 22
+    w("## 22. Notes stored in results.json\n")
     for i, n in enumerate(T.get("notes", []), 1):
         w(f"{i}. {n}")
     w("")
 
-    # ------------------------------------------------------------------ 22
-    w("## 22. Output files\n")
+    # ------------------------------------------------------------------ 23
+    w("## 23. Output files\n")
     schema = (ROOT / "docs" / "RESULTS_SCHEMA.md").read_text(encoding="utf-8").splitlines()
     rows = []
     for line in schema:
@@ -595,9 +815,24 @@ def main() -> None:
     if (ROOT / "results" / "figures" / "F16.png").exists():
         rows.append(["F16", "E13x leakage decomposition of the base paper's evaluation: SenT-In accuracy and AUC along "
                             "the protocol chain, majority-class rate as reference", "yes"])
+    p6_out = [("T21", "E14: every setting × index × model, four metrics (mean ± sd), positive share, informative-row AUC"),
+              ("T22", "E14: the base paper's layout (per index, rows = models; Accuracy, F1, AUC-ROC, PR-AUC) for "
+                      "PUB_C_GE and PUB_R_GE"),
+              ("T23", "E15: trading metrics in the base paper's test window (COMBINED and per market, both windows)"),
+              ("T24", "E15: direction metrics of the SMART-RL, BASE and BASE_PAPER decisions"),
+              ("T25", "E14: pre-registered tests with estimates, intervals, p, Holm p and the claim sentences"),
+              ("F17", "E14: AUC-ROC per index and model in PUB_C_GE, PUB_R_GE and CAUSAL with 95 % bootstrap intervals"),
+              ("F18", "E15: COMBINED wealth and drawdown (SMART-RL, BASE, BASE_PAPER, buy-and-hold, best other)"),
+              ("F19", "E14: accuracy with and without the look-ahead per index, published SenT-In accuracy as markers")]
+    for ident, text in p6_out:
+        f = ROOT / "results" / ("tables" if ident.startswith("T") else "figures") / \
+            (ident + (".csv" if ident.startswith("T") else ".png"))
+        rows.append([ident, text, "yes" if f.exists() else "no"])
     w(table(["id", "content", "file present"], rows) + "\n")
-    w("Reproduce: `python scripts/p5_confirm.py --stage evaluate`, `--stage analyze`, `python scripts/make_outputs.py`, "
-      "`python scripts/make_final_results.py` (conda environment `smartrl-thesis`).\n")
+    w("Reproduce: `python scripts/p5_confirm.py --stage evaluate`, `--stage analyze`, `python scripts/make_outputs.py`; "
+      "P6: `python scripts/run_p6_pipeline.py` (E14 and E15 stages of `scripts/p6_e14.py` and `scripts/p6_e15.py`), "
+      "`python scripts/p6_report.py`; then `python scripts/make_final_results.py` (conda environment "
+      "`smartrl-thesis`).\n")
 
     OUT.write_text("\n".join(L), encoding="utf-8")
     print(f"written {OUT} ({len(L)} lines)")
