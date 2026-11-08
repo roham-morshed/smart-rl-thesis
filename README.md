@@ -5,7 +5,7 @@
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](environment.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Pre-registered](https://img.shields.io/badge/design-pre--registered-informational.svg)](docs/SPEC.md)
-[![Thesis keys](https://img.shields.io/badge/thesis%20keys-936%20%7C%200%20missing-brightgreen.svg)](tests/test_results_contract.py)
+[![Thesis keys](https://img.shields.io/badge/thesis%20keys-936%2F936%20present-brightgreen.svg)](tests/test_results_contract.py)
 
 Code, run records and results of my M.Sc. thesis in Artificial Intelligence, *Design and Implementation of an Adaptive Intelligent Trading System Based on Reinforcement Learning, Sentiment Analysis, and Dynamic Weighting*, Islamic Azad University, Shiraz Branch (supervisor: Dr. Ali Tabarzad).
 
